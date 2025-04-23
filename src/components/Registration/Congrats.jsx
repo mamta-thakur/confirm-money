@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from "../assets/loan-logo.png";
+import Logo from "../../assets/loan-logo.png";
 
 const offers = [
   {

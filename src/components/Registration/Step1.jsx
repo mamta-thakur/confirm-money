@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Logo from "../assets/loan-logo.png";
+import Logo from "../../assets/loan-logo.png";
 import api from '../../services/api';
 
 const handleGenerateOTP = async () => {

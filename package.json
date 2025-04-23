@@ -3,14 +3,18 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://mamta-thakur.github.io/super-money-clone",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build", 
+    "predeploy": "vite build",
+    "deploy": "gh-pages -d dist",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
     "axios": "^1.8.4",
+    "gh-pages": "^6.3.0",
     "gsap": "^3.12.7",
     "lucide-react": "^0.503.0",
     "react": "^18.2.0",

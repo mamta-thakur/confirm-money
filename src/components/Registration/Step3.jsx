@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Logo from "../assets/loan-logo.png";
+import Logo from "../../assets/loan-logo.png";
 
 const Step3 = ({ nextStep, formData, setFormData }) => {
   const [errors, setErrors] = useState({});

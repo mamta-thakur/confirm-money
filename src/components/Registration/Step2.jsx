@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Logo from "../assets/loan-logo.png";
+import Logo from "../../assets/loan-logo.png";
 
 const Step2 = ({ nextStep, prevStep, formData, setFormData }) => {
   const [otp, setOtp] = useState(['', '', '', '']);
