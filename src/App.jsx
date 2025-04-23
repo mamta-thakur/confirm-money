@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -13,7 +13,6 @@ import ProductSection from './sections/ProductSection';
 import Section6 from './sections/Section6';
 
 import MultiStepForm from './components/Registration/MultiStepForm';
-
 
 function HomePage() {
   return (
@@ -41,21 +40,5 @@ function App() {
     </Router>
   );
 }
-
-// function App() {
-//   return (
-//     <div className='App'>
-//       <Navbar />
-//       <Section1 />
-//       <Section2 />
-//       <Section3 />
-//       <Section4 />
-//       <Section5 />
-//       <ProductSection />
-//       <Section6 />
-//       <Footer />
-//     </div>
-//   );
-// }
 
 export default App;
