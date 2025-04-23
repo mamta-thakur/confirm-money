@@ -6,15 +6,14 @@
   "homepage": "https://mamta-thakur.github.io/super-money-clone",
   "scripts": {
     "dev": "vite",
-    "build": "vite build", 
-    "predeploy": "vite build",
+    "build": "vite build",
+    "preview": "vite preview",
     "deploy": "gh-pages -d dist",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "predeploy": "vite build",
+    "lint": "eslint ."
   },
   "dependencies": {
     "axios": "^1.8.4",
-    "gh-pages": "^6.3.0",
     "gsap": "^3.12.7",
     "lucide-react": "^0.503.0",
     "react": "^18.2.0",
@@ -30,6 +29,7 @@
     "eslint": "^9.22.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
+    "gh-pages": "^6.3.0",
     "globals": "^16.0.0",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.1",
