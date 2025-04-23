@@ -12,7 +12,7 @@ import Section5 from './sections/Section5';
 import ProductSection from './sections/ProductSection';
 import Section6 from './sections/Section6';
 
-import MultiStepForm from './components/MultiStepForm';
+import MultiStepForm from './components/Registration/MultiStepForm';
 
 
 function HomePage() {

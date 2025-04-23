@@ -1,35 +1,3 @@
-// // components/MultiStepForm.jsx
-// import React, { useState } from 'react';
-// import Step1 from './Step1';
-// import Step2 from './Step2';
-// import Step3 from './Step3';
-// import Step4 from './Step4';
-// // import Congrats from './Congrats';
-
-// const MultiStepForm = () => {
-//   const [step, setStep] = useState(1);
-//   const [formData, setFormData] = useState({});
-
-//   const next = () => setStep(prev => prev + 1);
-//   const prev = () => setStep(prev => prev - 1);
-
-//   const updateData = (newData) => {
-//     setFormData(prev => ({ ...prev, ...newData }));
-//   };
-
-//   return (
-//     <div className="w-full max-w-lg mx-auto p-6">
-//       {step === 1 && <Step1 next={next} updateData={updateData} />}
-//       {step === 2 && <Step2 next={next} prev={prev} updateData={updateData} />}
-//       {step === 3 && <Step3 next={next} prev={prev} updateData={updateData} />}
-//       {step === 4 && <Step4 data={formData} />}
-//     </div>
-//   );
-// };
-
-// export default MultiStepForm;
-
-// src/components/MultiStepForm.jsx
 import React, { useState } from 'react';
 import Step1 from './Step1';
 import Step2 from './Step2';

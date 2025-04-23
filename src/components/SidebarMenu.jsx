@@ -51,7 +51,7 @@ export default function SidebarMenu({ isOpen, onClose }) {
     <a href="#login" className="hover:underline">Login</a>
   </div>
   <div className="text-4xl font-bold">
-    <a href="#register" className="hover:underline">Registration</a>
+    <a href="register" className="hover:underline">Registration</a>
   </div>
 </div>
 
