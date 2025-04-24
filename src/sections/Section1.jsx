@@ -107,7 +107,7 @@ const Section1 = () => {
   return (
     <section
       ref={sectionRef}
-      className="min-h-screen bg-[#6bc6a7] text-white relative overflow-hidden flex flex-col items-center justify-center text-center p-6"
+      className="min-h-screen bg-[#6bc6a7] text-white relative overflow-hidden flex flex-col justify-center text-center"
     >
       {/* Floating images */}
       <img
@@ -129,36 +129,39 @@ const Section1 = () => {
         className="absolute bottom-10 right-10 w-32 md:w-40"
       />
 
-      {/* Heading content */}
-      <h2 ref={subtitleRef} className="text-lg md:text-xl mb-2">
-        Unlock the power of
-      </h2>
-      <h1
-        ref={titleRef}
-        className="text-5xl md:text-7xl font-bold bg-white text-[#6bc6a7] px-6 py-2 rounded"
-      >
-        superUPI
-      </h1>
-      <p className="text-lg md:text-xl mt-2">crafted for the superYou</p>
+      {/* Content Wrapper */}
+      <div className="w-full max-w-screen-xl mx-auto px-4 flex flex-col items-center justify-center">
+        <h2 ref={subtitleRef} className="text-lg md:text-xl mb-2">
+          Unlock the power of
+        </h2>
+        <h1
+          ref={titleRef}
+          className="text-5xl md:text-7xl font-bold bg-white text-[#6bc6a7] px-6 py-2 rounded"
+        >
+          superUPI
+        </h1>
+        <p className="text-lg md:text-xl mt-2">crafted for the superYou</p>
 
-      {/* CTA Button */}
-      <div
-        ref={buttonRef}
-        className="mt-8 bg-gradient-to-r to-indigo-600 p-4 rounded-xl shadow-lg cursor-pointer flex items-center gap-4 border"
-      >
-        <img
-          src={qrCoin}
-          alt="QR Code"
-          className="w-12 h-12 border-white rounded"
-        />
-        <span className="text-lg font-medium">Check eligibility</span>
+        {/* CTA Button */}
+        <div
+          ref={buttonRef}
+          className="mt-8 bg-gradient-to-r to-indigo-600 p-4 rounded-xl shadow-lg cursor-pointer flex items-center gap-4 border"
+        >
+          <img
+            src={qrCoin}
+            alt="QR Code"
+            className="w-12 h-12 border-white rounded"
+          />
+          <span className="text-lg font-medium">Check eligibility</span>
+        </div>
       </div>
 
       {/* Footer note */}
-      <p className="absolute bottom-6 text-sm md:text-base opacity-90">
+      <p className="absolute bottom-6 text-sm md:text-base opacity-90 w-full text-center">
         Get up to 5% guaranteed cashback & many more perks. Every single time.
       </p>
     </section>
+
   );
 };
 

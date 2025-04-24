@@ -16,7 +16,6 @@ const Section3 = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Animate POS image in from right
       gsap.fromTo(
         posRef.current,
         { opacity: 0, x: 200, rotate: 15, scale: 0.8 },
@@ -37,7 +36,6 @@ const Section3 = () => {
         }
       );
 
-      // Floating QR glow effect
       gsap.to(qrGlowRef.current, {
         y: 80,
         repeat: -1,
@@ -55,30 +53,32 @@ const Section3 = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen bg-[#6bc6a7] text-white px-6 py-20 flex flex-col md:flex-row items-center justify-between overflow-hidden"
+      className="relative min-h-screen bg-[#6bc6a7] text-white px-6 py-20 overflow-hidden flex items-center justify-center"
     >
-      {/* Text */}
-      <div className="md:w-1/2 mb-12 md:mb-0 z-10 text-center md:text-left">
-        <p className="text-lg md:text-xl text-white/80">
-          Redefining the way you
-        </p>
-        <h2 className="text-4xl md:text-6xl font-bold mt-2">Scan and pay</h2>
-      </div>
+      <div className="w-4/5 max-w-screen-xl mx-auto flex flex-col md:flex-row items-center justify-between">
+        {/* Text */}
+        <div className="md:w-1/2 mb-12 md:mb-0 z-10 text-center md:text-left">
+          <p className="text-lg md:text-xl text-white/80">
+            Redefining the way you
+          </p>
+          <h2 className="text-4xl md:text-6xl font-bold mt-2">Scan and pay</h2>
+        </div>
 
-      {/* POS + QR Glow */}
-      <div className="relative md:w-1/2 flex justify-center z-10">
-        <img
-          src={posImage}
-          alt="POS Machine"
-          ref={posRef}
-          className="w-[260px] md:w-[340px] drop-shadow-2xl"
-        />
-        <img
-          src={qrGlow}
-          alt="QR Glow"
-          ref={qrGlowRef}
-          className="absolute top-[30%] left-[10%] w-[120px] md:w-[140px] pointer-events-none opacity-90"
-        />
+        {/* POS + QR Glow */}
+        <div className="relative md:w-1/2 flex justify-center z-10">
+          <img
+            src={posImage}
+            alt="POS Machine"
+            ref={posRef}
+            className="w-[260px] md:w-[340px] drop-shadow-2xl"
+          />
+          <img
+            src={qrGlow}
+            alt="QR Glow"
+            ref={qrGlowRef}
+            className="absolute top-[30%] left-[10%] w-[120px] md:w-[140px] pointer-events-none opacity-90"
+          />
+        </div>
       </div>
 
       {/* Floating QR Widget */}

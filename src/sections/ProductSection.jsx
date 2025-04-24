@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ArrowRight } from 'lucide-react';
 
 import product1 from '../assets/product-1.webp';
 import product2 from '../assets/product-2.webp';
@@ -17,11 +18,13 @@ const ProductSection = () => {
     {
       title: 'Confirm.Credit',
       subtitle: 'The smarter way to manage credit.',
+      category: 'DESIGN',
       image: product1,
     },
     {
       title: 'Confirm.Shop',
       subtitle: 'Shop seamlessly with instant approvals.',
+      category: 'MARKETING',
       image: product2,
     },
   ];
@@ -44,26 +47,22 @@ const ProductSection = () => {
         trigger: sectionRef.current,
         start: 'top top',
         end: `+=${window.innerHeight * (products.length - 1)}`,
-        // scrub: true,
         scrub: true,
         pin: true,
         markers: false,
-        // anticipatePin: 1,
       },
     });
 
     panels.forEach((panel, index) => {
       const fadeInTime = index * 1;
-      const fadeOutTime = (index + 0.99);
+      const fadeOutTime = index + 0.99;
 
-      // Fade in
       timeline.to(panel, {
         autoAlpha: 1,
         yPercent: 0,
         ease: 'power2.out',
       }, fadeInTime);
 
-      // Fade out
       if (index !== products.length - 1) {
         timeline.to(panel, {
           autoAlpha: 0,
@@ -79,31 +78,52 @@ const ProductSection = () => {
   }, [isDesktop, products.length]);
 
   return (
-    <div ref={sectionRef} className="relative w-full overflow-hidden min-h-screen">
-      <div className="w-full relative h-screen">
-        {products.map((product, index) => (
-          <div
-            key={index}
-            ref={(el) => (productRefs.current[index] = el)}
-            className={`
-              absolute top-0 left-0 w-full h-screen
-              bg-cover bg-center flex items-center justify-start px-6 lg:px-10
-              text-white transition-opacity duration-500 ease-in-out
-            `}
-            style={{
-              backgroundImage: `url(${product.image})`,
-              zIndex: products.length - index,
-              backgroundAttachment: 'fixed',
-            }}
-          >
-            <div className="bg-black/60 p-6 lg:p-8 rounded-2xl max-w-xl">
-              <p className="uppercase text-sm tracking-widest">Design</p>
-              <h2 className="text-4xl lg:text-6xl font-extrabold mt-2">{product.title}</h2>
-              <p className="text-base lg:text-lg mt-4">{product.subtitle}</p>
+    <div ref={sectionRef} className="relative w-full overflow-hidden">
+      {/* Desktop Animation */}
+      {isDesktop && (
+        <div className="w-full relative h-screen">
+          {products.map((product, index) => (
+            <div
+              key={index}
+              ref={(el) => (productRefs.current[index] = el)}
+              className="absolute top-0 left-0 w-full h-screen bg-cover bg-center flex items-center justify-start px-6 lg:px-10 text-white transition-opacity duration-500 ease-in-out"
+              style={{
+                backgroundImage: `url(${product.image})`,
+                zIndex: products.length - index,
+                backgroundAttachment: 'fixed',
+              }}
+            >
+              <div className="bg-black/60 p-6 lg:p-8 rounded-2xl max-w-xl">
+                <p className="uppercase text-sm tracking-widest">{product.category}</p>
+                <h2 className="text-4xl lg:text-6xl font-extrabold mt-2">{product.title}</h2>
+                <p className="text-base lg:text-lg mt-4">{product.subtitle}</p>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
+
+      {/* Mobile Static Cards */}
+      {!isDesktop && (
+        <div className="lg:hidden p-4 pb-8 space-y-6 bg-[#0b0c2a]">
+          {products.map((product, index) => (
+            <div
+              key={index}
+              className="rounded-2xl overflow-hidden relative h-60 flex items-end p-6 bg-cover bg-center"
+              style={{ backgroundImage: `url(${product.image})` }}
+            >
+              <div className="text-white z-10">
+                <p className="uppercase text-xs font-semibold opacity-80">{product.category}</p>
+                <h2 className="text-2xl font-extrabold leading-tight">{product.title}</h2>
+              </div>
+              <div className="absolute bottom-4 right-4 text-white z-10">
+                <ArrowRight size={24} />
+              </div>
+              <div className="absolute inset-0 bg-black/40" />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
