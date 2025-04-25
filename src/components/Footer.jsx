@@ -1,47 +1,48 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
     <footer className="bg-white text-gray-800 border-t border-gray-300 py-16">
       <div className="container mx-auto px-6 lg:px-32">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12">
-          {/* Column 1 */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12">
+          {/* Column 1 - Company Links */}
           <div>
-            <h3 className="text-lg font-bold mb-4">Company</h3>
+            <h3 className="text-lg font-bold mb-4">Legal</h3>
             <ul>
-              <li><a href="#" className="hover:text-blue-600">About Us</a></li>
-              <li><a href="#" className="hover:text-blue-600">Careers</a></li>
-              <li><a href="#" className="hover:text-blue-600">Blog</a></li>
-              <li><a href="#" className="hover:text-blue-600">Press</a></li>
+              <li>
+                <Link to="/privacy" className="hover:text-blue-600">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link to="/terms" className="hover:text-blue-600">
+                  Terms & Conditions
+                </Link>
+              </li>
+              <li>
+                <Link to="/call-to-action" className="hover:text-blue-600">
+                  Call to Action
+                </Link>
+              </li>
             </ul>
           </div>
 
-          {/* Column 2 */}
+          {/* Column 2 - Contact Info (Optional) */}
           <div>
-            <h3 className="text-lg font-bold mb-4">Services</h3>
-            <ul>
-              <li><a href="#" className="hover:text-blue-600">Web Design</a></li>
-              <li><a href="#" className="hover:text-blue-600">SEO Services</a></li>
-              <li><a href="#" className="hover:text-blue-600">App Development</a></li>
-              <li><a href="#" className="hover:text-blue-600">Cloud Hosting</a></li>
-            </ul>
+            <h3 className="text-lg font-bold mb-4">Contact</h3>
+            <p className="text-sm text-gray-600">
+              support@yourcompany.com<br />
+              +1 (123) 456-7890
+            </p>
           </div>
 
-          {/* Column 3 */}
-          <div>
-            <h3 className="text-lg font-bold mb-4">Support</h3>
-            <ul>
-              <li><a href="#" className="hover:text-blue-600">FAQ</a></li>
-              <li><a href="#" className="hover:text-blue-600">Contact Us</a></li>
-              <li><a href="#" className="hover:text-blue-600">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-blue-600">Terms of Service</a></li>
-            </ul>
-          </div>
-
-          {/* Column 4 */}
+          {/* Column 3 - Newsletter */}
           <div>
             <h3 className="text-lg font-bold mb-4">Subscribe</h3>
-            <p className="text-sm mb-4 text-gray-600">Sign up for our newsletter to get the latest news and updates.</p>
+            <p className="text-sm mb-4 text-gray-600">
+              Sign up for our newsletter to get updates.
+            </p>
             <form>
               <input
                 type="email"

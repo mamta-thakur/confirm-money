@@ -33,7 +33,7 @@ const MultiStepForm = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-gray-100">
-      <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-xl">
+      <div className="bg-white p-2 rounded-2xl shadow-xl w-full max-w-xl">
         {renderStep()}
       </div>
     </div>

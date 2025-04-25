@@ -14,6 +14,11 @@ import Section6 from './sections/Section6';
 
 import MultiStepForm from './components/Registration/MultiStepForm';
 
+import TermsAndConditions from "./pages/TermsAndConditions";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import CallToAction from "./pages/CallToAction";
+
+
 function HomePage() {
   return (
     <>
@@ -36,6 +41,9 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/register" element={<MultiStepForm />} />
+        <Route path="/terms" element={<TermsAndConditions />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/call-to-action" element={<CallToAction />} />
       </Routes>
     </Router>
   );

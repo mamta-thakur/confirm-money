@@ -33,7 +33,7 @@ const Step3 = ({ nextStep, formData, setFormData }) => {
   };
 
   return (
-    <div className="p-4 text-center">
+    <div className="p-2 text-center">
       <img src={Logo} alt="Logo" className="mx-auto mb-6" />
 
       <p className="text-sm text-gray-500 mb-1">66% to complete</p>
