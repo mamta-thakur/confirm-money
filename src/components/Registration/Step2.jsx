@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Logo from "../../assets/loan-logo.png";
+import toast from 'react-hot-toast';
 
 const Step2 = ({ nextStep, prevStep, formData, setFormData }) => {
   const [otp, setOtp] = useState(['', '', '', '']);
@@ -84,8 +85,26 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData }) => {
         </p>
       </div>
 
-      <button
+      {/* <button
         onClick={nextStep}
+        className={`w-full py-3 rounded font-semibold ${
+          isFormValid ? 'bg-black text-white' : 'bg-gray-300 text-gray-600 cursor-not-allowed'
+        }`}
+        disabled={!isFormValid}
+      >
+        Next
+      </button> */}
+
+      <button
+        onClick={() => {
+          const enteredOtp = otp.join('');
+          if (enteredOtp === formData.otp?.toString()) {
+            toast.success('OTP verified successfully!');
+            nextStep();
+          } else {
+            toast.error('Invalid OTP. Please try again.');
+          }
+        }}
         className={`w-full py-3 rounded font-semibold ${
           isFormValid ? 'bg-black text-white' : 'bg-gray-300 text-gray-600 cursor-not-allowed'
         }`}

@@ -10,7 +10,7 @@ export default function Navbar() {
     <>
       <nav className="bg-white shadow-md">
         <div className="w-[80%] mx-auto p-4 flex justify-between items-center">
-          <img src={Logo} alt="Logo" className="h-8-" />
+          <a href="/"><img src={Logo} alt="Logo" className="h-8-" /></a>
 
           {/* Hamburger Button */}
           <button

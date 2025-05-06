@@ -8,63 +8,121 @@ gsap.registerPlugin(ScrollTrigger);
 const Section2 = () => {
   const sectionRef = useRef(null);
   const imageRef = useRef(null);
+  const cardsRef = useRef([]);
+  const headingRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Animate image
       gsap.fromTo(
         imageRef.current,
-        {
-          y: 200,          // ⬅️ More vertical movement
-          opacity: 0,
-          scale: 0.8,      // ⬅️ Zoom-in effect
-          rotate: 10       // ⬅️ Slight rotation
-        },
+        { y: 200, opacity: 0, scale: 0.8, rotate: 10 },
         {
           y: 0,
           opacity: 1,
           scale: 1,
           rotate: 0,
           duration: 1.4,
-          ease: 'back.out(1.7)', // ⬅️ Smooth spring-like bounce
+          ease: 'back.out(1.7)',
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 80%',
             end: 'bottom 60%',
-            toggleActions: 'play reverse play reverse',
-            markers: false,
+            toggleActions: 'play none none reverse',
           },
         }
       );
-  
-      ScrollTrigger.refresh();
+
+      // Animate headline and paragraph
+      gsap.from(headingRef.current, {
+        y: 60,
+        opacity: 0,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse',
+        },
+      });
+
+      // Animate each card
+      cardsRef.current.forEach((card, i) => {
+        gsap.from(card, {
+          y: 50,
+          opacity: 0,
+          delay: i * 0.2,
+          duration: 0.8,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 90%',
+            toggleActions: 'play none none reverse',
+          },
+        });
+      });
+
     }, sectionRef);
-  
+
     return () => ctx.revert();
   }, []);
-  
 
   return (
     <section
       ref={sectionRef}
-      className="min-h-screen bg-[#F1F6FF] flex flex-col items-center justify-center text-center px-4"
+      className="min-h-screen bg-[#F1F6FF] flex flex-col items-center justify-center px-4 py-20 text-center"
     >
-      <div className="max-w-4xl">
+      {/* Headline and Description */}
+      <div ref={headingRef} className="max-w-4xl mb-12">
         <h2 className="text-4xl md:text-5xl font-bold text-[#6bc6a7] mb-4">
-          Up to 5% cashback
+          Unlock Your Loan Benefits
         </h2>
-        <p className="text-xl md:text-2xl text-[#1f1f1f]">
-          on every merchant UPI transaction
+        <p className="text-lg md:text-xl text-[#1f1f1f]">
+          Apply now and get instant access to cashback rewards, fast approval, and flexible repayment plans.
         </p>
       </div>
 
-      <div className="mt-12">
+      {/* Animated Image */}
+      <div className="mb-12">
         <img
+          ref={imageRef}
           src={vendingMachine}
           alt="vending-machine"
-          ref={imageRef}
-          className="w-[300px] md:w-[380px] mx-auto drop-shadow-xl"
+          className="w-[240px] md:w-[320px] mx-auto drop-shadow-xl"
         />
       </div>
+
+      {/* Loan Steps */}
+      <div className="max-w-5xl w-full grid gap-6 md:grid-cols-3">
+        {[
+          {
+            title: 'Step 1: Check Eligibility',
+            desc: 'Fill in basic personal and financial details to instantly check your loan eligibility.',
+          },
+          {
+            title: 'Step 2: Submit Documents',
+            desc: 'Upload PAN, ID proof, and bank statement for fast processing.',
+          },
+          {
+            title: 'Step 3: Receive Funds',
+            desc: 'Approved amount is disbursed directly to your bank within 24 hours.',
+          },
+        ].map((item, index) => (
+          <div
+            key={index}
+            ref={el => (cardsRef.current[index] = el)}
+            className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition duration-300"
+          >
+            <h3 className="text-xl font-semibold text-[#6bc6a7] mb-2">{item.title}</h3>
+            <p className="text-sm text-[#333]">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Call to Action */}
+      <button className="mt-12 bg-[#6bc6a7] text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-[#5bb396] transition duration-300">
+        Apply for Loan
+      </button>
     </section>
   );
 };

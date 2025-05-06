@@ -9,6 +9,8 @@ export default function SidebarMenu({ isOpen, onClose }) {
   const menuRef = useRef(null);
 
   useEffect(() => {
+    if (!menuRef.current) return;
+  
     if (isOpen) {
       gsap.fromTo(
         menuRef.current,
@@ -42,11 +44,11 @@ export default function SidebarMenu({ isOpen, onClose }) {
     <X size={28} />
   </button>
 
-  <img src={Logo} alt="Logo" className="h-10 mb-4" />
+  <a href="/"><img src={Logo} alt="Logo" className="h-10 mb-4" /></a>
 
-  <div className="text-4xl font-bold">
-    <a href="#home" className="hover:underline">Home</a>
-  </div>
+  {/* <div className="text-4xl font-bold">
+    <a href="/" className="hover:underline">Home</a>
+  </div> */}
   <div className="text-4xl font-bold">
     <a href="#login" className="hover:underline">Login</a>
   </div>

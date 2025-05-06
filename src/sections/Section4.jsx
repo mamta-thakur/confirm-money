@@ -17,7 +17,6 @@ const Section4 = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Phone image animation
       gsap.from(phoneRef.current, {
         opacity: 0,
         x: -100,
@@ -31,7 +30,6 @@ const Section4 = () => {
         },
       });
 
-      // Title animation
       gsap.from(titleRef.current, {
         opacity: 0,
         y: 50,
@@ -45,7 +43,6 @@ const Section4 = () => {
         },
       });
 
-      // Subtitle animation
       gsap.from(subtitleRef.current, {
         opacity: 0,
         y: 60,
@@ -59,7 +56,6 @@ const Section4 = () => {
         },
       });
 
-      // Description animation
       gsap.from(descRef.current, {
         opacity: 0,
         y: 80,
@@ -73,7 +69,6 @@ const Section4 = () => {
         },
       });
 
-      // QR box floating up
       gsap.from(qrRef.current, {
         opacity: 0,
         y: 40,
@@ -87,7 +82,6 @@ const Section4 = () => {
         },
       });
 
-      // Optional: Fade out whole section as it leaves
       gsap.to(sectionRef.current, {
         opacity: 0,
         scrollTrigger: {
@@ -106,43 +100,49 @@ const Section4 = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen bg-white px-6 py-20 flex flex-col md:flex-row items-center justify-between overflow-hidden"
+      className="relative min-h-[80vh] bg-white px-4 sm:px-6 py-12 md:py-16 flex flex-col md:flex-row items-center justify-between overflow-hidden"
     >
       {/* Left: Phone Image */}
-      <div ref={phoneRef} className="md:w-1/2 flex justify-center mb-12 md:mb-0">
+      <div ref={phoneRef} className="md:w-1/2 flex justify-center mb-8 md:mb-0">
         <img
           src={phoneMockup}
           alt="SuperUPI Phone"
-          className="w-[660px] md:w-[740px] drop-shadow-2xl"
+          className="w-[300px] sm:w-[400px] md:w-[500px] lg:w-[600px] drop-shadow-2xl"
         />
       </div>
 
       {/* Right: Text Content */}
-      <div className="md:w-1/2 text-center md:text-left z-10">
+      <div className="md:w-1/2 text-center md:text-left z-10 space-y-4">
         <h2
           ref={titleRef}
-          className="text-4xl md:text-6xl font-bold text-[#7A6BFF]"
+          className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#7A6BFF]"
         >
           superUPI
         </h2>
         <p
           ref={subtitleRef}
-          className="text-xl font-medium text-gray-800 mt-2"
+          className="text-lg sm:text-xl font-medium text-gray-800"
         >
           simple yet powerful
         </p>
         <p
           ref={descRef}
-          className="text-gray-500 mt-4 max-w-md"
+          className="text-gray-600 max-w-md mx-auto md:mx-0"
         >
-          Get up to 5% cashback & many more perks on every single transaction through superUPI
+          Get up to 5% cashback and many more perks on every single transaction through superUPI.
         </p>
+        <ul className="text-gray-500 text-sm sm:text-base list-disc list-inside mt-2 max-w-md mx-auto md:mx-0">
+          <li>No hidden charges</li>
+          <li>Seamless transaction flow</li>
+          <li>24/7 Customer Support</li>
+          <li>Works with all major banks</li>
+        </ul>
       </div>
 
       {/* Floating QR Widget */}
       <div
         ref={qrRef}
-        className="hidden md:flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl absolute bottom-10 right-10 shadow-xl z-20"
+        className="hidden md:flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl absolute bottom-6 right-6 shadow-xl z-20"
       >
         <img src={qrBox} alt="QR Box" className="w-10 h-10" />
         <span className="text-sm leading-tight">

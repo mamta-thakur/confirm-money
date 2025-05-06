@@ -21,6 +21,12 @@ const Step3 = ({ nextStep, formData, setFormData }) => {
     if (!formData.pan || !/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(formData.pan)) {
       newErrors.pan = "Valid PAN is required (e.g., ABCDE1234F)";
     }
+    if (!formData.email || !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(formData.email)) {
+      newErrors.email = "Valid email is required";
+    }
+    if (!formData.aadhar || !/^\d{12}$/.test(formData.aadhar)) {
+      newErrors.aadhar = "Aadhar must be a 12-digit number";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -48,6 +54,7 @@ const Step3 = ({ nextStep, formData, setFormData }) => {
       </div>
 
       <div className="space-y-4 text-left">
+
         {/* Name */}
         <div className="grid grid-cols-3 gap-2">
           <div>
@@ -61,9 +68,14 @@ const Step3 = ({ nextStep, formData, setFormData }) => {
           </div>
         </div>
 
-        {/* Gender Dropdown */}
+        {/* Gender Dropdown - fix for iPhone with appearance-none */}
         <div>
-          <select name="gender" className="w-full p-3 border rounded" value={formData.gender || ''} onChange={handleChange}>
+          <select
+            name="gender"
+            className="w-full p-3 border rounded appearance-none"
+            value={formData.gender || ''}
+            onChange={handleChange}
+          >
             <option value="">Select Gender</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
@@ -72,15 +84,28 @@ const Step3 = ({ nextStep, formData, setFormData }) => {
           {errors.gender && <p className="text-red-500 text-sm">{errors.gender}</p>}
         </div>
 
-        {/* DOB */}
+        {/* DOB - iPhone compatibility */}
         <div>
-          <input name="dob" placeholder="Date of Birth" type="date" className="w-full p-3 border rounded" onChange={handleChange} value={formData.dob || ''} />
+          <input
+            name="dob"
+            placeholder="Date of Birth"
+            type="date"
+            className="w-full p-3 border rounded"
+            onChange={handleChange}
+            value={formData.dob || ''}
+            pattern="\d{4}-\d{2}-\d{2}"
+          />
           {errors.dob && <p className="text-red-500 text-sm">{errors.dob}</p>}
         </div>
 
-        {/* Profession Dropdown */}
+        {/* Profession Dropdown - same appearance fix */}
         <div>
-          <select name="profession" className="w-full p-3 border rounded" value={formData.profession || ''} onChange={handleChange}>
+          <select
+            name="profession"
+            className="w-full p-3 border rounded appearance-none"
+            value={formData.profession || ''}
+            onChange={handleChange}
+          >
             <option value="">Select Profession</option>
             <option value="Salaried">Salaried</option>
             <option value="Professional">Professional</option>
@@ -100,6 +125,19 @@ const Step3 = ({ nextStep, formData, setFormData }) => {
           <input name="pan" placeholder="PAN (ABCDE1234F)" className="w-full p-3 border rounded" onChange={handleChange} value={formData.pan || ''} />
           {errors.pan && <p className="text-red-500 text-sm">{errors.pan}</p>}
         </div>
+
+        {/* Email */}
+        <div>
+          <input name="email" placeholder="Email Address" type="email" className="w-full p-3 border rounded" onChange={handleChange} value={formData.email || ''} />
+          {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+        </div>
+
+        {/* Aadhar */}
+        <div>
+          <input name="aadhar" placeholder="Aadhar Number (12 digits)" maxLength={12} className="w-full p-3 border rounded" onChange={handleChange} value={formData.aadhar || ''} />
+          {errors.aadhar && <p className="text-red-500 text-sm">{errors.aadhar}</p>}
+        </div>
+
       </div>
 
       <button

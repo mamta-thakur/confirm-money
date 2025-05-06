@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+import Layout from '../../components/Layout';
+
 import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
 import Step4 from './Step4';
 import Congrats from './Congrats';
+import { Toaster } from 'react-hot-toast'; 
+
 
 const MultiStepForm = () => {
   const [step, setStep] = useState(1);
@@ -32,11 +36,20 @@ const MultiStepForm = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gray-100">
+    /* <div className="min-h-screen flex items-center justify-center p-4 bg-gray-100">
       <div className="bg-white p-2 rounded-2xl shadow-xl w-full max-w-xl">
         {renderStep()}
       </div>
-    </div>
+    </div>*/
+    <Layout>
+      <Toaster position="top-center" reverseOrder={false} />
+
+      <div className="flex items-center justify-center p-4 bg-gray-100 min-h-[calc(100vh-160px)]">
+        <div className="bg-white p-4 rounded-2xl shadow-xl w-full max-w-xl">
+          {renderStep()}
+        </div>
+      </div>
+    </Layout>
   );
 };
 

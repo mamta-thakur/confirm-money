@@ -1,28 +1,7 @@
 import React, { useState } from 'react';
 import Logo from "../../assets/loan-logo.png";
 import api from '../../services/api';
-
-const handleGenerateOTP = async () => {
-  if (!isValidMobile) return;
-
-  setLoading(true);
-  setFormData({ ...formData, mobile });
-
-  try {
-    // Replace with your actual API endpoint
-    const response = await api.post('/send-otp', { mobile });
-
-    console.log('OTP Response:', response.data);
-
-    // Proceed to next step
-    nextStep();
-  } catch (error) {
-    console.error('Failed to send OTP:', error);
-    alert('Failed to send OTP. Please try again.');
-  } finally {
-    setLoading(false);
-  }
-};
+import toast from 'react-hot-toast';
 
 const Step1 = ({ nextStep, formData, setFormData }) => {
   const [loading, setLoading] = useState(false);
@@ -34,10 +13,14 @@ const Step1 = ({ nextStep, formData, setFormData }) => {
     if (!isValidMobile) return;
 
     setLoading(true);
-    setFormData({ ...formData, mobile });
-
+    
     try {
       // await api.post('/send-otp', { mobile });
+      const otp = Math.floor(1000 + Math.random() * 9000);
+      console.log('Generated OTP:', otp);
+      toast.success(`Your OTP is: ${otp}`); 
+      setFormData({ ...formData, mobile, otp });
+
       nextStep(); // proceed to OTP verification step
     } catch (error) {
       console.error("OTP request failed:", error);

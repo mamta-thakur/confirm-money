@@ -31,50 +31,55 @@ const ProductSection = () => {
 
   useEffect(() => {
     if (!isDesktop || productRefs.current.length === 0) return;
+      const ctx = gsap.context(() => {
 
-    const panels = productRefs.current;
+        const panels = productRefs.current;
 
-    panels.forEach((panel, index) => {
-      gsap.set(panel, {
-        autoAlpha: index === 0 ? 1 : 0,
-        yPercent: index === 0 ? 0 : 10,
-        zIndex: products.length - index,
-      });
-    });
+        panels.forEach((panel, index) => {
+          gsap.set(panel, {
+            autoAlpha: index === 0 ? 1 : 0,
+            yPercent: index === 0 ? 0 : 10,
+            zIndex: products.length - index,
+          });
+        });
 
-    const timeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: 'top top',
-        end: `+=${window.innerHeight * (products.length - 1)}`,
-        scrub: true,
-        pin: true,
-        markers: false,
-      },
-    });
+        const timeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top top',
+            end: `+=${window.innerHeight * (products.length - 1)}`,
+            scrub: true,
+            pin: true,
+            markers: false,
+          },
+        });
 
-    panels.forEach((panel, index) => {
-      const fadeInTime = index * 1;
-      const fadeOutTime = index + 0.99;
+        panels.forEach((panel, index) => {
+          const fadeInTime = index * 1;
+          const fadeOutTime = index + 0.99;
 
-      timeline.to(panel, {
-        autoAlpha: 1,
-        yPercent: 0,
-        ease: 'power2.out',
-      }, fadeInTime);
+          timeline.to(panel, {
+            autoAlpha: 1,
+            yPercent: 0,
+            ease: 'power2.out',
+          }, fadeInTime);
 
-      if (index !== products.length - 1) {
-        timeline.to(panel, {
-          autoAlpha: 0,
-          yPercent: -10,
-          ease: 'power2.inOut',
-        }, fadeOutTime);
-      }
-    });
+          if (index !== products.length - 1) {
+            timeline.to(panel, {
+              autoAlpha: 0,
+              yPercent: -10,
+              ease: 'power2.inOut',
+            }, fadeOutTime);
+          }
+        });
+      }, sectionRef);
 
-    return () => {
-      ScrollTrigger.getAll().forEach((st) => st.kill());
-    };
+      return () => ctx.revert();
+
+
+    // return () => {
+    //   ScrollTrigger.getAll().forEach((st) => st.kill());
+    // };
   }, [isDesktop, products.length]);
 
   return (
