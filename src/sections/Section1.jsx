@@ -158,7 +158,7 @@ const Section1 = () => {
 
       {/* Footer note */}
       <p className="absolute bottom-6 text-sm md:text-base opacity-90 w-full text-center">
-        Get up to 5% guaranteed cashback & many more perks. Every single time.
+        Get up to 5% guaranteed cashback & many more perks.
       </p>
     </section>
 

@@ -9,7 +9,16 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData }) => {
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
 
-  // Countdown Timer
+  // 1️⃣ Load saved details from localStorage (on login)
+  useEffect(() => {
+    const savedDetails = JSON.parse(localStorage.getItem('userDetails'));
+    if (savedDetails?.otp) {
+      const otpDigits = savedDetails.otp.toString().padStart(4, '0').split('');
+      setOtp(otpDigits);
+    }
+  }, []);
+
+  // 2️⃣ Countdown Timer
   useEffect(() => {
     if (timer <= 0) return;
     const interval = setInterval(() => setTimer(prev => prev - 1), 1000);
@@ -23,7 +32,6 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData }) => {
     updated[index] = value;
     setOtp(updated);
 
-    // Move to next
     if (value && index < 3) {
       inputsRef.current[index + 1].focus();
     }
@@ -36,6 +44,23 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData }) => {
   };
 
   const isFormValid = checked1 && checked2 && otp.every(digit => digit !== '');
+
+  // 3️⃣ Submit handler
+  const handleNextStep = () => {
+    const enteredOtp = otp.join('');
+    if (enteredOtp === formData.otp?.toString()) {
+      // Save userDetails to localStorage
+      const detailsToSave = {
+        ...formData,
+        otp: enteredOtp,
+      };
+      localStorage.setItem('userDetails', JSON.stringify(detailsToSave));
+      toast.success('OTP verified and details saved!');
+      nextStep();
+    } else {
+      toast.error('Invalid OTP. Please try again.');
+    }
+  };
 
   return (
     <div className="p-2 text-center">
@@ -85,26 +110,8 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData }) => {
         </p>
       </div>
 
-      {/* <button
-        onClick={nextStep}
-        className={`w-full py-3 rounded font-semibold ${
-          isFormValid ? 'bg-black text-white' : 'bg-gray-300 text-gray-600 cursor-not-allowed'
-        }`}
-        disabled={!isFormValid}
-      >
-        Next
-      </button> */}
-
       <button
-        onClick={() => {
-          const enteredOtp = otp.join('');
-          if (enteredOtp === formData.otp?.toString()) {
-            toast.success('OTP verified successfully!');
-            nextStep();
-          } else {
-            toast.error('Invalid OTP. Please try again.');
-          }
-        }}
+        onClick={handleNextStep}
         className={`w-full py-3 rounded font-semibold ${
           isFormValid ? 'bg-black text-white' : 'bg-gray-300 text-gray-600 cursor-not-allowed'
         }`}

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight } from 'lucide-react';
@@ -13,6 +14,7 @@ const ProductSection = () => {
   const sectionRef = useRef(null);
   const productRefs = useRef([]);
   const isDesktop = useIsDesktop();
+  const navigate = useNavigate();
 
   const products = [
     {
@@ -30,6 +32,7 @@ const ProductSection = () => {
   ];
 
   useEffect(() => {
+    console.log(productRefs.current);
     if (!isDesktop || productRefs.current.length === 0) return;
       const ctx = gsap.context(() => {
 
@@ -90,6 +93,7 @@ const ProductSection = () => {
           {products.map((product, index) => (
             <div
               key={index}
+              onClick={() => navigate('/loan-journey', { replace: true })}
               ref={(el) => (productRefs.current[index] = el)}
               className="absolute top-0 left-0 w-full h-screen bg-cover bg-center flex items-center justify-start px-6 lg:px-10 text-white transition-opacity duration-500 ease-in-out"
               style={{
@@ -98,11 +102,13 @@ const ProductSection = () => {
                 backgroundAttachment: 'fixed',
               }}
             >
-              <div className="bg-black/60 p-6 lg:p-8 rounded-2xl max-w-xl">
-                <p className="uppercase text-sm tracking-widest">{product.category}</p>
-                <h2 className="text-4xl lg:text-6xl font-extrabold mt-2">{product.title}</h2>
-                <p className="text-base lg:text-lg mt-4">{product.subtitle}</p>
-              </div>
+              <Link to="/loan-journey" target='_blank' key={index}>
+                <div className="bg-black/60 p-6 lg:p-8 rounded-2xl max-w-xl">
+                  <p className="uppercase text-sm tracking-widest">{product.category}</p>
+                  <h2 className="text-4xl lg:text-6xl font-extrabold mt-2">{product.title}</h2>
+                  <p className="text-base lg:text-lg mt-4">{product.subtitle}</p>
+                </div>
+              </Link>
             </div>
           ))}
         </div>

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -12,7 +12,10 @@ import Section5 from './sections/Section5';
 import ProductSection from './sections/ProductSection';
 import Section6 from './sections/Section6';
 
-import MultiStepForm from './components/Registration/MultiStepForm';
+import MultiStepRegForm from './components/Registration/MultiStepForm';
+import MultiStepLoginForm from './components/Login/MultiStepForm';
+
+import MultiStepForm from './components/Login/MultiStepForm';
 
 import TermsAndConditions from "./pages/TermsAndConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -47,7 +50,11 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        {/* <Route path="/" element={<ErrorBoundary><HomePage /></ErrorBoundary>} /> */}
         <Route path="/register" element={<MultiStepForm />} />
+        <Route path="/login" element={<MultiStepForm />} />
+        <Route path="/loan-journey" element={<MultiStepForm />} />
+        <Route path="*" element={<Navigate to="/loan-journey" replace />} />
         <Route path="/terms" element={<TermsAndConditions />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/call-to-action" element={<CallToAction />} />
