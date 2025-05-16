@@ -137,7 +137,7 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
 
         {/* DOB */}
         <div>
-          <input
+          {/* <input
             name="dob"
             placeholder="Date of Birth"
             type="date"
@@ -145,9 +145,21 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
             onChange={handleChange}
             value={formData.dob || ''}
             pattern="\d{4}-\d{2}-\d{2}"
+          /> */}
+          <input
+            name="dob"
+            placeholder="Date of Birth"
+            type="date"
+            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition bg-white text-gray-700 appearance-none"
+            onChange={handleChange}
+            value={formData.dob || ''}
+            pattern="\d{4}-\d{2}-\d{2}"
           />
           {errors.dob && <p className="text-red-500 text-xs mt-1">{errors.dob}</p>}
         </div>
+
+        
+
 
         {/* Profession Dropdown */}
         <div>
