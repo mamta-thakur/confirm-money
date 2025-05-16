@@ -2,8 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'ArialRoundedMTBold';
+  src: url('/fonts/ArialRoundedMTBold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'ArialRoundedMTBold', 'Arial', sans-serif;
 }
 
 html {

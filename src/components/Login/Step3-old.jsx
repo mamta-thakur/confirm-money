@@ -1,26 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import LoanLogo from '../../assets/loan-logo.png';
-// import ProgressSteps from './components/ProgressSteps';
 import ProgressSteps from '../ProgressSteps';
 import { saveUserDetails } from '../../utils/auth';
 
-const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) => {
+const Step3 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) => {
   const [errors, setErrors] = useState({});
-
-  useEffect(() => {
-    if (isReturningUser && formData.isAuthenticated) {
-      // Data will already be populated from formData
-      // No need to do anything
-    } else {
-      // Clear the form data except for authentication-related fields
-      const { mobile, otp, isAuthenticated } = formData;
-      setFormData({
-        mobile,
-        otp,
-        isAuthenticated
-      });
-    }
-  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -39,9 +23,9 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
     if (!formData.pan || !/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(formData.pan)) {
       newErrors.pan = "Valid PAN is required (e.g., ABCDE1234F)";
     }
-    // if (!formData.email || !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(formData.email)) {
-    //   newErrors.email = "Valid email is required";
-    // }
+    if (!formData.email || !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(formData.email)) {
+      newErrors.email = "Valid email is required";
+    }
     if (!formData.aadhar || !/^\d{12}$/.test(formData.aadhar)) {
       newErrors.aadhar = "Aadhar must be a 12-digit number";
     }
@@ -57,7 +41,7 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
     }
   };
 
-  const completionPercentage = 66;
+  const completionPercentage = isReturningUser ? 75 : 66;
 
   return (
     <div className="p-2 text-center">
@@ -74,7 +58,7 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
         ></div>
       </div>
 
-      <ProgressSteps currentStep={2} />
+      <ProgressSteps currentStep={3} />
 
       <div className="mb-6 mt-4 text-left">
         <h2 className="text-xl font-bold text-gray-800">
@@ -138,14 +122,14 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
         {/* DOB */}
         <div>
           <input
-            name="dob"
-            placeholder="Date of Birth"
-            type="date"
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
-            onChange={handleChange}
-            value={formData.dob || ''}
-            pattern="\d{4}-\d{2}-\d{2}"
-          />
+          name="dob"
+          placeholder="Date of Birth"
+          type="date"
+          className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition bg-white text-gray-700 appearance-none"
+          onChange={handleChange}
+          value={formData.dob || ''}
+          pattern="\d{4}-\d{2}-\d{2}"
+        />
           {errors.dob && <p className="text-red-500 text-xs mt-1">{errors.dob}</p>}
         </div>
 
@@ -236,4 +220,4 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
   );
 };
 
-export default Step2;
+export default Step3;

@@ -16,6 +16,7 @@ import MultiStepRegForm from './components/Registration/MultiStepForm';
 import MultiStepLoginForm from './components/Login/MultiStepForm';
 
 import MultiStepForm from './components/Login/MultiStepForm';
+import Congrats from './components/Login/Congrats';
 
 import TermsAndConditions from "./pages/TermsAndConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -54,6 +55,7 @@ function App() {
         <Route path="/register" element={<MultiStepForm />} />
         <Route path="/login" element={<MultiStepForm />} />
         <Route path="/loan-journey" element={<MultiStepForm />} />
+        <Route path="/loan-journey/offers" element={<Congrats />} />
         <Route path="*" element={<Navigate to="/loan-journey" replace />} />
         <Route path="/terms" element={<TermsAndConditions />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { isUserRegistered, generateOTP } from '../../utils/auth';
 import api from '../../services/api';
 import toast from 'react-hot-toast';
@@ -9,10 +9,15 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
   const [loading, setLoading] = useState(false);
   const [mobile, setMobile] = useState(formData.mobile || '');
   const [mode, setMode] = useState('login');
+  const [showOTP, setShowOTP] = useState(false);
+  const [otp, setOtp] = useState(['', '', '', '']);
+  const inputsRef = useRef([]);
+  const [timer, setTimer] = useState(60);
+  const [checked1, setChecked1] = useState(false);
+  const [checked2, setChecked2] = useState(false);
 
   const isValidMobile = mobile.length === 10 && /^\d+$/.test(mobile);
 
-  // Check if user is registered when mobile number changes
   useEffect(() => {
     if (isValidMobile) {
       const userExists = isUserRegistered(mobile);
@@ -20,13 +25,19 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
     }
   }, [mobile]);
 
+  useEffect(() => {
+    if (timer <= 0) return;
+    const interval = setInterval(() => setTimer(prev => prev - 1), 1000);
+    return () => clearInterval(interval);
+  }, [timer]);
+
   const handleGenerateOTP = async () => {
     if (!isValidMobile) return;
 
     setLoading(true);
     
     try {
-      // await api.post('/send-otp', { mobile });
+    //   await api.post('/send-otp', { mobile });
       
       const otp = generateOTP();
       console.log('Generated OTP:', otp);
@@ -40,7 +51,8 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
       }));
       
       setIsReturningUser(mode === 'login');
-      nextStep();
+      setShowOTP(true);
+      setTimer(60);
     } catch (error) {
       console.error("OTP request failed:", error);
       toast.error("Failed to send OTP. Please try again.");
@@ -49,6 +61,46 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
     }
   };
 
+  const handleOtpChange = (value, index) => {
+    if (!/^\d?$/.test(value)) return;
+    const updated = [...otp];
+    updated[index] = value;
+    setOtp(updated);
+
+    if (value && index < 3) {
+      inputsRef.current[index + 1].focus();
+    }
+  };
+
+  const handleKeyDown = (e, index) => {
+    if (e.key === 'Backspace' && !otp[index] && index > 0) {
+      inputsRef.current[index - 1].focus();
+    }
+  };
+
+  const handleResendOTP = () => {
+    toast.success("New OTP sent!");
+    setTimer(60);
+  };
+
+  const handleVerifyOTP = () => {
+    const enteredOtp = otp.join('');
+    
+    if (enteredOtp === formData.otp?.toString()) {
+      const updatedFormData = {
+        ...formData,
+        isAuthenticated: true
+      };
+      
+      setFormData(updatedFormData);
+      toast.success('OTP verified successfully!');
+      nextStep();
+    } else {
+      toast.error('Invalid OTP. Please try again.');
+    }
+  };
+
+  const isFormValid = checked1 && checked2 && otp.every(digit => digit !== '');
   const completionPercentage = mode === 'register' ? 0 : 25;
 
   return (
@@ -92,19 +144,96 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
         }}
       />
 
-      <button
-        onClick={handleGenerateOTP}
-        disabled={!isValidMobile || loading}
-        className={`w-full py-3 text-white font-semibold rounded-lg transition duration-300 ${
-          isValidMobile && !loading 
-            ? 'bg-green-500 hover:bg-green-600 active:bg-green-700' 
-            : 'bg-gray-300 cursor-not-allowed'
-        }`}
-      >
-        {loading ? 'Sending OTP...' : (
-          mode === 'login' ? 'Login with OTP' : 'Register with OTP'
-        )}
-      </button>
+      {!showOTP ? (
+        <button
+          onClick={handleGenerateOTP}
+          disabled={!isValidMobile || loading}
+          className={`w-full py-3 text-white font-semibold rounded-lg transition duration-300 ${
+            isValidMobile && !loading 
+              ? 'bg-green-500 hover:bg-green-600 active:bg-green-700' 
+              : 'bg-gray-300 cursor-not-allowed'
+          }`}
+        >
+          {loading ? 'Sending OTP...' : (
+            mode === 'login' ? 'Login with OTP' : 'Register with OTP'
+          )}
+        </button>
+      ) : (
+        <>
+          <div className="flex justify-center space-x-3 mb-3">
+            {otp.map((digit, index) => (
+              <input
+                key={index}
+                ref={el => (inputsRef.current[index] = el)}
+                type="text"
+                inputMode="numeric"
+                maxLength={1}
+                className="w-14 h-14 text-center border rounded-lg text-xl font-semibold focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
+                value={digit}
+                onChange={e => handleOtpChange(e.target.value, index)}
+                onKeyDown={e => handleKeyDown(e, index)}
+              />
+            ))}
+          </div>
+
+          <div className="text-center mb-4">
+            {timer > 0 ? (
+              <p className="text-sm text-gray-600">
+                Resend OTP in ({timer.toString().padStart(2, '0')}s)
+              </p>
+            ) : (
+              <button 
+                onClick={handleResendOTP}
+                className="text-green-600 text-sm font-medium hover:underline"
+              >
+                Resend OTP
+              </button>
+            )}
+          </div>
+
+          <div className="text-left text-xs text-gray-600 space-y-3 mb-6">
+            <div className="flex items-start">
+              <input 
+                type="checkbox" 
+                id="terms"
+                className="mt-1 mr-2" 
+                checked={checked1} 
+                onChange={e => setChecked1(e.target.checked)} 
+              />
+              <label htmlFor="terms" className="cursor-pointer">
+                You agree to LoanEasy's Privacy Policy and T&C and consent to be contacted{' '}
+                <span className="text-green-500 underline">Read More</span>
+              </label>
+            </div>
+            
+            <div className="flex items-start">
+              <input 
+                type="checkbox" 
+                id="consent"
+                className="mt-1 mr-2" 
+                checked={checked2} 
+                onChange={e => setChecked2(e.target.checked)} 
+              />
+              <label htmlFor="consent" className="cursor-pointer">
+                You hereby consent to LoanEasy being your authorized representative{' '}
+                <span className="text-green-500 underline">Read More</span>
+              </label>
+            </div>
+          </div>
+
+          <button
+            onClick={handleVerifyOTP}
+            className={`w-full py-3 rounded-lg font-semibold transition ${
+              isFormValid 
+                ? 'bg-green-500 text-white hover:bg-green-600 active:bg-green-700' 
+                : 'bg-gray-300 text-gray-600 cursor-not-allowed'
+            }`}
+            disabled={!isFormValid}
+          >
+            Verify OTP
+          </button>
+        </>
+      )}
 
       <p className="mt-4 text-sm text-gray-600">
         {mode === 'login' 

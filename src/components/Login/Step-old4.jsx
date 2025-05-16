@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import LoanLogo from '../../assets/loan-logo.png';
 import ProgressSteps from '../ProgressSteps';
 import { saveUserDetails } from '../../utils/auth';
 
-const Step3 = ({ formData, setFormData, prevStep }) => {
+const Step4 = ({ formData, setFormData, nextStep, prevStep, isReturningUser }) => {
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -30,9 +28,11 @@ const Step3 = ({ formData, setFormData, prevStep }) => {
   const handleSubmit = () => {
     if (validate()) {
       saveUserDetails(formData);
-      navigate('/loan-journey/offers');
+      nextStep();
     }
   };
+
+  const completionPercentage = 99;
 
   return (
     <div className="p-2 text-center">
@@ -41,15 +41,15 @@ const Step3 = ({ formData, setFormData, prevStep }) => {
         <img src={LoanLogo} alt="Loan Logo" className="mx-auto mb-6 w-32 h-auto" />
       </div>
 
-      <p className="text-sm text-gray-500 mb-1">99% to complete</p>
+      <p className="text-sm text-gray-500 mb-1">{completionPercentage}% to complete</p>
       <div className="w-full h-1 bg-gray-200 mb-4 rounded-full">
         <div 
           className="h-full bg-green-500 rounded-full transition-all duration-500 ease-in-out" 
-          style={{ width: '99%' }}
+          style={{ width: `${completionPercentage}%` }}
         ></div>
       </div>
 
-      <ProgressSteps currentStep={3} />
+      <ProgressSteps currentStep={4} />
 
       <div className="mb-6 mt-4 text-left">
         <h2 className="text-xl font-bold text-gray-800">
@@ -143,4 +143,4 @@ const Step3 = ({ formData, setFormData, prevStep }) => {
   );
 };
 
-export default Step3;
+export default Step4;

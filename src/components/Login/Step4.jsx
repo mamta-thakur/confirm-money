@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import LoanLogo from '../../assets/loan-logo.png';
-import ProgressSteps from '../ProgressSteps';
+import ProgressSteps from './components/ProgressSteps';
 import { saveUserDetails } from '../../utils/auth';
 
 const Step4 = ({ formData, setFormData, nextStep, prevStep, isReturningUser }) => {

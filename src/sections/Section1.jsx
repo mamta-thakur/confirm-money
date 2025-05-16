@@ -54,51 +54,41 @@ const Section1 = () => {
         },
       });
 
-      // Animate each image separately
-      gsap.from(coinRef.current, {
-        opacity: 0,
-        x: 90,
+      gsap.to(coinRef.current, {
+        x: 15,
         duration: 2,
-        scrollTrigger: {
-          trigger: coinRef.current,
-          start: "top 90%",
-          toggleActions: "play reverse play reverse",
-        },
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut',
       });
 
-      gsap.from(cubeRef.current, {
-        // opacity: 0,
-        y: 50,
+      gsap.to(cubeRef.current, {
+        y: 20,
         duration: 2,
-        // delay: 0.2,
-        scrollTrigger: {
-          trigger: cubeRef.current,
-          start: "top 90%",
-          toggleActions: "play reverse play reverse",
-        },
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut',
       });
 
-      gsap.from(flagRef.current, {
-        opacity: 0,
-        y: 80,
+      gsap.to(flagRef.current, {
+        y: 15,
         duration: 2,
-        delay: 0.4,
-        scrollTrigger: {
-          trigger: flagRef.current,
-          start: "top 90%",
-          toggleActions: "play reverse play reverse",
-        },
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut',
-
       });
+
+      // Blob animation
+      gsap.utils.toArray(".blob").forEach((blob, i) => {
+        gsap.to(blob, {
+          y: 30 + i * 5,
+          duration: 6 + i,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+      });
+
     }, sectionRef);
 
     return () => ctx.revert();
@@ -109,6 +99,15 @@ const Section1 = () => {
       ref={sectionRef}
       className="min-h-screen bg-[#6bc6a7] text-white relative overflow-hidden flex flex-col justify-center text-center"
     >
+      {/* Animated SVG Blobs */}
+      <svg className="blob absolute top-0 left-0 w-72 opacity-20 text-white" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <path fill="currentColor" d="M50.5,-68.6C65.5,-60.6,77.4,-44.4,78.8,-28.1C80.1,-11.7,70.9,4.9,61.2,20.5C51.5,36,41.3,50.5,27.3,61.2C13.2,71.8,-4.7,78.5,-21.5,74.2C-38.3,70,-54.1,54.7,-61.2,38.1C-68.3,21.6,-66.8,3.8,-63.2,-13.8C-59.6,-31.5,-53.9,-49.1,-41.3,-58.5C-28.8,-68,-9.4,-69.3,8.4,-72C26.2,-74.7,52.4,-78.6,50.5,-68.6Z" transform="translate(100 100)" />
+      </svg>
+
+      <svg className="blob absolute bottom-0 right-0 w-80 opacity-30 text-white" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <path fill="currentColor" d="M45.1,-61.1C56.6,-51.2,62.6,-33.6,65.4,-16.3C68.2,1.1,67.8,18.1,61.4,33.3C54.9,48.5,42.5,61.9,27.9,67.6C13.4,73.3,-3.4,71.2,-21.8,66.6C-40.1,61.9,-60,54.7,-67.9,40.9C-75.8,27.2,-71.6,6.9,-63.9,-9.4C-56.2,-25.6,-44.9,-37.9,-32.2,-47.7C-19.5,-57.5,-9.7,-64.8,5.3,-71.1C20.3,-77.4,40.5,-82.1,45.1,-61.1Z" transform="translate(100 100)" />
+      </svg>
+
       {/* Floating images */}
       <img
         src={qrCoin}
@@ -136,7 +135,7 @@ const Section1 = () => {
         </h2>
         <h1
           ref={titleRef}
-          className="text-5xl md:text-7xl font-bold bg-white text-[#6bc6a7] px-6 py-2 rounded"
+          className="text-5xl md:text-7xl font-bold bg-white text-[#6bc6a7] px-6 py-2 rounded shadow-lg"
         >
           superUPI
         </h1>
@@ -145,14 +144,14 @@ const Section1 = () => {
         {/* CTA Button */}
         <div
           ref={buttonRef}
-          className="mt-8 bg-gradient-to-r to-indigo-600 p-4 rounded-xl shadow-lg cursor-pointer flex items-center gap-4 border"
+          className="mt-8 bg-gradient-to-r from-[#ffffff] to-[#d6f6ed] text-[#2a8c6f] px-6 py-4 rounded-xl shadow-lg cursor-pointer flex items-center gap-4 border border-white hover:scale-105 transition"
         >
           <img
             src={qrCoin}
             alt="QR Code"
             className="w-12 h-12 border-white rounded"
           />
-          <span className="text-lg font-medium">Check eligibility</span>
+          <span className="text-lg font-semibold">Check eligibility</span>
         </div>
       </div>
 
@@ -161,7 +160,6 @@ const Section1 = () => {
         Get up to 5% guaranteed cashback & many more perks.
       </p>
     </section>
-
   );
 };
 

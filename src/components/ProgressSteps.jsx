@@ -3,10 +3,11 @@ import React from 'react';
 const ProgressSteps = ({ currentStep }) => {
   const steps = [
     { id: 1, label: 'Register' },
-    { id: 2, label: 'Verify' },
+    // { id: 2, label: 'Verify' },
     { id: 3, label: 'Details' },
-    { id: 4, label: 'Loan' },
-    { id: 5, label: 'Offers' }
+    // { id: 4, label: 'Loan' },
+    // { id: 5, label: 'Offers' }
+    { id: 4, label: 'Offers' }
   ];
 
   return (

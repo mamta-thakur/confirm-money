@@ -4,7 +4,12 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        rounded: ['"Arial Rounded MT Bold"', 'Arial', 'sans-serif'],
+        regular: ['Arial', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 }

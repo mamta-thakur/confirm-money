@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Layout from '../../components/Layout';
+// import Layout from '../../components/Layout';
 
 import Step1 from './Step1';
 import Step2 from './Step2';
