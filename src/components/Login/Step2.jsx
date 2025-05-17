@@ -123,11 +123,13 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
         <div>
           <select
             name="gender"
-            className="w-full p-3 border rounded-lg appearance-none bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
+            className={`w-full p-3 border rounded-lg appearance-none bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 transition ${
+              !formData.gender ? 'text-gray-400' : 'text-gray-700'
+            }`}
             value={formData.gender || ''}
             onChange={handleChange}
           >
-            <option value="">Select Gender</option>
+            <option value="" disabled hidden>Select Gender</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
             <option value="Other">Other</option>
@@ -137,20 +139,13 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
 
         {/* DOB */}
         <div>
-          {/* <input
-            name="dob"
-            placeholder="Date of Birth"
-            type="date"
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
-            onChange={handleChange}
-            value={formData.dob || ''}
-            pattern="\d{4}-\d{2}-\d{2}"
-          /> */}
           <input
             name="dob"
             placeholder="Date of Birth"
             type="date"
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition bg-white text-gray-700 appearance-none"
+            className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition bg-white appearance-none ${
+              !formData.dob ? 'text-gray-400' : 'text-gray-700'
+            }`}
             onChange={handleChange}
             value={formData.dob || ''}
             pattern="\d{4}-\d{2}-\d{2}"
@@ -158,18 +153,17 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
           {errors.dob && <p className="text-red-500 text-xs mt-1">{errors.dob}</p>}
         </div>
 
-        
-
-
         {/* Profession Dropdown */}
         <div>
           <select
             name="profession"
-            className="w-full p-3 border rounded-lg appearance-none bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
+            className={`w-full p-3 border rounded-lg appearance-none bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 transition ${
+              !formData.profession ? 'text-gray-400' : 'text-gray-700'
+            }`}
             value={formData.profession || ''}
             onChange={handleChange}
           >
-            <option value="">Select Profession</option>
+            <option value="" disabled hidden>Select Profession</option>
             <option value="Salaried">Salaried</option>
             <option value="Professional">Professional</option>
             <option value="Self Employed">Self Employed</option>

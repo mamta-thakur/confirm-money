@@ -156,14 +156,16 @@ const MultiStepForm = () => {
           />
       
           {/* Form Container */}
-          <div className="relative z-10 flex items-center justify-center min-h-[calc(100vh-160px)]">
+          <div className="relative z-10 flex items-center justify-center min-h-[calc(100vh-1px)]">
             <motion.div
               key={step}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -30 }}
               transition={{ duration: 0.5 }}
-              className="bg-white/60 backdrop-blur-xl shadow-2xl border border-white/30 p-8 w-full max-w-xl transition-all duration-300"
+              // className="bg-white/60 backdrop-blur-xl shadow-2xl border border-white/30 p-8 w-full max-w-xl transition-all duration-300"
+              // className="bg-white/60 backdrop-blur-xl shadow-2xl border border-white/30 p-8 w-full max-w-xl min-h-screen flex flex-col justify-between"
+              className="bg-white/60- backdrop-blur-xl shadow-2xl- border border-white/30 p-8 w-full max-w-xl transition-all duration-300"
             >
               <AnimatePresence mode="wait">
                 {renderStep()}
