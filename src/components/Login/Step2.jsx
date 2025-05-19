@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import LoanLogo from '../../assets/loan-logo.png';
 // import ProgressSteps from './components/ProgressSteps';
+import ProgressBar from '../ProgressBar';
 import ProgressSteps from '../ProgressSteps';
 import { saveUserDetails } from '../../utils/auth';
 
@@ -22,10 +23,58 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
     }
   }, []);
 
+  // const handleChange = (e) => {
+  //   setFormData({ ...formData, [e.target.name]: e.target.value });
+  //   setErrors({ ...errors, [e.target.name]: '' });
+  // };
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    setErrors({ ...errors, [e.target.name]: '' });
+    const { name, value } = e.target;
+    
+    if (name === 'dob') {
+      const birthDate = new Date(value);
+      const today = new Date();
+      const age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+
+      if (age < 18) {
+        setErrors({ ...errors, dob: "You must be at least 18 years old" });
+        return;
+      }
+      
+      if (age > 100) {
+        setErrors({ ...errors, dob: "Age cannot exceed 100 years" });
+        return;
+      }
+    }
+
+    setFormData({ ...formData, [name]: value });
+    setErrors({ ...errors, [name]: '' });
   };
+
+  // const validate = () => {
+  //   const newErrors = {};
+
+  //   if (!formData.firstName) newErrors.firstName = "First name is required";
+  //   if (!formData.lastName) newErrors.lastName = "Last name is required";
+  //   if (!formData.gender) newErrors.gender = "Gender is required";
+  //   if (!formData.dob) newErrors.dob = "Date of birth is required";
+  //   if (!formData.profession) newErrors.profession = "Profession is required";
+  //   if (!formData.income || isNaN(formData.income)) newErrors.income = "Valid income is required";
+  //   if (!formData.pan || !/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(formData.pan)) {
+  //     newErrors.pan = "Valid PAN is required (e.g., ABCDE1234F)";
+  //   }
+  //   if (!formData.aadhar || !/^\d{12}$/.test(formData.aadhar)) {
+  //     newErrors.aadhar = "Aadhar must be a 12-digit number";
+  //   }
+
+  //   setErrors(newErrors);
+  //   return Object.keys(newErrors).length === 0;
+  // };
 
   const validate = () => {
     const newErrors = {};
@@ -39,9 +88,6 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
     if (!formData.pan || !/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(formData.pan)) {
       newErrors.pan = "Valid PAN is required (e.g., ABCDE1234F)";
     }
-    // if (!formData.email || !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(formData.email)) {
-    //   newErrors.email = "Valid email is required";
-    // }
     if (!formData.aadhar || !/^\d{12}$/.test(formData.aadhar)) {
       newErrors.aadhar = "Aadhar must be a 12-digit number";
     }
@@ -57,8 +103,6 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
     }
   };
 
-  const completionPercentage = 66;
-
   return (
     <div className="p-2 text-center">
       <div className="mb-6">
@@ -66,14 +110,7 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
         <img src={LoanLogo} alt="Loan Logo" className="mx-auto mb-6 w-32 h-auto" />
       </div>
 
-      <p className="text-sm text-gray-500 mb-1">{completionPercentage}% to complete</p>
-      <div className="w-full h-1 bg-gray-200 mb-4 rounded-full">
-        <div 
-          className="h-full bg-green-500 rounded-full transition-all duration-500 ease-in-out" 
-          style={{ width: `${completionPercentage}%` }}
-        ></div>
-      </div>
-
+      <ProgressBar formData={formData} currentStep={2} />
       <ProgressSteps currentStep={2} />
 
       <div className="mb-6 mt-4 text-left">
@@ -143,6 +180,7 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
             name="dob"
             placeholder="Date of Birth"
             type="date"
+            max={new Date().toISOString().split('T')[0]}
             className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition bg-white appearance-none ${
               !formData.dob ? 'text-gray-400' : 'text-gray-700'
             }`}

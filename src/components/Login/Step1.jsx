@@ -3,6 +3,7 @@ import { isUserRegistered, generateOTP } from '../../utils/auth';
 import api from '../../services/api';
 import toast from 'react-hot-toast';
 import LoanLogo from '../../assets/loan-logo.png';
+import ProgressBar from '../ProgressBar';
 import ProgressSteps from '../ProgressSteps';
 
 const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
@@ -110,15 +111,17 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
         <img src={LoanLogo} alt="Loan Logo" className="mx-auto mb-6 w-32 h-auto" />
       </div>
 
-      <p className="text-sm text-gray-500 mb-1">{completionPercentage}% to complete</p>
-      <div className="w-full h-1 bg-gray-200 mb-4 rounded-full">
+      {/* <p className="text-sm text-gray-500 mb-1">{completionPercentage}% to complete</p> */}
+      {/* <div className="w-full h-1 bg-gray-200 mb-4 rounded-full">
         <div 
           className="h-full bg-green-500 rounded-full transition-all duration-500 ease-in-out" 
           style={{ width: `${completionPercentage}%` }}
         ></div>
-      </div>
+      </div> */}
 
+      <ProgressBar formData={formData} currentStep={1} />
       <ProgressSteps currentStep={1} />
+
 
       <div className="mb-8 mt-6">
         <h2 className="text-2xl font-bold text-gray-800">
@@ -238,7 +241,7 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
       <p className="mt-4 text-sm text-gray-600">
         {mode === 'login' 
           ? "We'll verify your identity with a one-time password" 
-          : "Create an account to explore loan options tailored for you"}
+          : ""}
       </p>
     </div>
   );

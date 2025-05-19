@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoanLogo from '../../assets/loan-logo.png';
+// import ProgressSteps from '../ProgressSteps';
+import ProgressBar from '../ProgressBar';
 import ProgressSteps from '../ProgressSteps';
 import { saveUserDetails } from '../../utils/auth';
 
@@ -34,6 +36,16 @@ const Step3 = ({ formData, setFormData, prevStep }) => {
     }
   };
 
+  const min = 1000;
+  const max = 1000000;
+  const value = formData.loanAmount || min;
+  const percent = ((value - min) / (max - min)) * 100;
+
+  const minTenure = 1;
+  const maxTenure = 60;
+  const tenureValue = formData.tenure || minTenure;
+  const tenurePercent = ((tenureValue - minTenure) / (maxTenure - minTenure)) * 100;
+
   return (
     <div className="p-2 text-center">
       <div className="mb-6">
@@ -41,14 +53,15 @@ const Step3 = ({ formData, setFormData, prevStep }) => {
         <img src={LoanLogo} alt="Loan Logo" className="mx-auto mb-6 w-32 h-auto" />
       </div>
 
-      <p className="text-sm text-gray-500 mb-1">99% to complete</p>
-      <div className="w-full h-1 bg-gray-200 mb-4 rounded-full">
+      {/* <p className="text-sm text-gray-500 mb-1">99% to complete</p> */}
+      {/* <div className="w-full h-1 bg-gray-200 mb-4 rounded-full">
         <div 
           className="h-full bg-green-500 rounded-full transition-all duration-500 ease-in-out" 
           style={{ width: '99%' }}
         ></div>
-      </div>
+      </div> */}
 
+      <ProgressBar formData={formData} currentStep={3} />
       <ProgressSteps currentStep={3} />
 
       <div className="mb-6 mt-4 text-left">
@@ -86,7 +99,7 @@ const Step3 = ({ formData, setFormData, prevStep }) => {
           <label className="font-medium text-gray-700">Loan Required</label>
           <span className="font-semibold text-green-600">₹{(formData.loanAmount || 0).toLocaleString()}</span>
         </div>
-        <input
+        {/* <input
           type="range"
           min={1000}
           max={1000000}
@@ -94,7 +107,23 @@ const Step3 = ({ formData, setFormData, prevStep }) => {
           value={formData.loanAmount || 0}
           onChange={(e) => handleSliderChange("loanAmount", parseInt(e.target.value))}
           className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+        /> */}
+
+        <input
+          type="range"
+          min={min}
+          max={max}
+          step={1000}
+          value={value}
+          onChange={(e) =>
+            handleSliderChange("loanAmount", parseInt(e.target.value))
+          }
+          className="w-full h-2 rounded-lg appearance-none cursor-pointer"
+          style={{
+            background: `linear-gradient(to right, #22c55e ${percent}%, #e5e7eb ${percent}%)`
+          }}
         />
+
         <div className="flex justify-between text-xs text-gray-500 mt-1">
           <span>₹1,000</span>
           <span>₹10,00,000</span>
@@ -108,7 +137,7 @@ const Step3 = ({ formData, setFormData, prevStep }) => {
           <label className="font-medium text-gray-700">Tenure (months)</label>
           <span className="font-semibold text-green-600">{formData.tenure || 0} months</span>
         </div>
-        <input
+        {/* <input
           type="range"
           min={1}
           max={60}
@@ -116,6 +145,19 @@ const Step3 = ({ formData, setFormData, prevStep }) => {
           value={formData.tenure || 0}
           onChange={(e) => handleSliderChange("tenure", parseInt(e.target.value))}
           className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+        /> */}
+
+        <input
+          type="range"
+          min={minTenure}
+          max={maxTenure}
+          step={1}
+          value={tenureValue}
+          onChange={(e) => handleSliderChange("tenure", parseInt(e.target.value))}
+          className="w-full h-2 rounded-lg appearance-none cursor-pointer"
+          style={{
+            background: `linear-gradient(to right, #22c55e ${tenurePercent}%, #e5e7eb ${tenurePercent}%)`
+          }}
         />
         <div className="flex justify-between text-xs text-gray-500 mt-1">
           <span>1 month</span>

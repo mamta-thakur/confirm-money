@@ -41,13 +41,13 @@ const Step4 = ({ formData, setFormData, nextStep, prevStep, isReturningUser }) =
         <img src={LoanLogo} alt="Loan Logo" className="mx-auto mb-6 w-32 h-auto" />
       </div>
 
-      <p className="text-sm text-gray-500 mb-1">{completionPercentage}% to complete</p>
-      <div className="w-full h-1 bg-gray-200 mb-4 rounded-full">
+      {/* <p className="text-sm text-gray-500 mb-1">{completionPercentage}% to complete</p> */}
+      {/* <div className="w-full h-1 bg-gray-200 mb-4 rounded-full">
         <div 
           className="h-full bg-green-500 rounded-full transition-all duration-500 ease-in-out" 
           style={{ width: `${completionPercentage}%` }}
         ></div>
-      </div>
+      </div> */}
 
       <ProgressSteps currentStep={4} />
 
