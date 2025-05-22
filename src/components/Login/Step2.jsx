@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import LoanLogo from '../../assets/loan-logo.png';
-// import ProgressSteps from './components/ProgressSteps';
 import ProgressBar from '../ProgressBar';
 import ProgressSteps from '../ProgressSteps';
 import { saveUserDetails } from '../../utils/auth';
@@ -9,34 +8,20 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    if (isReturningUser && formData.isAuthenticated) {
-      // Data will already be populated from formData
-      // No need to do anything
-    } else {
-      // Clear the form data except for authentication-related fields
+    if (!isReturningUser || !formData.isAuthenticated) {
       const { mobile, otp, isAuthenticated } = formData;
-      setFormData({
-        mobile,
-        otp,
-        isAuthenticated
-      });
+      setFormData({ mobile, otp, isAuthenticated });
     }
   }, []);
 
-  // const handleChange = (e) => {
-  //   setFormData({ ...formData, [e.target.name]: e.target.value });
-  //   setErrors({ ...errors, [e.target.name]: '' });
-  // };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
+
     if (name === 'dob') {
       const birthDate = new Date(value);
       const today = new Date();
-      const age = today.getFullYear() - birthDate.getFullYear();
+      let age = today.getFullYear() - birthDate.getFullYear();
       const monthDiff = today.getMonth() - birthDate.getMonth();
-      
       if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
         age--;
       }
@@ -45,7 +30,6 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
         setErrors({ ...errors, dob: "You must be at least 18 years old" });
         return;
       }
-      
       if (age > 100) {
         setErrors({ ...errors, dob: "Age cannot exceed 100 years" });
         return;
@@ -56,26 +40,6 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
     setErrors({ ...errors, [name]: '' });
   };
 
-  // const validate = () => {
-  //   const newErrors = {};
-
-  //   if (!formData.firstName) newErrors.firstName = "First name is required";
-  //   if (!formData.lastName) newErrors.lastName = "Last name is required";
-  //   if (!formData.gender) newErrors.gender = "Gender is required";
-  //   if (!formData.dob) newErrors.dob = "Date of birth is required";
-  //   if (!formData.profession) newErrors.profession = "Profession is required";
-  //   if (!formData.income || isNaN(formData.income)) newErrors.income = "Valid income is required";
-  //   if (!formData.pan || !/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(formData.pan)) {
-  //     newErrors.pan = "Valid PAN is required (e.g., ABCDE1234F)";
-  //   }
-  //   if (!formData.aadhar || !/^\d{12}$/.test(formData.aadhar)) {
-  //     newErrors.aadhar = "Aadhar must be a 12-digit number";
-  //   }
-
-  //   setErrors(newErrors);
-  //   return Object.keys(newErrors).length === 0;
-  // };
-
   const validate = () => {
     const newErrors = {};
 
@@ -85,6 +49,7 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
     if (!formData.dob) newErrors.dob = "Date of birth is required";
     if (!formData.profession) newErrors.profession = "Profession is required";
     if (!formData.income || isNaN(formData.income)) newErrors.income = "Valid income is required";
+    if (!formData.incomeType) newErrors.income = "Please select income type";
     if (!formData.pan || !/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(formData.pan)) {
       newErrors.pan = "Valid PAN is required (e.g., ABCDE1234F)";
     }
@@ -106,7 +71,6 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
   return (
     <div className="p-2 text-center">
       <div className="mb-6">
-        {/* <LoanLogo /> */}
         <img src={LoanLogo} alt="Loan Logo" className="mx-auto mb-6 w-32 h-auto" />
       </div>
 
@@ -114,9 +78,7 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
       <ProgressSteps currentStep={2} />
 
       <div className="mb-6 mt-4 text-left">
-        <h2 className="text-xl font-bold text-gray-800">
-          Personal Details
-        </h2>
+        <h2 className="text-xl font-bold text-gray-800">Personal Details</h2>
         <p className="text-gray-600 text-sm mt-1">
           {isReturningUser 
             ? "Please review your personal details" 
@@ -156,7 +118,7 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
           </div>
         </div>
 
-        {/* Gender Dropdown */}
+        {/* Gender */}
         <div>
           <select
             name="gender"
@@ -191,7 +153,7 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
           {errors.dob && <p className="text-red-500 text-xs mt-1">{errors.dob}</p>}
         </div>
 
-        {/* Profession Dropdown */}
+        {/* Profession */}
         <div>
           <select
             name="profession"
@@ -209,18 +171,28 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
           {errors.profession && <p className="text-red-500 text-xs mt-1">{errors.profession}</p>}
         </div>
 
-        {/* Income */}
-        <div>
+        {/* Income + Dropdown */}
+        <div className="grid grid-cols-2 gap-2">
           <input 
             name="income" 
-            placeholder="Monthly Income" 
+            placeholder="Income" 
             type="number" 
             className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" 
             onChange={handleChange} 
             value={formData.income || ''} 
           />
-          {errors.income && <p className="text-red-500 text-xs mt-1">{errors.income}</p>}
+          <select
+            name="incomeType"
+            className="w-full p-3 border rounded-lg bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
+            onChange={handleChange}
+            value={formData.incomeType || ''}
+          >
+            <option value="" disabled>Select Type</option>
+            <option value="monthly">Monthly</option>
+            <option value="annual">Annual</option>
+          </select>
         </div>
+        {errors.income && <p className="text-red-500 text-xs mt-1">{errors.income}</p>}
 
         {/* PAN */}
         <div>
@@ -233,19 +205,6 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
           />
           {errors.pan && <p className="text-red-500 text-xs mt-1">{errors.pan}</p>}
         </div>
-
-        {/* Email */}
-        {/* <div>
-          <input 
-            name="email" 
-            placeholder="Email Address" 
-            type="email" 
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" 
-            onChange={handleChange} 
-            value={formData.email || ''} 
-          />
-          {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
-        </div> */}
 
         {/* Aadhar */}
         <div>
@@ -261,6 +220,7 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
         </div>
       </div>
 
+      {/* Buttons */}
       <div className="flex space-x-3 mt-6">
         <button
           onClick={prevStep}

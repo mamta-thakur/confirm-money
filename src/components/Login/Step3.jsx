@@ -22,6 +22,8 @@ const Step3 = ({ formData, setFormData, prevStep }) => {
 
   const validate = () => {
     const newErrors = {};
+    
+    if (!formData.loanType) newErrors.creditType = "Select loan type";
     if (!formData.loanPurpose) newErrors.loanPurpose = "Select loan purpose";
     if (!formData.loanAmount || formData.loanAmount < 1000) newErrors.loanAmount = "Loan amount too low";
     if (!formData.tenure || formData.tenure < 1) newErrors.tenure = "Tenure required";
@@ -64,13 +66,33 @@ const Step3 = ({ formData, setFormData, prevStep }) => {
       <ProgressBar formData={formData} currentStep={3} />
       <ProgressSteps currentStep={3} />
 
-      <div className="mb-6 mt-4 text-left">
+      {/* <div className="mb-6 mt-4 text-left">
         <h2 className="text-xl font-bold text-gray-800">
           Loan Requirements
         </h2>
         <p className="text-gray-600 text-sm mt-1">
           Tell us what you're looking for
         </p>
+      </div> */}
+
+      {/* Looking for */}
+      <div className="mb-6 text-left">
+        <label className="block mb-2 font-medium text-gray-700">What are you looking for?</label>
+        <select
+          name="loanType"
+          className="w-full p-3 border rounded-lg appearance-none bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
+          value={formData.loanType || ''}
+          onChange={handleChange}
+        >
+          <option value="">Select</option>
+          <option value="Personal Loan">Personal Loan</option>
+          <option value="Business Loan">Business Loan </option>
+          <option value="Car Loan">Car Loan</option>
+          <option value="Credit Card">Credit Card</option>
+          <option value="Home Loan">Home Loan</option>
+          <option value="Loan Against Property">Loan Against Property</option>
+        </select>
+        {errors.loanType && <p className="text-red-500 text-xs mt-1">{errors.creditType}</p>}
       </div>
 
       {/* Purpose of Loan */}

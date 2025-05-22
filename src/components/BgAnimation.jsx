@@ -94,11 +94,11 @@ const BgAnimation = () => {
         animate={{ y: [0, 20, 0], x: [0, 10, 0] }}
         transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
         />
-        <motion.div
+        {/* <motion.div
         className="absolute top-[60%] left-[20%] w-32 h-32 bg-green-400 rounded-full opacity-40 blur-2xl"
         animate={{ y: [0, -20, 0], x: [0, -10, 0] }}
         transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-        />
+        /> */}
         {/* <motion.div
         className="absolute bottom-10 right-10 w-52 h-52 bg-blue-400 rounded-full opacity-30 blur-3xl"
         animate={{ y: [0, 15, 0], x: [0, 5, 0] }}
