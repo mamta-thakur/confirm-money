@@ -18,6 +18,9 @@ import MultiStepLoginForm from './components/Login/MultiStepForm';
 import MultiStepForm from './components/Login/MultiStepForm';
 import Congrats from './components/Login/Congrats';
 
+import ShopLoginPage from './pages/ShopJourney/LoginPage';
+import ShopPage from './pages/ShopJourney/ShopPage';
+
 import TermsAndConditions from "./pages/TermsAndConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CallToAction from "./pages/CallToAction";
@@ -57,6 +60,9 @@ function App() {
         <Route path="/loan-journey" element={<MultiStepForm />} />
         <Route path="/loan-journey/offers" element={<Congrats />} />
         <Route path="*" element={<Navigate to="/loan-journey" replace />} />
+        {/* <Route path="/shop-journey" element={<MultiStepForm />} /> */}
+        <Route path="/shop-journey" element={<ShopLoginPage />} />
+        <Route path="/shop" element={<ShopPage />} />
         <Route path="/terms" element={<TermsAndConditions />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/call-to-action" element={<CallToAction />} />

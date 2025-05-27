@@ -22,12 +22,14 @@ const ProductSection = () => {
       subtitle: 'The smarter way to manage credit.',
       category: 'DESIGN',
       image: product1,
+      link: '/loan-journey',
     },
     {
       title: 'Confirm.Shop',
       subtitle: 'Shop seamlessly with instant approvals.',
       category: 'MARKETING',
       image: product2,
+      link: '/shop',
     },
   ];
 
@@ -93,7 +95,7 @@ const ProductSection = () => {
           {products.map((product, index) => (
             <div
               key={index}
-              onClick={() => navigate('/loan-journey', { replace: true })}
+              // onClick={() => navigate(product.link, { replace: true })}
               ref={(el) => (productRefs.current[index] = el)}
               className="absolute top-0 left-0 w-full h-screen bg-cover bg-center flex items-center justify-start px-6 lg:px-10 text-white transition-opacity duration-500 ease-in-out"
               style={{
@@ -102,7 +104,7 @@ const ProductSection = () => {
                 backgroundAttachment: 'fixed',
               }}
             >
-              <Link to="/loan-journey" target='_blank' key={index}>
+              <Link to={product.link} target='_blank' key={index}>
                 <div className="bg-black/60 p-6 lg:p-8 rounded-2xl max-w-xl">
                   <p className="uppercase text-sm tracking-widest">{product.category}</p>
                   <h2 className="text-4xl lg:text-6xl font-extrabold mt-2">{product.title}</h2>
@@ -123,14 +125,16 @@ const ProductSection = () => {
               className="rounded-2xl overflow-hidden relative h-60 flex items-end p-6 bg-cover bg-center"
               style={{ backgroundImage: `url(${product.image})` }}
             >
-              <div className="text-white z-10">
-                <p className="uppercase text-xs font-semibold opacity-80">{product.category}</p>
-                <h2 className="text-2xl font-extrabold leading-tight">{product.title}</h2>
-              </div>
-              <div className="absolute bottom-4 right-4 text-white z-10">
-                <ArrowRight size={24} />
-              </div>
-              <div className="absolute inset-0 bg-black/40" />
+              <Link to={product.link} key={index}>
+                  <div className="text-white z-10">
+                    <p className="uppercase text-xs font-semibold opacity-80">{product.category}</p>
+                    <h2 className="text-2xl font-extrabold leading-tight">{product.title}</h2>
+                  </div>
+                  <div className="absolute bottom-4 right-4 text-white z-10">
+                    <ArrowRight size={24} />
+                  </div>
+                  <div className="absolute inset-0 bg-black/40" />
+              </Link>
             </div>
           ))}
         </div>

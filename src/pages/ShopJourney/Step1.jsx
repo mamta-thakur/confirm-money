@@ -1,64 +1,68 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { isUserRegistered, generateOTP } from '../../utils/auth';
+import { useNavigate } from 'react-router-dom';
+import { registerShopUser,isShopUserRegistered, generateOTP, setAuthenticated } from '../../utils/auth';
 import api from '../../services/api';
 import toast from 'react-hot-toast';
 import LoanLogo from '../../assets/loan-logo.png';
-import ProgressBar from '../ProgressBar';
-import ProgressSteps from '../ProgressSteps';
+// import ProgressBar from '../ProgressBar';
+// import ProgressSteps from '../ProgressSteps';
 
 const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
-  const [loading, setLoading] = useState(false);
-  const [mobile, setMobile] = useState(formData.mobile || '');
-  const [mode, setMode] = useState('login');
-  const [showOTP, setShowOTP] = useState(false);
-  const [otp, setOtp] = useState(['', '', '', '']);
-  const inputsRef = useRef([]);
-  const [timer, setTimer] = useState(60);
-  const [checked1, setChecked1] = useState(false);
-  const [checked2, setChecked2] = useState(false);
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    const [mobile, setMobile] = useState(formData.mobile || '');
+    const [mode, setMode] = useState('login');
+    const [showOTP, setShowOTP] = useState(false);
+    const [otp, setOtp] = useState(['', '', '', '']);
+    const inputsRef = useRef([]);
+    const [timer, setTimer] = useState(60);
+    const [checked1, setChecked1] = useState(false);
+    const [checked2, setChecked2] = useState(false);
 
-  const isValidMobile = mobile.length === 10 && /^\d+$/.test(mobile);
+    const isValidMobile = mobile.length === 10 && /^\d+$/.test(mobile);
 
-  useEffect(() => {
+    useEffect(() => {
     if (isValidMobile) {
-      const userExists = isUserRegistered(mobile);
-      setMode(userExists ? 'login' : 'register');
+        const userExists = isShopUserRegistered(mobile);
+        setMode(userExists ? 'login' : 'register');
     }
-  }, [mobile]);
+    }, [mobile]);
 
-  useEffect(() => {
+    useEffect(() => {
     if (timer <= 0) return;
     const interval = setInterval(() => setTimer(prev => prev - 1), 1000);
     return () => clearInterval(interval);
-  }, [timer]);
+    }, [timer]);
 
-  const handleGenerateOTP = async () => {
+    const handleGenerateOTP = async () => {
     if (!isValidMobile) return;
 
     setLoading(true);
-    
+
     try {
     //   await api.post('/send-otp', { mobile });
-      
-      const otp = generateOTP();
-      console.log('Generated OTP:', otp);
-      toast.success(`Your OTP is: ${otp}`);
-      
-      setFormData(prev => ({ 
+        
+        const otp = generateOTP();
+        console.log('Generated OTP:', otp);
+        toast.success(`Your OTP is: ${otp}`);
+        
+        setFormData(prev => ({ 
         ...prev, 
         mobile, 
         otp,
         isNewUser: mode === 'register'
-      }));
-      
-      setIsReturningUser(mode === 'login');
-      setShowOTP(true);
-      setTimer(60);
+        }));
+
+        localStorage.setItem('shop-otp', otp);
+        
+        setIsReturningUser(mode === 'login');
+        setShowOTP(true);
+        setTimer(60);
     } catch (error) {
-      console.error("OTP request failed:", error);
-      toast.error("Failed to send OTP. Please try again.");
+        console.error("OTP request failed:", error);
+        toast.error("Failed to send OTP. Please try again.");
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
   };
 
@@ -92,27 +96,33 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
         ...formData,
         isAuthenticated: true
       };
+
+    //   isNewUser = mode === 'register';
+      if (formData.isNewUser) {
+        registerShopUser(mobile, enteredOtp);
+        toast.success('Registration successful!');
+      }
       
       setFormData(updatedFormData);
+
+      localStorage.setItem('userMobile', mobile);
+      setAuthenticated(true);
+
       toast.success('OTP verified successfully!');
-      nextStep();
+    //   nextStep();
+    navigate('/shop');
     } else {
       toast.error('Invalid OTP. Please try again.');
     }
   };
 
   const isFormValid = checked1 && checked2 && otp.every(digit => digit !== '');
-  const completionPercentage = mode === 'register' ? 0 : 25;
 
   return (
     <div className="p-2 text-center">
       <div className="mb-6">
-        {/* <LoanLogo /> */}
         <img src={LoanLogo} alt="Loan Logo" className="mx-auto mb-6 w-32 h-auto" />
       </div>
-
-      <ProgressBar formData={formData} currentStep={1} />
-      <ProgressSteps currentStep={1} />
 
 
       <div className="mb-8 mt-6">
