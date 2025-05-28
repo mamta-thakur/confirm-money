@@ -19,7 +19,7 @@ const SearchCategoryProducts = ({ onSearch }) => {
         />
         <button
           onClick={handleSearch}
-          className="bg-blue-600 text-white px-4 rounded-r-md hover:bg-blue-700"
+          className="bg-green-500 text-white px-4 rounded-r-md hover:bg-green-600 "
         >
           Search
         </button>

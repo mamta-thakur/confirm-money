@@ -70,7 +70,7 @@ const BrandLogos = ({ onBrandClick }) => {
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end">
-                <span className="text-white font-medium px-2 py-1">{brand.name}</span>
+                <span className="text-yellow-500 font-medium px-2 py-1">{brand.name}</span>
               </div>
             </div>
             <div className="text-xs text-gray-500">Shop now</div>

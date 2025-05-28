@@ -60,7 +60,7 @@ const ShopSidebar = () => {
           ))}
         </div>
         
-        <div className="bg-gradient-to-r from-blue-500 to-purple-500 text-white p-4 rounded-lg">
+        <div className="bg-gradient-to-br from-yellow-100 via-white to-emerald-100 from-blue-500- to-purple-500- text-white- p-4 rounded-lg">
           <h3 className="font-semibold mb-2">Special Offer</h3>
           <p className="text-sm mb-3">Get exclusive discounts when you shop with our partner brands!</p>
           <button className="text-xs bg-white text-blue-600 font-medium py-1.5 px-3 rounded-full">

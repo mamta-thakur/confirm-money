@@ -26,9 +26,9 @@ const ShopCategories = () => {
         {categories.map((category) => (
           <div 
             key={category.id}
-            className="flex flex-col items-center justify-center p-3 rounded-lg border border-gray-200 bg-white hover:bg-blue-50 hover:border-blue-300 transition-colors cursor-pointer"
+            className="flex flex-col items-center justify-center p-3 rounded-lg border border-gray-200 bg-white hover:bg-yellow-50 hover:border-yellow-300 transition-colors cursor-pointer"
           >
-            <div className="text-blue-500 mb-2">
+            <div className="text-green-500 mb-2">
               {category.icon}
             </div>
             <span className="text-xs font-medium text-gray-600">{category.name}</span>

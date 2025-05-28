@@ -39,7 +39,7 @@ const ShopPage = () => {
         {selectedWebsite ? (
           <BrowserView url={selectedWebsite} isLoading={isLoading} onBack={() => setSelectedWebsite(null)} />
         ) : (
-          <div className="p-4 md:p-6">
+          <div className="p-4 md:p-6 bg-gradient-to-br from-indigo-100 via-white to-emerald-100 ">
             <h1 className="text-2xl font-bold text-gray-800 mb-6">Shop and Save</h1>
             <ShopBanner />
             <SearchCategoryProducts onSearch={(query) => console.log("Search for:", query)} />
