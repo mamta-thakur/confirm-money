@@ -17,21 +17,16 @@ const categories = [
   { id: 'deals', name: 'Deals', icon: <ShoppingBag size={20} /> },
 ];
 
-const ShopCategories = ({ onCategoryClick, selectedCategory }) => {
+const ShopCategories = () => {
   return (
     <div className="mb-8">
       <h2 className="text-lg font-semibold text-gray-700 mb-4">Categories</h2>
       
-      <div className="grid grid-cols-5 sm:grid-cols-10- gap-2 overflow-x-auto pb-2">
+      <div className="grid grid-cols-5 sm:grid-cols-10 gap-2 overflow-x-auto pb-2">
         {categories.map((category) => (
           <div 
             key={category.id}
-            onClick={() => onCategoryClick(category.id)}
-            className={`flex flex-col items-center justify-center p-3 rounded-lg border cursor-pointer transition-colors ${
-              selectedCategory === category.id
-                ? 'bg-yellow-100 border-yellow-500 text-yellow-700'
-                : 'bg-white border-gray-200 hover:bg-yellow-50 hover:border-yellow-300'
-            }`}
+            className="flex flex-col items-center justify-center p-3 rounded-lg border border-gray-200 bg-white hover:bg-yellow-50 hover:border-yellow-300 transition-colors cursor-pointer"
           >
             <div className="text-green-500 mb-2">
               {category.icon}

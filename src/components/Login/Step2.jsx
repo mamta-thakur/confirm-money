@@ -69,15 +69,15 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
   };
 
   return (
-    <div className="p-2 text-center">
-      <div className="mb-6">
+    <div className="p-2 mt-20 text-center">
+      {/* <div className="mb-8">
         <img src={LoanLogo} alt="Loan Logo" className="mx-auto mb-6 w-32 h-auto" />
-      </div>
+      </div> */}
 
       <ProgressBar formData={formData} currentStep={2} />
       <ProgressSteps currentStep={2} />
 
-      <div className="mb-6 mt-4 text-left">
+      <div className="mb-6 mt-10 text-left">
         <h2 className="text-xl font-bold text-gray-800">Personal Details</h2>
         <p className="text-gray-600 text-sm mt-1">
           {isReturningUser 
@@ -187,7 +187,7 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
             onChange={handleChange}
             value={formData.incomeType || ''}
           >
-            <option value="" disabled>Select Type</option>
+            {/* <option value="" disabled>Select Type</option> */}
             <option value="monthly">Monthly</option>
             <option value="annual">Annual</option>
           </select>

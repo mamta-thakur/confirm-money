@@ -45,7 +45,7 @@ export default function SidebarMenu({ isOpen, onClose }) {
                 <X size={28} />
               </button>
 
-              <a href="/"><img src={Logo} alt="Logo" className="h-10 mb-4" /></a>
+              <a href="/"><img src={Logo} alt="Logo" className="h-20 mb-4" /></a>
               {!localStorage.getItem('userDetails') ? (
                 <>
                   <div className="text-4xl font-bold">

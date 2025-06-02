@@ -4,6 +4,7 @@ import ProgressSteps from '../ProgressSteps';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, Star, Info } from 'lucide-react';
 import BgAnimation from '../BgAnimation';
+import Navbar from '../../components/NavbarProducts';
 
 const offers = [
   {
@@ -43,6 +44,11 @@ const Congrats = ({ formData }) => {
     <>
     {/* <Toaster position="top-center" reverseOrder={false} /> */}
     <div className="relative min-h-screen bg-gradient-to-br- from-indigo-100 via-white to-emerald-100 overflow-hidden">
+        <div className="flex justify-center">
+          <div className="sticky- top-0 w-full max-w-xl z-50 bg-white/80 backdrop-blur-sm border-b border-gray-200">
+            <Navbar />
+          </div>
+        </div>
         {/* Form Container */}
         <div className="relative z-10 flex items-center- justify-center min-h-[calc(100vh-1px)]">
           <motion.div
@@ -58,10 +64,9 @@ const Congrats = ({ formData }) => {
 
 
               <div className="p-2 text-center">
-                <div className="mb-6">
-                  {/* <LoanLogo /> */}
+                {/* <div className="mb-8">
                   <img src={LoanLogo} alt="Loan Logo" className="mx-auto mb-6 w-32 h-auto" />
-                </div>
+                </div> */}
 
                 {/* <p className="text-sm text-gray-500 mb-1">100% completed</p> */}
                 {/* <div className="w-full h-1 bg-gray-200 mb-4 rounded-full">
@@ -79,7 +84,7 @@ const Congrats = ({ formData }) => {
                   </h2>
                 </div>
 
-                <div className="bg-green-100 border border-green-400 text-green-700 p-4 rounded-lg mb-6 text-left">
+                <div className="bg-green-100 border border-green-400 text-green-700 p-4 rounded-lg mb-6 mt-20 text-left">
                   <p className="font-medium">
                     Based on your profile, you are eligible for the following loan offers:
                   </p>

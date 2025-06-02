@@ -90,7 +90,7 @@ const BgAnimation = () => {
         
         {/* Animated Blobs */}
         <motion.div
-        className="absolute top-10 left-10 w-40 h-40 bg-yellow-300 rounded-full opacity-60 blur-2xl"
+        className="absolute top-1 left-5 w-40 h-40 bg-yellow-300 rounded-full opacity-60 blur-2xl"
         animate={{ y: [0, 20, 0], x: [0, 10, 0] }}
         transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
         />

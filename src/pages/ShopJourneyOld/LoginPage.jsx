@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
 // import Layout from '../../components/Layout';
 import Step1 from './Step1';
-import Step2 from './Step2';
-import Step3 from './Step3';
 import { Toaster } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getUserDetails } from '../../utils/auth';
-import BgAnimation from '../BgAnimation';
-import Navbar from '../../components/NavbarProducts'; // Adjust the import path as needed
+import BgAnimation from '../../components/BgAnimation';
 
-const MultiStepForm = () => {
+const LoginPage = () => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({});
   const [isReturningUser, setIsReturningUser] = useState(false);
@@ -49,16 +46,10 @@ const MultiStepForm = () => {
     {/* <Layout> */}
       <Toaster position="top-center" reverseOrder={false} />
 
-      {/* <div className="relative min-h-screen bg-gradient-to-br- from-indigo-100 via-white to-emerald-100 overflow-hidden"> */}
-      <div className="relative min-h-screen bg-gradient-to-br from-indigo-100 via-white to-emerald-100">
-        <div className="flex justify-center">
-          <div className="sticky- top-0 w-full max-w-xl z-50 bg-white/80 backdrop-blur-sm border-b border-gray-200">
-            <Navbar />
-          </div>
-        </div>
+      <div className="relative min-h-screen bg-gradient-to-br- from-indigo-100 via-white to-emerald-100 overflow-hidden">
+          
       
           {/* Form Container */}
-          {/* <div className="relative flex justify-center px-4 py-8"> */}
           <div className="relative z-10 flex items-center- justify-center min-h-[calc(100vh-1px)]">
             <motion.div
               key={step}
@@ -80,4 +71,4 @@ const MultiStepForm = () => {
   );
 };
 
-export default MultiStepForm;
+export default LoginPage;

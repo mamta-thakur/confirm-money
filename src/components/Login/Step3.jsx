@@ -49,11 +49,10 @@ const Step3 = ({ formData, setFormData, prevStep }) => {
   const tenurePercent = ((tenureValue - minTenure) / (maxTenure - minTenure)) * 100;
 
   return (
-    <div className="p-2 text-center">
-      <div className="mb-6">
-        {/* <LoanLogo /> */}
+    <div className="p-2 mt-20 text-center">
+      {/* <div className="mb-8">
         <img src={LoanLogo} alt="Loan Logo" className="mx-auto mb-6 w-32 h-auto" />
-      </div>
+      </div> */}
 
       {/* <p className="text-sm text-gray-500 mb-1">99% to complete</p> */}
       {/* <div className="w-full h-1 bg-gray-200 mb-4 rounded-full">
@@ -76,7 +75,7 @@ const Step3 = ({ formData, setFormData, prevStep }) => {
       </div> */}
 
       {/* Looking for */}
-      <div className="mb-6 text-left">
+      <div className="mb-6 mt-10 text-left">
         <label className="block mb-2 font-medium text-gray-700">What are you looking for?</label>
         <select
           name="loanType"
