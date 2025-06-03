@@ -38,3 +38,7 @@ input[type="range"]::-moz-range-thumb {
   cursor: pointer;
   border: none;
 }
+
+.react-datepicker-wrapper {
+  width: 100% !important;
+}

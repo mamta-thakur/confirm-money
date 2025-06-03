@@ -44,6 +44,10 @@ export const isUserRegistered = (mobile: string): boolean => {
   // Clear user details from local storage and redirect
   export const logoutUser = () => {
     localStorage.removeItem('userDetails');
+    localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('registeredUsers');
+    localStorage.removeItem('shop-otp');
+    localStorage.removeItem('userMobile');
     window.location.href = '/'; // Redirect to home or login page
   };
   

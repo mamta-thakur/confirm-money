@@ -3,6 +3,8 @@ import LoanLogo from '../../assets/loan-logo.png';
 import ProgressBar from '../ProgressBar';
 import ProgressSteps from '../ProgressSteps';
 import { saveUserDetails } from '../../utils/auth';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) => {
   const [errors, setErrors] = useState({});
@@ -49,7 +51,7 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
     if (!formData.dob) newErrors.dob = "Date of birth is required";
     if (!formData.profession) newErrors.profession = "Profession is required";
     if (!formData.income || isNaN(formData.income)) newErrors.income = "Valid income is required";
-    if (!formData.incomeType) newErrors.income = "Please select income type";
+    // if (!formData.incomeType) newErrors.income = "Please select income type";
     if (!formData.pan || !/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(formData.pan)) {
       newErrors.pan = "Valid PAN is required (e.g., ABCDE1234F)";
     }
@@ -137,8 +139,8 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
         </div>
 
         {/* DOB */}
-        <div>
-          <input
+        <div className="w-full">
+          {/* <input
             name="dob"
             placeholder="Date of Birth"
             type="date"
@@ -149,6 +151,26 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
             onChange={handleChange}
             value={formData.dob || ''}
             pattern="\d{4}-\d{2}-\d{2}"
+          /> */}
+          <DatePicker
+            selected={formData.dob ? new Date(formData.dob) : null}
+            onChange={(date) =>
+              handleChange({
+                target: {
+                  name: "dob",
+                  value: date.toISOString().split("T")[0], // Save as yyyy-mm-dd
+                },
+              })
+            }
+            placeholderText="DD/MM/YYYY"
+            dateFormat="dd/MM/yyyy"
+            showMonthDropdown
+            showYearDropdown
+            dropdownMode="select" // <- Enables dropdowns
+            maxDate={new Date()}  // Prevent future dates
+            className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition bg-white appearance-none ${
+              !formData.dob ? "text-gray-400" : "text-gray-700"
+            }`}
           />
           {errors.dob && <p className="text-red-500 text-xs mt-1">{errors.dob}</p>}
         </div>
@@ -185,7 +207,7 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
             name="incomeType"
             className="w-full p-3 border rounded-lg bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
             onChange={handleChange}
-            value={formData.incomeType || ''}
+            value={formData.incomeType || 'monthly'}
           >
             {/* <option value="" disabled>Select Type</option> */}
             <option value="monthly">Monthly</option>

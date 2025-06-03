@@ -46,22 +46,32 @@ export default function SidebarMenuProducts({ isOpen, onClose }) {
               </button>
 
               <a href="/"><img src={Logo} alt="Logo" className="h-20 mb-4" /></a>
-              {!localStorage.getItem('userDetails') ? (
+              {localStorage.getItem('userDetails') || localStorage.getItem('isAuthenticated')? (
                 <>
+                <div className="text-l font-bold text-black">
+                  <a href="/" className="hover:underline">Home</a>
+                </div>
+                <div className="text-l font-bold text-black">
+                  <a href="/loan-journey" className="hover:underline">Confirm.Credit</a>
+                </div>
+                <div className="text-l font-bold text-black">
+                  <a href="/shop" className="hover:underline">Confirm.Shop</a>
+                </div>
+                <div className="text-l font-bold text-black">
+                  <a onClick={logoutUser} className="hover:underline">Logout</a>
+                </div>
+              </>
+                
+              ) : (
+                <>
+                  <div className="text-l font-bold text-black">
+                    <a href="/" className="hover:underline">Home</a>
+                  </div>
                   <div className="text-l font-bold text-black">
                     <a href="/loan-journey" className="hover:underline">Confirm.Credit</a>
                   </div>
                   <div className="text-l font-bold text-black">
                     <a href="/shop" className="hover:underline">Confirm.Shop</a>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="text-l font-bold text-black">
-                      <a href="/" className="hover:underline">Home</a>
-                    </div>
-                  <div className="text-l font-bold text-black">
-                    <a onClick={logoutUser} className="hover:underline">Logout</a>
                   </div>
                 </>
               )}

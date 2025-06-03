@@ -1,5 +1,6 @@
 import { useState } from "react";
-import SidebarMenu from "./SidebarMenu";
+// import SidebarMenu from "./SidebarMenu";
+import SidebarMenu from "./SidebarMenuProducts";
 import Logo from "../assets/loan-logo.png";
 import { Menu } from "lucide-react";
 
