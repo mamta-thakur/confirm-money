@@ -18,7 +18,8 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
 
-  const isValidMobile = mobile.length === 10 && /^\d+$/.test(mobile);
+  const isValidMobile = (mobile.length === 10 && /^\d+$/.test(mobile));
+  const isConcentGiven = checked1 && checked2;
 
   useEffect(() => {
     if (isValidMobile) {
@@ -202,7 +203,7 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
             onClick={handleGenerateOTP}
             disabled={!isValidMobile || loading}
             className={`w-full py-3 text-white font-semibold rounded-lg transition duration-300 ${
-              isValidMobile && !loading 
+              isValidMobile && !loading && isConcentGiven 
                 ? 'bg-green-500 hover:bg-green-600 active:bg-green-700' 
                 : 'bg-gray-300 cursor-not-allowed'
             }`}
