@@ -10,8 +10,9 @@ const ProgressBar = ({ formData, currentStep }) => {
       if (formData.otp) progress += 15;
     } else if (currentStep === 2) {
       progress = 33; // Base progress for reaching step 2
-      if (formData.firstName) progress += 5;
-      if (formData.lastName) progress += 5;
+      // if (formData.firstName) progress += 5;
+      // if (formData.lastName) progress += 5;
+      if (formData.name) progress += 10;
       if (formData.gender) progress += 5;
       if (formData.dob) progress += 5;
       if (formData.profession) progress += 5;

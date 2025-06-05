@@ -214,7 +214,7 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
         </div>
 
         {/* Income + Dropdown */}
-        <div className="grid grid-cols-2 gap-2">
+        <div className="">
           <input 
             name="income" 
             placeholder="Monthly Income" 
