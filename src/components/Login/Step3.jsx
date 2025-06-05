@@ -49,7 +49,7 @@ const Step3 = ({ formData, setFormData, prevStep }) => {
   const tenurePercent = ((tenureValue - minTenure) / (maxTenure - minTenure)) * 100;
 
   return (
-    <div className="p-2 mt-20 text-center">
+    <div className="p-2 mt-5 text-center">
       {/* <div className="mb-8">
         <img src={LoanLogo} alt="Loan Logo" className="mx-auto mb-6 w-32 h-auto" />
       </div> */}
@@ -86,10 +86,12 @@ const Step3 = ({ formData, setFormData, prevStep }) => {
           <option value="">Select</option>
           <option value="Personal Loan">Personal Loan</option>
           <option value="Business Loan">Business Loan </option>
-          <option value="Car Loan">Car Loan</option>
-          <option value="Credit Card">Credit Card</option>
+          <option value="Education Loan">Education Loan </option>
+          <option value="Auto Loan">Auto Loan</option>
           <option value="Home Loan">Home Loan</option>
           <option value="Loan Against Property">Loan Against Property</option>
+          <option value="Gold Loan">Gold Loan</option>
+          <option value="Credit Card">Credit Card</option>
         </select>
         {errors.loanType && <p className="text-red-500 text-xs mt-1">{errors.creditType}</p>}
       </div>
@@ -104,12 +106,14 @@ const Step3 = ({ formData, setFormData, prevStep }) => {
           onChange={handleChange}
         >
           <option value="">Select</option>
-          <option value="Home Renovation">Home Renovation</option>
-          <option value="Medical Emergency">Medical Emergency</option>
-          <option value="Education">Education</option>
-          <option value="Wedding">Wedding</option>
+          <option value="Personal">Personal</option>
           <option value="Business">Business</option>
-          <option value="Other">Other</option>
+          <option value="Consumer Durable">Consumer Durable</option>
+          <option value="Vehicle Purchase">Vehicle Purchase</option>
+          <option value="Home Buy / Renovation">Home Buy / Renovation</option>
+          <option value="Emergency / Medical">Emergency / Medical</option>
+          <option value="Wedding Expenses">Wedding Expenses</option>
+          <option value="Debt Consolidation">Debt Consolidation</option>
         </select>
         {errors.loanPurpose && <p className="text-red-500 text-xs mt-1">{errors.loanPurpose}</p>}
       </div>

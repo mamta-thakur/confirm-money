@@ -34,6 +34,11 @@ export const isUserRegistered = (mobile: string): boolean => {
   export const saveUserDetails = (details: any) => {
     localStorage.setItem(USER_DETAILS_KEY, JSON.stringify(details));
   };
+
+  // Save user details
+  export const saveConcentDetails = (details: any) => {
+    localStorage.setItem('userConcentDetails', JSON.stringify(details));
+  };
   
   // Generate a random OTP
   export const generateOTP = (): number => {

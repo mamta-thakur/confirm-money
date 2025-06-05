@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import LoanLogo from '../../assets/loan-logo.png';
 import ProgressBar from '../ProgressBar';
 import ProgressSteps from '../ProgressSteps';
+import { saveConcentDetails } from '../../utils/auth';
 
 const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
   const [loading, setLoading] = useState(false);
@@ -105,7 +106,7 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
   const completionPercentage = mode === 'register' ? 0 : 25;
 
   return (
-    <div className="p-2 mt-20 text-center">
+    <div className="p-2 mt-5 text-center">
       {/* <div className="mb-8">
         <img src={LoanLogo} alt="Loan Logo" className="mx-auto mb-6 w-32 h-auto" />
       </div> */}
@@ -118,12 +119,37 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
         <h2 className="text-2xl font-bold text-gray-800">
           {mode === 'login' ? '' : ''}
         </h2>
-        <p className="text-gray-600 mt-20">
-          {mode === 'login' 
-            ? 'Sign-in using Mobile Number' 
-            : 'Sign-up using Mobile Number'}
+
+        {/* <p className="text-2xl font-semibold text-blue-800 leading-snug">
+          Unlock Best Offers <br />
+          from <span className="font-extrabold text-3xl">30+ Lenders</span>
+        </p> */}
+
+        <p className="text-gray-600 mt-20 text-2xl font-semibold leading-snug">
+          {mode === 'login' ? (
+            <>
+              Unlock Best Offers <br />
+              from <span className="font-extrabold text-3xl">30+ Lenders</span>
+            </>
+          ) : (
+            'Sign-up using Mobile Number'
+          )}
         </p>
       </div>
+
+      {/* <div className="mb-8 mt-6 text-center">
+        <h2 className="text-2xl font-bold text-gray-800">
+          {mode === 'login' ? '' : ''}
+        </h2>
+        {mode === 'login' ? (
+          <p className="text-2xl font-semibold text-blue-800 leading-snug">
+            Unlock Best Offers <br />
+            from <span className="font-extrabold text-3xl">30+ Lenders</span>
+          </p>
+        ) : (
+          <p className="text-gray-600 text-xl">Sign-up using Mobile Number</p>
+        )}
+      </div> */}
 
       <input
         type="tel"
@@ -139,19 +165,52 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
       />
 
       {!showOTP ? (
-        <button
-          onClick={handleGenerateOTP}
-          disabled={!isValidMobile || loading}
-          className={`w-full py-3 text-white font-semibold rounded-lg transition duration-300 ${
-            isValidMobile && !loading 
-              ? 'bg-green-500 hover:bg-green-600 active:bg-green-700' 
-              : 'bg-gray-300 cursor-not-allowed'
-          }`}
-        >
-          {loading ? 'Sending OTP...' : (
-            mode === 'login' ? 'Login with OTP' : 'Register with OTP'
-          )}
-        </button>
+        <>
+        <div className="text-left text-xs text-gray-600 space-y-3 mb-6">
+            <div className="flex items-start">
+              <input 
+                type="checkbox" 
+                id="consent"
+                className="mt-1 mr-2" 
+                checked={checked2} 
+                onChange={e => setChecked2(e.target.checked)} 
+              />
+              <label htmlFor="consent" className="cursor-pointer-">
+                I acknowledge that this is my mobile number and authorise Confirm to use it for communications related to my loan application. {' '}
+              </label>
+            </div>
+
+            <div className="flex items-start">
+              <input 
+                type="checkbox" 
+                id="terms"
+                className="mt-1 mr-2" 
+                checked={checked1} 
+                onChange={e => setChecked1(e.target.checked)} 
+              />
+              <label htmlFor="terms" className="cursor-pointer-">
+                I acknowledge that I have read and agree to Confirm's Credit Report Terms, Terms of Use, and Privacy Policy. {' '}
+                <a href="privacy" target="_blank" className="text-green-500 underline">Read More</a>
+              </label>
+            </div>
+          </div>
+        
+          <button
+            onClick={handleGenerateOTP}
+            disabled={!isValidMobile || loading}
+            className={`w-full py-3 text-white font-semibold rounded-lg transition duration-300 ${
+              isValidMobile && !loading 
+                ? 'bg-green-500 hover:bg-green-600 active:bg-green-700' 
+                : 'bg-gray-300 cursor-not-allowed'
+            }`}
+          >
+            {loading ? 'Sending OTP...' : (
+              mode === 'login' ? 'Proceed with OTP' : 'Proceed with OTP'
+            )}
+          </button>
+        
+        </>
+        
       ) : (
         <>
           <div className="flex justify-center space-x-3 mb-3">
@@ -185,35 +244,7 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
             )}
           </div>
 
-          <div className="text-left text-xs text-gray-600 space-y-3 mb-6">
-            <div className="flex items-start">
-              <input 
-                type="checkbox" 
-                id="terms"
-                className="mt-1 mr-2" 
-                checked={checked1} 
-                onChange={e => setChecked1(e.target.checked)} 
-              />
-              <label htmlFor="terms" className="cursor-pointer-">
-                You agree to LoanEasy's Privacy Policy and T&C and consent to be contacted{' '}
-                <a href="privacy" target="_blank" className="text-green-500 underline">Read More</a>
-              </label>
-            </div>
-            
-            <div className="flex items-start">
-              <input 
-                type="checkbox" 
-                id="consent"
-                className="mt-1 mr-2" 
-                checked={checked2} 
-                onChange={e => setChecked2(e.target.checked)} 
-              />
-              <label htmlFor="consent" className="cursor-pointer-">
-                You hereby consent to LoanEasy being your authorized representative{' '}
-                <a href="#" target="_blank" className="text-green-500 underline">Read More</a>
-              </label>
-            </div>
-          </div>
+          
 
           <button
             onClick={handleVerifyOTP}
@@ -224,15 +255,23 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
             }`}
             disabled={!isFormValid}
           >
-            Verify OTP
+            Verify & Login
           </button>
         </>
       )}
 
       <p className="mt-4 text-sm text-gray-600">
-        {mode === 'login' 
-          ? "We'll verify your identity with a one-time password" 
-          : ""}
+        {mode === 'login' ? (
+          <>
+            By logging in, you agree to following <br />
+            Confirm's Credit Report Terms, <a href="terms" target="_blank" className="text-green-500 underline">Terms of Use</a>, and <a href="privacy" target="_blank" className="text-green-500 underline"> Privacy Policy</a>.
+          </>
+        ) : (
+          <>
+            By logging in, you agree to following <br />
+            Confirm's Credit Report Terms, <a href="terms" target="_blank" className="text-green-500 underline">Terms of Use</a>, and <a href="privacy" target="_blank" className="text-green-500 underline"> Privacy Policy</a>.
+          </>
+        )}
       </p>
     </div>
   );

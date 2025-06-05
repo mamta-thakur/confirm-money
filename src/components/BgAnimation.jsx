@@ -8,11 +8,11 @@ const BgAnimation = () => {
         animate={{ y: [0, 30, 0], x: [0, 20, 0] }}
             transition={{ duration: 8, repeat: Infinity }}
         /> */}
-        <motion.div
+        {/* <motion.div
         className="absolute w-32 h-32 bg-green-200 rounded-full bottom-10 right-10 opacity-20"
         animate={{ y: [0, -20, 0], x: [0, -15, 0] }}
         transition={{ duration: 10, repeat: Infinity }}
-        />
+        /> */}
         {/* <motion.div
         className="absolute w-24 h-24 bg-pink-200 rounded-full top-1/2 left-1/3 opacity-20"
         animate={{ y: [0, 40, 0], x: [0, -25, 0] }}
@@ -31,6 +31,7 @@ const BgAnimation = () => {
             viewBox="0 0 100 100"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            class="opacity-40"
         >
             {/* Outer coin circle */}
             <circle cx="50" cy="50" r="45" fill="#FFD700" stroke="#DAA520" strokeWidth="5" />
@@ -66,6 +67,7 @@ const BgAnimation = () => {
             viewBox="0 0 120 60"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            class="opacity-40"
         >
             {/* Note body */}
             <rect x="2" y="2" width="116" height="56" rx="8" fill="#A8E6CF" stroke="#34A853" strokeWidth="4" />

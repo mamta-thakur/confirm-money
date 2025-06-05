@@ -45,16 +45,24 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
   const validate = () => {
     const newErrors = {};
 
-    if (!formData.firstName) newErrors.firstName = "First name is required";
-    if (!formData.lastName) newErrors.lastName = "Last name is required";
+    // if (!formData.firstName) newErrors.firstName = "First name is required";
+    // if (!formData.lastName) newErrors.lastName = "Last name is required";
+    if (!formData.name) newErrors.name = "Name is required";
     if (!formData.gender) newErrors.gender = "Gender is required";
     if (!formData.dob) newErrors.dob = "Date of birth is required";
     if (!formData.profession) newErrors.profession = "Profession is required";
     if (!formData.income || isNaN(formData.income)) newErrors.income = "Valid income is required";
     // if (!formData.incomeType) newErrors.income = "Please select income type";
-    if (!formData.pan || !/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(formData.pan)) {
+    if (
+      !formData.pan ||
+      formData.pan.length !== 10 ||
+      !/^[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}$/.test(formData.pan)
+    ) {
       newErrors.pan = "Valid PAN is required (e.g., ABCDE1234F)";
     }
+    // if (!formData.pan || !/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(formData.pan)) {
+    //   newErrors.pan = "Valid PAN is required (e.g., ABCDE1234F)";
+    // }
     if (!formData.aadhar || !/^\d{12}$/.test(formData.aadhar)) {
       newErrors.aadhar = "Aadhar must be a 12-digit number";
     }
@@ -71,7 +79,7 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
   };
 
   return (
-    <div className="p-2 mt-20 text-center">
+    <div className="p-2 mt-5 text-center">
       {/* <div className="mb-8">
         <img src={LoanLogo} alt="Loan Logo" className="mx-auto mb-6 w-32 h-auto" />
       </div> */}
@@ -80,7 +88,7 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
       <ProgressSteps currentStep={2} />
 
       <div className="mb-6 mt-10 text-left">
-        <h2 className="text-xl font-bold text-gray-800">Personal Details</h2>
+        {/* <h2 className="text-xl font-bold text-gray-800">Personal Details</h2> */}
         <p className="text-gray-600 text-sm mt-1">
           {isReturningUser 
             ? "Please review your personal details" 
@@ -90,7 +98,17 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
 
       <div className="space-y-4 text-left">
         {/* Name */}
-        <div className="grid grid-cols-3 gap-2">
+        <div>
+          <input 
+            name="name" 
+            placeholder="Name as per PAN Card"
+            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" 
+            onChange={handleChange} 
+            value={formData.name || ''} 
+          />
+          {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+        </div>
+        {/* <div className="grid grid-cols-3 gap-2">
           <div>
             <input 
               name="firstName" 
@@ -118,7 +136,7 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
             />
             {errors.lastName && <p className="text-red-500 text-xs mt-1">{errors.lastName}</p>}
           </div>
-        </div>
+        </div> */}
 
         {/* Gender */}
         <div>
@@ -133,7 +151,6 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
             <option value="" disabled hidden>Select Gender</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
-            <option value="Other">Other</option>
           </select>
           {errors.gender && <p className="text-red-500 text-xs mt-1">{errors.gender}</p>}
         </div>
@@ -187,8 +204,11 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
           >
             <option value="" disabled hidden>Select Profession</option>
             <option value="Salaried">Salaried</option>
-            <option value="Professional">Professional</option>
-            <option value="Self Employed">Self Employed</option>
+            <option value="Self Employed - Business">Self Employed - Business</option>
+            <option value="Self Employed - Professional">Self Employed - Professional</option>
+            <option value="Student">Student</option>
+            <option value="Housewife">Housewife</option>
+            <option value="Other">Other</option>
           </select>
           {errors.profession && <p className="text-red-500 text-xs mt-1">{errors.profession}</p>}
         </div>
@@ -197,22 +217,21 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
         <div className="grid grid-cols-2 gap-2">
           <input 
             name="income" 
-            placeholder="Income" 
+            placeholder="Monthly Income" 
             type="number" 
             className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" 
             onChange={handleChange} 
             value={formData.income || ''} 
           />
-          <select
+          {/* <select
             name="incomeType"
             className="w-full p-3 border rounded-lg bg-white focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
             onChange={handleChange}
             value={formData.incomeType || 'monthly'}
           >
-            {/* <option value="" disabled>Select Type</option> */}
             <option value="monthly">Monthly</option>
             <option value="annual">Annual</option>
-          </select>
+          </select> */}
         </div>
         {errors.income && <p className="text-red-500 text-xs mt-1">{errors.income}</p>}
 
@@ -244,12 +263,12 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
 
       {/* Buttons */}
       <div className="flex space-x-3 mt-6">
-        <button
+        {/* <button
           onClick={prevStep}
           className="w-1/3 py-3 rounded-lg font-medium border border-gray-300 hover:bg-gray-50 transition"
         >
           Back
-        </button>
+        </button> */}
         
         <button
           onClick={handleNext}

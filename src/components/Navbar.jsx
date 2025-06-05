@@ -10,7 +10,7 @@ export default function Navbar() {
   return (
     <>
       <nav className="bg-white shadow-md">
-        <div className="w-[80%] mx-auto p-4 flex justify-between items-center">
+        <div className="w-[80%] mx-auto py-2 flex justify-between items-center">
           <a href="/">
           {/* <img src={Logo} alt="Logo" className="h-8-" /> */}
           <img src={Logo} alt="Logo" className="h-20 md:h-20 w-auto" />

@@ -9,7 +9,7 @@ export default function NavbarProducts() {
   return (
     <>
       <nav className="bg-white shadow-md border-b-2 border-green-500">
-        <div className="w-[90%] mx-auto p-4 flex justify-between items-center">
+        <div className="w-[90%] mx-auto py-2 flex justify-between items-center">
           <a href="/">
           <img src={Logo} alt="Logo" className="h-20 md:h-20 w-auto" />
           </a>

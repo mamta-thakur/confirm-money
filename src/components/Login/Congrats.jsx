@@ -1,6 +1,4 @@
-import React from 'react';
-import LoanLogo from '../../assets/loan-logo.png';
-import ProgressSteps from '../ProgressSteps';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, Star, Info } from 'lucide-react';
 import BgAnimation from '../BgAnimation';
@@ -12,45 +10,89 @@ const offers = [
     lender: "Poonawalla Fincorp",
     description: "Personal Loan",
     approval: "Excellent",
-    loanAmount: "upto ₹5 Lakh",
-    interestRate: "from 16% p.a.",
-    processingFee: "2.5%",
-    recommended: true
+    loanAmount: "Upto Rs 5,00,000",
+    interestRate: "Starting 12%",
+    tenure: "Upto 36 months",
+    processingFee: "2 to 6%",
+    recommended: true,
+    documents: [
+      {
+        title: "Identity proof",
+        examples: ["PAN"]
+      },
+      {
+        title: "Current Residence Proof",
+        examples: ["Aadhaar", "Passport"]
+      },
+      {
+        title: "Income Proof (Only for Loan Amount > 50k)",
+        examples: ["Bank Statement(Soft Copy - 3 Months)"]
+      }
+    ]
   },
   {
     id: 2,
     lender: "Prefr",
     description: "Personal Loan",
     approval: "Good",
-    loanAmount: "upto ₹5 Lakh",
-    interestRate: "min 15%",
-    processingFee: "2%",
-    recommended: false
+    loanAmount: "Upto Rs 5,00,000",
+    interestRate: "Starting 15%",
+    tenure: "Upto 36 months",
+    processingFee: "2 to 5%",
+    documents: [
+      {
+        title: "Identity proof",
+        examples: ["PAN"]
+      },
+      {
+        title: "Current Residence Proof",
+        examples: ["Aadhaar", "Passport"]
+      },
+      {
+        title: "Income Proof (Only for Loan Amount > 50k)",
+        examples: ["Bank Statement(Soft Copy - 3 Months)"]
+      }
+    ]
   },
   {
     id: 3,
     lender: "IndusInd Bank",
     description: "Personal Loan",
     approval: "Average",
-    loanAmount: "upto ₹3 Lakh",
-    interestRate: "from 14% p.a.",
-    processingFee: "1.5%",
-    recommended: false
+    loanAmount: "Upto Rs 3,00,000",
+    interestRate: "Starting 14%",
+    tenure: "Upto 24 months",
+    processingFee: "1.5 to 4%",
+    documents: [
+      {
+        title: "Identity proof",
+        examples: ["PAN"]
+      },
+      {
+        title: "Current Residence Proof",
+        examples: ["Aadhaar", "Passport"]
+      },
+      {
+        title: "Income Proof (Only for Loan Amount > 50k)",
+        examples: ["Bank Statement(Soft Copy - 3 Months)"]
+      }
+    ]
   }
 ];
 
 const Congrats = ({ formData }) => {
+  const [selectedOffer, setSelectedOffer] = useState(null);
   return (
     <>
     {/* <Toaster position="top-center" reverseOrder={false} /> */}
-    <div className="relative min-h-screen bg-gradient-to-br- from-indigo-100 via-white to-emerald-100 overflow-hidden">
+    <div className="relative min-h-screen from-indigo-100 via-white to-emerald-100 overflow-hidden">
         <div className="flex justify-center">
           <div className="sticky- top-0 w-full max-w-xl z-50 bg-white/80 backdrop-blur-sm border-b border-gray-200">
             <Navbar />
           </div>
         </div>
         {/* Form Container */}
-        <div className="relative z-10 flex items-center- justify-center min-h-[calc(100vh-1px)]">
+        <div className="relative z-10 flex justify-center min-h-[calc(100vh-1px)]">
           <motion.div
             // key={step}
             initial={{ opacity: 0, y: 30 }}
@@ -64,38 +106,22 @@ const Congrats = ({ formData }) => {
 
 
               <div className="p-2 text-center">
-                {/* <div className="mb-8">
-                  <img src={LoanLogo} alt="Loan Logo" className="mx-auto mb-6 w-32 h-auto" />
-                </div> */}
 
-                {/* <p className="text-sm text-gray-500 mb-1">100% completed</p> */}
-                {/* <div className="w-full h-1 bg-gray-200 mb-4 rounded-full">
-                  <div className="w-full h-full bg-green-500 rounded-full"></div>
-                </div> */}
-
-                <ProgressSteps currentStep={5} />
-
-                <div className="flex items-center justify-center mb-6 mt-6">
+                <div className="flex items-center justify-center mb-20 mt-6">
                   <div className="bg-green-100 rounded-full p-2">
                     <Check className="text-green-600 w-6 h-6" />
                   </div>
                   <h2 className="ml-2 text-xl font-bold text-gray-800">
-                    Congratulations!
+                    Here are your curated offers...
                   </h2>
                 </div>
-
-                <div className="bg-green-100 border border-green-400 text-green-700 p-4 rounded-lg mb-6 mt-20 text-left">
-                  <p className="font-medium">
-                    Based on your profile, you are eligible for the following loan offers:
-                  </p>
-                </div>
-
+                
                 {offers.map((offer) => (
                   <div key={offer.id} className="border rounded-lg shadow-sm p-4 mb-5 text-left">
                     <div className="flex justify-between items-start">
                       <div>
                         <h3 className="font-bold text-lg">{offer.lender}</h3>
-                        <p className="text-gray-600 text-sm">{offer.description}</p>
+                        {/* <p className="text-gray-600 text-sm">{offer.description}</p> */}
                       </div>
                       {offer.recommended && (
                         <div className="flex items-center bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">
@@ -107,28 +133,56 @@ const Congrats = ({ formData }) => {
                     
                     <div className="mt-4 grid grid-cols-3 gap-4 text-sm">
                       <div>
-                        <p className="text-gray-500">Approval chance</p>
-                        <p className="font-medium">{offer.approval}</p>
-                      </div>
-                      <div>
                         <p className="text-gray-500">Loan Amount</p>
                         <p className="font-medium">{offer.loanAmount}</p>
                       </div>
                       <div>
-                        <p className="text-gray-500">Interest Rate</p>
+                        <p className="text-gray-600 text-sm">Tenure</p>
+                        <p className="font-semibold">{offer.tenure}</p>
+                      </div>
+                      <div>
+                        <p className="text-gray-500">Interest Rate(p.a.)</p>
                         <p className="font-medium">{offer.interestRate}</p>
+                      </div>
+                      <div>
+                        <p className="text-gray-600 text-sm">Processing fees</p>
+                        <p className="font-semibold">{offer.processingFee}</p>
                       </div>
                     </div>
                     
                     <div className="flex justify-between items-center mt-4">
-                      <button className="flex items-center text-blue-600 hover:underline text-sm">
+                      <button 
+                        onClick={() => setSelectedOffer(offer.id === selectedOffer ? null : offer.id)}
+                        className="flex items-center text-blue-600 hover:underline text-sm">
                         <Info className="w-4 h-4 mr-1" />
-                        Offer Details
+                        More Details
                       </button>
                       <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 active:bg-green-700 transition text-sm">
                         Apply Now
                       </button>
                     </div>
+
+                    {selectedOffer === offer.id && offer.documents && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="mt-6 border-t pt-4"
+                      >
+                        <h4 className="font-semibold text-lg mb-3 text-center">Documents</h4>
+                        <p className="font-medium text-gray-800 mb-3 text-center">List of Documents (Indicative)</p>
+                        <div className="space-y-3">
+                          {offer.documents.map((doc, index) => (
+                            <div key={index}>
+                              <p className="font-medium text-gray-800">{doc.title}</p>
+                              <p className="text-xs text-gray-600">
+                                 - Ex: {doc.examples.join(", ")}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
                   </div>
                 ))}
 
