@@ -5,6 +5,7 @@ import { Toaster } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getUserDetails } from '../../utils/auth';
 import BgAnimation from '../../components/BgAnimation';
+import Navbar from '../../components/NavbarProducts';
 
 const LoginPage = () => {
   const [step, setStep] = useState(1);
@@ -47,7 +48,11 @@ const LoginPage = () => {
       <Toaster position="top-center" reverseOrder={false} />
 
       <div className="relative min-h-screen bg-gradient-to-br- from-indigo-100 via-white to-emerald-100 overflow-hidden">
-          
+          <div className="flex justify-center">
+            <div className="sticky- top-0 w-full max-w-xl z-50 bg-white/80 backdrop-blur-sm border-b border-gray-200">
+              <Navbar />
+            </div>
+          </div>
       
           {/* Form Container */}
           <div className="relative z-10 flex items-center- justify-center min-h-[calc(100vh-1px)]">

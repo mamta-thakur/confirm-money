@@ -132,7 +132,10 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
               from <span className="font-extrabold text-3xl">30+ Lenders</span>
             </>
           ) : (
-            'Sign-up using Mobile Number'
+            <>
+              Unlock Best Offers <br />
+              from <span className="font-extrabold text-3xl">30+ Lenders</span>
+            </>
           )}
         </p>
       </div>
