@@ -25,7 +25,7 @@ const Step3 = ({ formData, setFormData, prevStep }) => {
     
     if (!formData.loanType) newErrors.creditType = "Select loan type";
     if (!formData.loanPurpose) newErrors.loanPurpose = "Select loan purpose";
-    if (!formData.loanAmount || formData.loanAmount < 1000) newErrors.loanAmount = "Loan amount too low";
+    if (!formData.loanAmount || formData.loanAmount < 5000) newErrors.loanAmount = "Loan amount too low";
     if (!formData.tenure || formData.tenure < 1) newErrors.tenure = "Tenure required";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -38,18 +38,18 @@ const Step3 = ({ formData, setFormData, prevStep }) => {
     }
   };
 
-  const min = 1000;
+  const min = 5000;
   const max = 1000000;
   const value = formData.loanAmount || min;
   const percent = ((value - min) / (max - min)) * 100;
 
-  const minTenure = 1;
+  const minTenure = 3;
   const maxTenure = 60;
   const tenureValue = formData.tenure || minTenure;
   const tenurePercent = ((tenureValue - minTenure) / (maxTenure - minTenure)) * 100;
 
   return (
-    <div className="p-2 mt-5 text-center">
+    <div className="p-2 mt-2 text-center">
       {/* <div className="mb-8">
         <img src={LoanLogo} alt="Loan Logo" className="mx-auto mb-6 w-32 h-auto" />
       </div> */}
@@ -138,7 +138,7 @@ const Step3 = ({ formData, setFormData, prevStep }) => {
           type="range"
           min={min}
           max={max}
-          step={1000}
+          step={5000}
           value={value}
           onChange={(e) =>
             handleSliderChange("loanAmount", parseInt(e.target.value))
@@ -150,7 +150,7 @@ const Step3 = ({ formData, setFormData, prevStep }) => {
         />
 
         <div className="flex justify-between text-xs text-gray-500 mt-1">
-          <span>₹1,000</span>
+          <span>₹5,000</span>
           <span>₹10,00,000</span>
         </div>
         {errors.loanAmount && <p className="text-red-500 text-xs mt-1">{errors.loanAmount}</p>}
@@ -176,7 +176,7 @@ const Step3 = ({ formData, setFormData, prevStep }) => {
           type="range"
           min={minTenure}
           max={maxTenure}
-          step={1}
+          step={3}
           value={tenureValue}
           onChange={(e) => handleSliderChange("tenure", parseInt(e.target.value))}
           className="w-full h-2 rounded-lg appearance-none cursor-pointer"
@@ -185,7 +185,7 @@ const Step3 = ({ formData, setFormData, prevStep }) => {
           }}
         />
         <div className="flex justify-between text-xs text-gray-500 mt-1">
-          <span>1 month</span>
+          <span>3 month</span>
           <span>60 months</span>
         </div>
         {errors.tenure && <p className="text-red-500 text-xs mt-1">{errors.tenure}</p>}

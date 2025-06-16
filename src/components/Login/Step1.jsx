@@ -107,7 +107,7 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
   const completionPercentage = mode === 'register' ? 0 : 25;
 
   return (
-    <div className="p-2 mt-5 text-center">
+    <div className="p-2 mt-2 text-center">
       {/* <div className="mb-8">
         <img src={LoanLogo} alt="Loan Logo" className="mx-auto mb-6 w-32 h-auto" />
       </div> */}
@@ -126,7 +126,7 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
           from <span className="font-extrabold text-3xl">30+ Lenders</span>
         </p> */}
 
-        <p className="text-gray-600 mt-20 text-2xl font-semibold leading-snug">
+        <p className="text-gray-600 mt-10 text-2xl font-semibold leading-snug">
           {mode === 'login' ? (
             <>
               Unlock Best Offers <br />
@@ -193,15 +193,14 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
                 onChange={e => setChecked1(e.target.checked)} 
               />
               <label htmlFor="terms" className="cursor-pointer-">
-                I acknowledge that I have read and agree to Confirm's Credit Report Terms, Terms of Use, and Privacy Policy. {' '}
-                <a href="privacy" target="_blank" className="text-green-500 underline">Read More</a>
+                I acknowledge that I have read and agree to Confirm's <a href="terms" target="_blank" className="text-green-500 underline">Credit Report Terms</a>, <a href="terms" target="_blank" className="text-green-500 underline">Terms of Use</a>, and <a href="privacy" target="_blank" className="text-green-500 underline"> Privacy Policy</a>. {' '}
               </label>
             </div>
           </div>
         
           <button
             onClick={handleGenerateOTP}
-            disabled={!isValidMobile || loading}
+            disabled={!isValidMobile || loading || !isConcentGiven}
             className={`w-full py-3 text-white font-semibold rounded-lg transition duration-300 ${
               isValidMobile && !loading && isConcentGiven 
                 ? 'bg-green-500 hover:bg-green-600 active:bg-green-700' 
@@ -267,8 +266,8 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
       <p className="mt-4 text-sm text-gray-600">
         {mode === 'login' ? (
           <>
-            By logging in, you agree to following <br />
-            Confirm's Credit Report Terms, <a href="terms" target="_blank" className="text-green-500 underline">Terms of Use</a>, and <a href="privacy" target="_blank" className="text-green-500 underline"> Privacy Policy</a>.
+            {/* By logging in, you agree to following <br />
+            Confirm's Credit Report Terms, <a href="terms" target="_blank" className="text-green-500 underline">Terms of Use</a>, and <a href="privacy" target="_blank" className="text-green-500 underline"> Privacy Policy</a>. */}
           </>
         ) : (
           <>

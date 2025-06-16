@@ -24,14 +24,14 @@ const ShopPage = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showSearch, setShowSearch] = useState(false);
 
-  useEffect(() => {
-    // Check if user is authenticated
-    const userMobile = localStorage.getItem('userMobile');
-    if (!userMobile || !isShopUserRegistered(userMobile) || !isAuthenticated()) {
-      // Redirect to login if not authenticated
-      navigate('/shop-journey');
-    }
-  }, [navigate])
+  // useEffect(() => {
+  //   // Check if user is authenticated
+  //   const userMobile = localStorage.getItem('userMobile');
+  //   if (!userMobile || !isShopUserRegistered(userMobile) || !isAuthenticated()) {
+  //     // Redirect to login if not authenticated
+  //     navigate('/shop-journey');
+  //   }
+  // }, [navigate])
 
   const handleBrandClick = (url) => {
     setIsLoading(true);
@@ -67,7 +67,7 @@ const ShopPage = () => {
               {/* <div className="flex- flex-col- md:flex-row h-screen bg-gray-50"> */}
                 {/* Main content area (80%) */}
                 <Navbar />
-                <div className="w-full md:w-4/5- h-full- h-[65%] overflow-auto">
+                <div className="w-full md:w-4/5- h-full- h-[60%] overflow-auto">
                   {selectedWebsite ? (
                     <BrowserView url={selectedWebsite} isLoading={isLoading} onBack={() => {setSelectedWebsite(null); setSelectedCategory(null); }} />
                   ) : (

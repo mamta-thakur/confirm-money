@@ -79,7 +79,7 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
   };
 
   return (
-    <div className="p-2 mt-5 text-center">
+    <div className="p-2 mt-2 text-center">
       {/* <div className="mb-8">
         <img src={LoanLogo} alt="Loan Logo" className="mx-auto mb-6 w-32 h-auto" />
       </div> */}
@@ -91,8 +91,8 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
         {/* <h2 className="text-xl font-bold text-gray-800">Personal Details</h2> */}
         <p className="text-gray-600 text-sm mt-1">
           {isReturningUser 
-            ? "Please review your personal details" 
-            : "Please provide your personal details"}
+            ? "Enter Details" 
+            : "Enter Details"}
         </p>
       </div>
 
@@ -240,6 +240,7 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
           <input 
             name="pan" 
             placeholder="PAN (ABCDE1234F)" 
+            maxLength={10}
             className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" 
             onChange={handleChange} 
             value={formData.pan || ''} 
@@ -254,7 +255,13 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
             placeholder="Aadhar Number (12 digits)" 
             maxLength={12} 
             className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" 
-            onChange={handleChange} 
+            onChange={(e) => {
+              const value = e.target.value;
+              // Allow only digits
+              if (/^\d*$/.test(value)) {
+                handleChange(e); // call your existing handler
+              }
+            }}  
             value={formData.aadhar || ''} 
           />
           {errors.aadhar && <p className="text-red-500 text-xs mt-1">{errors.aadhar}</p>}

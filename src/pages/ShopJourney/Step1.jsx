@@ -121,7 +121,7 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
   return (
     <>
       
-      <div className="p-2 mt-20 text-center">
+      <div className="p-2 mt-10 text-center">
         {/* <div className="mb-6">
           <img src={LoanLogo} alt="Loan Logo" className="mx-auto mb-6 w-32 h-auto" />
         </div> */}
