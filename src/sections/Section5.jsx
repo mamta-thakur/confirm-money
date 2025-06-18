@@ -2,10 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-import card1 from '../assets/qr-coin.webp';
-import card2 from '../assets/qr-coin.webp';
-import card3 from '../assets/qr-coin.webp';
-import qrBox from '../assets/qr-coin.webp';
+import card1 from '../assets/money_bag.png';
+import card2 from '../assets/money_bag.png';
+import card3 from '../assets/money_bag.png';
+import qrBox from '../assets/money_bag.png';
 
 gsap.registerPlugin(ScrollTrigger);
 

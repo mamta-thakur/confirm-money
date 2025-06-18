@@ -40,9 +40,9 @@ function HomePage() {
       <Section1 />
       <Section2 />
       <Section3 />
-      <Section4 />
-      <Section5 />
-      <ProductSection />
+      {/* <Section4 /> */}
+      {/* <Section5 /> */}
+      {/* <ProductSection /> */}
       <Section6 />
       <Footer />
     </>

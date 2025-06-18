@@ -4,7 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import posImage from '../assets/qr-coin-color-red.webp';
 import qrGlow from '../assets/decor-l-2.webp';
-import qrBox from '../assets/qr-coin.webp';
+import qrBox from '../assets/money_bag.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,35 +16,6 @@ const Section3 = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Main POS animation
-      gsap.fromTo(
-        posRef.current,
-        { opacity: 0, x: 200, rotate: 15, scale: 0.8 },
-        {
-          opacity: 1,
-          x: 0,
-          rotate: 0,
-          scale: 1,
-          duration: 1.4,
-          ease: 'back.out(1.7)',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 80%',
-            end: 'bottom 60%',
-            toggleActions: 'play reverse play reverse',
-          },
-        }
-      );
-
-      // Glow bounce
-      gsap.to(qrGlowRef.current, {
-        y: 80,
-        repeat: -1,
-        yoyo: true,
-        duration: 2,
-        ease: 'sine.inOut',
-      });
-
       // Features animation
       featuresRef.current.forEach((el, i) => {
         gsap.fromTo(
@@ -74,48 +45,83 @@ const Section3 = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen bg-[#6bc6a7] text-white px-6 py-20 overflow-hidden flex flex-col items-center justify-center"
+      className="relative min-h-screen bg-[#6bc6a7] text-white px-6 py-10 overflow-hidden flex flex-col items-center justify-center"
     >
-      <div className="w-4/5 max-w-screen-xl mx-auto flex flex-col md:flex-row items-center justify-between">
+      <div className="w-4/5- mb-10- max-w-screen-xl mx-auto flex flex-col md:flex-row items-center justify-between">
         {/* Text */}
-        <div className="md:w-1/2 mb-12 md:mb-0 z-10 text-center md:text-left">
-          <p className="text-lg md:text-xl text-white/80">
-            Redefining the way you
+        <div className="md:w-1/2- mb-12 md:mb-0 z-10 text-center md:text-left">
+          
+          <h3 className="text-2xl md:text-3xl font-bold mt-2 text-[#000e18]">
+            Shop What You Love.<br></br>
+            Pay How You Like.<br></br>
+            Only with Confirm.<br></br>
+          </h3>
+        </div>
+      </div>
+
+      <h3 className="text-2xl md:text-3xl font-bold mt-2 text-[#000e18]">How to use Confirm.Shop?</h3>
+      <div className="max-w-screen-xl- mx-auto- grid- grid-cols-1- md:grid-cols-3- gap-10- 
+      w-full max-w-screen-lg mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* 1. At Checkout */}
+        <div className="text-center md:text-left">
+          <div className="text-4xl mb-4">🛒</div>
+          <h3 className="text-xl font-bold mb-2">At checkout</h3>
+          <p className="text-sm mb-2">
+            Look for the Affirm logo when completing your purchase, or pay with your{' '}
+            <a href="#" className="text-blue-600 underline">Affirm Card</a>.
           </p>
-          <h2 className="text-4xl md:text-6xl font-bold mt-2">Scan and pay</h2>
         </div>
 
-        {/* POS + QR Glow */}
-        <div className="relative md:w-1/2 flex justify-center z-10">
-          <img
-            src={posImage}
-            alt="POS Machine"
-            ref={posRef}
-            className="w-[260px] md:w-[340px] drop-shadow-2xl"
-          />
-          <img
-            src={qrGlow}
-            alt="QR Glow"
-            ref={qrGlowRef}
-            className="absolute top-[30%] left-[10%] w-[120px] md:w-[140px] pointer-events-none opacity-90"
-          />
+        {/* 2. Affirm App */}
+        <div className="text-center md:text-left">
+          <div className="text-4xl mb-4">📱</div>
+          <h3 className="text-xl font-bold mb-2">Affirm app</h3>
+          <p className="text-sm mb-4">
+            Check your purchasing power and see your payment options from the palm of your hand.
+          </p>
+          <button className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm mb-2">Learn more</button>
+        </div>
+
+        {/* 3. The Affirm Card */}
+        <div className="text-center md:text-left">
+          <div className="text-4xl mb-4">💳</div>
+          <h3 className="text-xl font-bold mb-2">The Affirm Card™</h3>
+          <p className="text-sm mb-2">
+            Request to pay over time for the big stuff, or just pay in full for the smaller things.
+          </p>
         </div>
       </div>
 
       {/* Dummy Features Section */}
       <div className="w-full max-w-screen-lg mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {['Instant Payments', 'Secure Transactions', '24/7 Support'].map((feature, index) => (
+        {/* {['Instant Payments', 'Secure Transactions', '24/7 Support'].map((feature, index) => ( */}
+          <>
           <div
-            key={index}
-            ref={(el) => (featuresRef.current[index] = el)}
             className="bg-white/10 p-6 rounded-xl backdrop-blur-md shadow-md text-center"
           >
-            <h3 className="text-xl font-semibold mb-2">{feature}</h3>
+            <h3 className="text-xl font-semibold mb-2">Get Deals</h3>
             <p className="text-sm text-white/80">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel neque.
+              on your favourite brands<br></br> At Checkout
             </p>
           </div>
-        ))}
+          <div
+          className="bg-white/10 p-6 rounded-xl backdrop-blur-md shadow-md text-center"
+        >
+          <h3 className="text-xl font-semibold mb-2">Get Financing</h3>
+          <p className="text-sm text-white/80">
+            Explore payment options <br></br>on real time
+          </p>
+        </div>
+        <div
+        className="bg-white/10 p-6 rounded-xl backdrop-blur-md shadow-md text-center"
+      >
+        <h3 className="text-xl font-semibold mb-2">24/7 Support</h3>
+        <p className="text-sm text-white/80">
+          Get help and answers to <br></br>questions in real time
+        </p>
+      </div>
+      </>
+        {/* ))} */}
       </div>
 
       {/* Floating QR Widget */}

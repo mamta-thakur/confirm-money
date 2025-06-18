@@ -2,9 +2,9 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import superFlag from "../assets/notes-vertical.webp";
-import qrCoin from "../assets/qr-coin.webp";
-import cubeLeft from "../assets/note-with-l.webp";
+import percentArrow from "../assets/percent_arrow.png";
+import moneyBag from "../assets/money_bag.png";
+import rupee from "../assets/rupee.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -34,7 +34,7 @@ const Section1 = () => {
         opacity: 0,
         y: 30,
         delay: 0.2,
-        duration: 2,
+        duration: 1,
         scrollTrigger: {
           trigger: subtitleRef.current,
           start: "top 80%",
@@ -46,7 +46,7 @@ const Section1 = () => {
         opacity: 0,
         scale: 0.8,
         delay: 0.4,
-        duration: 2,
+        duration: 1,
         scrollTrigger: {
           trigger: buttonRef.current,
           start: "top 80%",
@@ -54,39 +54,29 @@ const Section1 = () => {
         },
       });
 
+      // Subtle floating animations
       gsap.to(coinRef.current, {
-        x: 15,
-        duration: 2,
+        y: 10,
+        duration: 3,
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut',
       });
 
       gsap.to(cubeRef.current, {
-        y: 20,
-        duration: 2,
+        y: 15,
+        duration: 4,
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut',
       });
 
       gsap.to(flagRef.current, {
-        y: 15,
-        duration: 2,
+        y: 12,
+        duration: 3.5,
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut',
-      });
-
-      // Blob animation
-      gsap.utils.toArray(".blob").forEach((blob, i) => {
-        gsap.to(blob, {
-          y: 30 + i * 5,
-          duration: 6 + i,
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
-        });
       });
 
     }, sectionRef);
@@ -97,68 +87,77 @@ const Section1 = () => {
   return (
     <section
       ref={sectionRef}
-      className="min-h-screen bg-[#6bc6a7] text-white relative overflow-hidden flex flex-col justify-center text-center"
+      className="min-h-screen bg-[#6bc6a7] text-white relative overflow-hidden flex flex-col justify-center"
     >
-      {/* Animated SVG Blobs */}
-      <svg className="blob absolute top-0 left-0 w-72 opacity-20 text-white" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <path fill="currentColor" d="M50.5,-68.6C65.5,-60.6,77.4,-44.4,78.8,-28.1C80.1,-11.7,70.9,4.9,61.2,20.5C51.5,36,41.3,50.5,27.3,61.2C13.2,71.8,-4.7,78.5,-21.5,74.2C-38.3,70,-54.1,54.7,-61.2,38.1C-68.3,21.6,-66.8,3.8,-63.2,-13.8C-59.6,-31.5,-53.9,-49.1,-41.3,-58.5C-28.8,-68,-9.4,-69.3,8.4,-72C26.2,-74.7,52.4,-78.6,50.5,-68.6Z" transform="translate(100 100)" />
-      </svg>
-
-      <svg className="blob absolute bottom-0 right-0 w-80 opacity-30 text-white" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <path fill="currentColor" d="M45.1,-61.1C56.6,-51.2,62.6,-33.6,65.4,-16.3C68.2,1.1,67.8,18.1,61.4,33.3C54.9,48.5,42.5,61.9,27.9,67.6C13.4,73.3,-3.4,71.2,-21.8,66.6C-40.1,61.9,-60,54.7,-67.9,40.9C-75.8,27.2,-71.6,6.9,-63.9,-9.4C-56.2,-25.6,-44.9,-37.9,-32.2,-47.7C-19.5,-57.5,-9.7,-64.8,5.3,-71.1C20.3,-77.4,40.5,-82.1,45.1,-61.1Z" transform="translate(100 100)" />
-      </svg>
-
       {/* Floating images */}
       <img
-        src={qrCoin}
-        alt="QR Coin"
+        src={moneyBag}
+        alt="Coin"
         ref={coinRef}
-        className="absolute top-10 left-10 w-28 md:w-32 rotate-12"
+        className="absolute top-10 left-16 w-22 md:w-30 opacity-80"
       />
       <img
-        src={cubeLeft}
-        alt="Cube"
+        src={rupee}
+        alt="Notes"
         ref={cubeRef}
-        className="absolute bottom-10 left-10 w-38 md:w-46 rotate-45"
+        className="absolute bottom-20 right-16 w-32 md:w-40 opacity-80"
       />
       <img
-        src={superFlag}
-        alt="Super Flag"
+        src={percentArrow}
+        alt="Money Stack"
         ref={flagRef}
-        className="absolute bottom-10 right-10 w-32 md:w-40"
+        className="absolute bottom-20 left-16 w-28 md:w-36 opacity-80"
       />
 
       {/* Content Wrapper */}
-      <div className="w-full max-w-screen-xl mx-auto px-4 flex flex-col items-center justify-center">
-        <h2 ref={subtitleRef} className="text-lg md:text-xl mb-2">
-          Unlock the power of
-        </h2>
+      <div className="w-full max-w-4xl mx-auto px-6 text-center">
         <h1
           ref={titleRef}
-          className="text-5xl md:text-7xl font-bold bg-white text-[#6bc6a7] px-6 py-2 rounded shadow-lg"
+          className="text-4xl md:text-6xl font-bold mb-8 leading-tight"
         >
-          superUPI
+          Get Easy Loans <br />
         </h1>
-        <p className="text-lg md:text-xl mt-2">crafted for the superYou</p>
 
         {/* CTA Button */}
         <div
           ref={buttonRef}
-          className="mt-8 bg-gradient-to-r from-[#ffffff] to-[#d6f6ed] text-[#2a8c6f] px-6 py-4 rounded-xl shadow-lg cursor-pointer flex items-center gap-4 border border-white hover:scale-105 transition"
+          className="inline-flex items-center gap-3 bg-white text-[#6bc6a7] px-8 py-4 rounded-full shadow-lg cursor-pointer hover:scale-105 transition-transform duration-300 font-semibold text-lg"
         >
-          <img
-            src={qrCoin}
-            alt="QR Code"
-            className="w-12 h-12 border-white rounded"
-          />
-          <span className="text-lg font-semibold">Check eligibility</span>
+          <div className="w-8 h-8 bg-[#6bc6a7] rounded-full flex items-center justify-center">
+            <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clipRule="evenodd" />
+            </svg>
+          </div>
+          Check eligibility
+        </div>
+
+        {/* Statistics Section */}
+        <div className="mt-16 bg-white/10 backdrop-blur-sm rounded-2xl p-6 mx-auto max-w-3xl">
+          <div className="grid grid-cols-3 gap-6 text-center">
+            <div>
+              <div className="flex items-center justify-center mb-2">
+                <span className="text-2xl">⭐</span>
+              </div>
+              <div className="text-xl font-bold">4.6/5</div>
+              <div className="text-sm opacity-80">1k+ Reviews</div>
+            </div>
+            <div>
+              <div className="flex items-center justify-center mb-2">
+                <span className="text-2xl">💰</span>
+              </div>
+              <div className="text-xl font-bold">₹1000 Cr+</div>
+              <div className="text-sm opacity-80">Loans arranged</div>
+            </div>
+            <div>
+              <div className="flex items-center justify-center mb-2">
+                <span className="text-2xl">😊</span>
+              </div>
+              <div className="text-xl font-bold">1 lac+</div>
+              <div className="text-sm opacity-80">Happy Customers</div>
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* Footer note */}
-      <p className="absolute bottom-6 text-sm md:text-base opacity-90 w-full text-center">
-        Get up to 5% guaranteed cashback & many more perks.
-      </p>
     </section>
   );
 };

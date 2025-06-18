@@ -3,7 +3,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import phoneMockup from '../assets/super-deposit.webp';
-import qrBox from '../assets/qr-coin.webp';
+import qrBox from '../assets/money_bag.png';
 
 gsap.registerPlugin(ScrollTrigger);
 

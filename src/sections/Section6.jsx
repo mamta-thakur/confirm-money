@@ -3,32 +3,46 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 
 const faqs = [
   {
-    question: "What is Lorem Ipsum?",
+    question: "What is Confirm.Money?",
     answer:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+      "Confirm.Money is your all-in-one site for comparing loans and shopping online. You can see offers from many lenders and choose flexible payment plans for your purchases.",
   },
   {
-    question: "Why do we use it?",
+    question: "What types of loans can I apply for?",
     answer:
-      "It is a long established fact that a reader will be distracted by the readable content of a page.",
+      "Depending on your profile, you can get:\n- Personal Loans\n- Business Loans\n- Shopping-Cart Funding (EMIs at checkout)\n- Loan Against Property\n…and more, based on each lender’s rules.",
   },
   {
-    question: "Where does it come from?",
+    question: "How do I use Confirm.Money?",
     answer:
-      "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in classical Latin literature.",
+      "1. Sign up with your mobile number and the OTP you receive.\n2. Enter a few details about the loan you need.\n3. Compare live offers—check interest rates, loan amounts and durations.\n4. Pick the best option and apply online.\n5. Get help from our loan experts every step of the way.",
   },
   {
-    question: "Where can I get some?",
+    question: "Are there any fees or hidden charges?",
     answer:
-      "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.",
+      "No. Confirm.Money does not charge you any fees. You only pay the interest rate and processing fee that your chosen lender shows you.",
   },
   {
-    question: "Is Lorem Ipsum safe to use?",
+    question: "Can I shop directly on Confirm.Money?",
     answer:
-      "Yes, Lorem Ipsum is safe and used widely in publishing and web development as placeholder text.",
+      "Yes. Browse our partner stores or brands, add items to your cart, and at checkout choose “EMI” or “Get Financing” to split your payment over 3 or 6 months.",
+  },
+  {
+    question: "Can I pay off my loan or EMI early?",
+    answer:
+      "Absolutely. You can prepay part or all of your loan at any time. Your lender’s prepayment or foreclosure charges (if any) will apply.",
+  },
+  {
+    question: "What documents do I need to apply?",
+    answer:
+      "Basic KYC: PAN card and Aadhaar (or other ID proof).\nFor some loans: Salary slips (last 3 months), ITRs (last 2 years), bank statements, etc., depending on the loan type and lender.",
+  },
+  {
+    question: "How safe is my personal information?",
+    answer:
+      "Very safe. We use strong encryption and industry-standard security measures, and we never share your data without your permission.",
   },
 ];
-
 
 export default function Section6() {
   const [openIndex, setOpenIndex] = useState(0);
@@ -39,7 +53,7 @@ export default function Section6() {
 
   return (
     <section className="py-16 bg-white">
-      <div className="max-w-3xl mx-auto px-4 text-center">
+      <div className="max-w-5xl mx-auto px-4 text-center">
         <h2 className="text-4xl font-bold mb-10">FAQs</h2>
         <div className="space-y-4">
           {faqs.map((faq, index) => (
@@ -59,7 +73,7 @@ export default function Section6() {
                 )}
               </button>
               {openIndex === index && (
-                <div className="px-6 pb-6 text-gray-600 text-left">
+                <div className="px-6 pb-6 text-gray-600 text-left whitespace-pre-line">
                   {faq.answer}
                 </div>
               )}
