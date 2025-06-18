@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Logo from "../assets/loan-logo.png";
 import { FaTwitter, FaInstagram, FaLinkedin, FaFacebook } from 'react-icons/fa';
 
 const Footer = () => {
@@ -9,7 +10,11 @@ const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12">
           {/* Column 1 - Company Description */}
           <div>
-            <h3 className="text-xl font-bold mb-4">Confirm Logo</h3>
+            <h3 className="text-xl font-bold mb-4">
+              <a href="/">
+              <img src={Logo} alt="Logo" className="h-20 md:h-20 w-auto" />
+              </a>
+            </h3>
             <p className="text-sm text-gray-600 mb-4">
               Confirm.Money is your all-in-one site for comparing loans and shopping online.
               You can see offers from many lenders and choose flexible payment plans for your purchases.
