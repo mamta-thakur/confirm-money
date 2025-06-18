@@ -68,7 +68,7 @@ const Section3 = () => {
           <h3 className="text-xl font-bold mb-2">At checkout</h3>
           <p className="text-sm mb-2">
             Look for the Affirm logo when completing your purchase, or pay with your{' '}
-            <a href="#" className="text-blue-600 underline">Affirm Card</a>.
+            <a href="#" className="text-green-600 underline">Affirm Card</a>.
           </p>
         </div>
 
@@ -79,7 +79,7 @@ const Section3 = () => {
           <p className="text-sm mb-4">
             Check your purchasing power and see your payment options from the palm of your hand.
           </p>
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm mb-2">Learn more</button>
+          <button className="bg-green-600 text-white px-4 py-2 rounded-md text-sm mb-2">Learn more</button>
         </div>
 
         {/* 3. The Affirm Card */}

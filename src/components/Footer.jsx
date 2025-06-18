@@ -30,17 +30,17 @@ const Footer = () => {
             <ul className="text-sm text-gray-600 space-y-1">
               <li className="font-semibold">Products:</li>
               <li>
-                <Link to="/loan-journey" className="hover:text-blue-600">Confirm.Credit</Link>
+                <Link to="/loan-journey" className="hover:text-green-600">Confirm.Credit</Link>
               </li>
               <li>
-                <Link to="/shop" className="hover:text-blue-600">Confirm.Shop</Link>
+                <Link to="/shop" className="hover:text-green-600">Confirm.Shop</Link>
               </li>
               <li className="font-semibold mt-4">Legal:</li>
               <li>
-                <Link to="/terms" className="hover:text-blue-600">Terms of Use</Link>
+                <Link to="/terms" className="hover:text-green-600">Terms of Use</Link>
               </li>
               <li>
-                <Link to="/privacy" className="hover:text-blue-600">Privacy Policy</Link>
+                <Link to="/privacy" className="hover:text-green-600">Privacy Policy</Link>
               </li>
             </ul>
           </div>
@@ -50,7 +50,7 @@ const Footer = () => {
             <h3 className="text-lg font-bold mb-4">Contact us</h3>
             <p className="text-sm text-gray-600 mb-2">+91 9699033291</p>
             <p className="text-sm text-gray-600 mb-4">contact@confirm.Money</p>
-            <div className="flex space-x-4 mt-2 text-xl text-blue-600">
+            <div className="flex space-x-4 mt-2 text-xl text-green-600">
               <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
                 <FaTwitter />
               </a>
