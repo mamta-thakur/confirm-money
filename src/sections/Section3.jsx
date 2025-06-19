@@ -160,7 +160,7 @@ const Section3 = () => {
               Pay How You Like.
             </span>
             <br />
-            <span className="text-[#000e18] font-extrabold">
+            <span className="text-white font-extrabold">
               Only with Confirm.
             </span>
           </h2>
@@ -170,7 +170,7 @@ const Section3 = () => {
 
         {/* How to use section */}
         <div className="text-center mb-10">
-          <h3 className="text-3xl md:text-4xl font-bold text-[#000e18] mb-6">
+          <h3 className="text-3xl md:text-4xl font-bold text-white mb-6">
             How to use Confirm.Shop?
           </h3>
           
