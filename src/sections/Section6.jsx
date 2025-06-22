@@ -53,8 +53,10 @@ export default function Section6() {
 
   return (
     <section className="py-16 bg-white">
-      <div className="max-w-5xl mx-auto px-4 text-center">
-        <h2 className="text-4xl font-bold mb-10">FAQs</h2>
+      <div className="max-w-7xl mx-auto px-4 text-center">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-10">
+          FAQs
+        </h2>
         <div className="space-y-4">
           {faqs.map((faq, index) => (
             <div
@@ -62,18 +64,20 @@ export default function Section6() {
               className="border rounded-2xl shadow-sm overflow-hidden transition-all"
             >
               <button
-                className="w-full flex justify-between items-center p-6 text-left"
+                className="w-full flex justify-between items-center p-5 sm:p-6 text-left"
                 onClick={() => toggleFAQ(index)}
               >
-                <span className="font-semibold text-lg">{faq.question}</span>
+                <span className="font-semibold text-base sm:text-lg md:text-xl">
+                  {faq.question}
+                </span>
                 {openIndex === index ? (
-                  <ChevronUp className="w-6 h-6 text-indigo-600" />
+                  <ChevronUp className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-600" />
                 ) : (
-                  <ChevronDown className="w-6 h-6 text-indigo-600" />
+                  <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-600" />
                 )}
               </button>
               {openIndex === index && (
-                <div className="px-6 pb-6 text-gray-600 text-left whitespace-pre-line">
+                <div className="px-5 sm:px-6 pb-6 text-gray-600 text-left whitespace-pre-line text-sm sm:text-base md:text-lg leading-relaxed">
                   {faq.answer}
                 </div>
               )}

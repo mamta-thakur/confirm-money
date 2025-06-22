@@ -9,7 +9,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="bg-white shadow-md">
+      <nav className="bg-white shadow-md sticky top-0 z-50">
         <div className="w-[80%] mx-auto py-2 flex justify-between items-center">
           <a href="/">
           {/* <img src={Logo} alt="Logo" className="h-8-" /> */}
