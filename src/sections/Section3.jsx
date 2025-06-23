@@ -9,31 +9,31 @@ const Section3 = () => {
   const sectionRef = useRef(null);
   const cardsRef = useRef([]);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      cardsRef.current.forEach((el, i) => {
-        gsap.fromTo(
-          el,
-          { opacity: 0, y: 40, scale: 0.95 },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.8,
-            delay: i * 0.2,
-            ease: 'back.out(1.7)',
-            scrollTrigger: {
-              trigger: el,
-              start: 'top 85%',
-              toggleActions: 'play none none reverse',
-            },
-          }
-        );
-      });
-    }, sectionRef);
+  // useEffect(() => {
+  //   const ctx = gsap.context(() => {
+  //     cardsRef.current.forEach((el, i) => {
+  //       gsap.fromTo(
+  //         el,
+  //         { opacity: 0, y: 40, scale: 0.95 },
+  //         {
+  //           opacity: 1,
+  //           y: 0,
+  //           scale: 1,
+  //           duration: 0.8,
+  //           delay: i * 0.2,
+  //           ease: 'back.out(1.7)',
+  //           scrollTrigger: {
+  //             trigger: el,
+  //             start: 'top 85%',
+  //             toggleActions: 'play none none reverse',
+  //           },
+  //         }
+  //       );
+  //     });
+  //   }, sectionRef);
 
-    return () => ctx.revert();
-  }, []);
+  //   return () => ctx.revert();
+  // }, []);
 
   const boxes = [
     {
