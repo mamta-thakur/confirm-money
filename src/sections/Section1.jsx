@@ -5,6 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import percentArrow from "../assets/percent_arrow.png";
 import moneyBag from "../assets/money_bag.png";
 import rupee from "../assets/rupee.png";
+import coinBag from '../assets/coin_bag.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -95,7 +96,7 @@ const Section1 = () => {
         ref={coinRef}
         className="absolute top-6 sm:top-10 left-4 sm:left-16 w-40 sm:w-36 md:w-48 opacity-70 z-0"
       />
-      <img
+      {/* <img
         src={rupee}
         alt="Notes"
         ref={cubeRef}
@@ -106,7 +107,7 @@ const Section1 = () => {
         alt="Money Stack"
         ref={flagRef}
         className="absolute bottom-10 sm:bottom-20 left-4 sm:left-16 w-14 sm:w-28 md:w-36 opacity-70 z-0"
-      />
+      /> */}
 
       {/* Content Wrapper */}
       <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 text-center relative z-10">
@@ -137,19 +138,21 @@ const Section1 = () => {
         <div className="mt-12 sm:mt-16 bg-white/30 backdrop-blur-md rounded-2xl p-4 sm:p-6 mx-auto max-w-5xl">
           <div className="grid grid-cols-3 gap-4 sm:gap-6 text-center text-[#0b3a2c]">
             <div>
-              <div className="flex items-center justify-center mb-2 text-xl sm:text-5xl">⭐</div>
+              <div className="flex items-center justify-center mb-2 text-xl sm:text-4xl">⭐</div>
               <div className="text-lg sm:text-2xl font-bold">4.6/5</div>
               <div className="text-xs sm:text-xl opacity-80">1k+ Reviews</div>
             </div>
             <div>
-              <div className="flex items-center justify-center mb-2 text-xl sm:text-5xl">💰</div>
+              <div className="flex items-center justify-center mb-2 text-xl sm:text-5xl">
+                <img src={coinBag} alt="Coin Bag" className="w-9 h-9 sm:w-12 sm:h-12" />
+              </div>
               <div className="text-lg sm:text-2xl font-bold">₹1000 Cr+</div>
               <div className="text-xs sm:text-xl opacity-80">Loans arranged</div>
             </div>
             <div>
-              <div className="flex items-center justify-center mb-2 text-xl sm:text-5xl">😊</div>
+              <div className="flex items-center justify-center mb-2 text-xl sm:text-4xl">😊</div>
               <div className="text-lg sm:text-2xl font-bold">1 lac+</div>
-              <div className="text-xs sm:text-xl opacity-80">Happy Customers</div>
+              <div className="text-xs sm:text-xl opacity-80">Customers</div>
             </div>
           </div>
         </div>

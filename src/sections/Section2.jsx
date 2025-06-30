@@ -104,20 +104,20 @@ const Section2 = () => {
       className="relative min-h-[calc(100vh-64px)] bg-[#F1F6FF] flex flex-col items-center justify-center px-4 py-16 sm:py-24 text-center"
     >
       {/* Top Right Icon */}
-      <img
+      {/* <img
         ref={topRightRef}
         src={percentIcon}
         alt="Discount Icon"
         className="absolute top-4 sm:top-8 right-4 sm:right-10 w-12 sm:w-20 md:w-36 opacity-80"
-      />
+      /> */}
 
       {/* Bottom Left Icon */}
-      <img
+      {/* <img
         ref={bottomLeftRef}
         src={loanApprovedIcon}
         alt="Loan Approved"
         className="absolute bottom-6 sm:bottom-10 left-4 sm:left-10 w-14 sm:w-24 md:w-36 rotate-[12deg] opacity-80"
-      />
+      /> */}
 
       {/* Headline */}
       <div ref={headingRef} className="max-w-4xl mb-4 sm:mb-6 px-2">
@@ -160,7 +160,7 @@ const Section2 = () => {
             ref={el => (cardsRef.current[index] = el)}
             className="bg-white p-2 sm:p-6 rounded-2xl shadow-lg hover:shadow-xl transition duration-300"
           >
-            <h3 className="text-base sm:text-xl lg:text-2xl font-semibold text-[#6bc6a7] mb-1">{item.title}</h3>
+            <h3 className="text-base sm:text-xl md:text-l lg:text-2xl font-semibold text-[#6bc6a7] mb-1">{item.title}</h3>
             <p className="text-sm sm:text-base lg:text-lg text-[#333]">{item.desc}</p>
           </div>
         ))}

@@ -13,7 +13,7 @@ export default function Navbar() {
         <div className="w-[80%] mx-auto py-2 flex justify-between items-center">
           <a href="/">
           {/* <img src={Logo} alt="Logo" className="h-8-" /> */}
-          <img src={Logo} alt="Logo" className="h-20 md:h-20 w-auto" />
+          <img src={Logo} alt="Logo" className="h-20 mb-2 md:h-20 w-auto" />
           </a>
 
           {/* Hamburger Button */}

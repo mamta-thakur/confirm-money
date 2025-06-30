@@ -59,17 +59,17 @@ const Section3 = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-[calc(100vh-64px)] bg-[#6bc6a7] text-white px-6 sm:px-12 py-16"
+      className="relative min-h-[calc(100vh-64px)] bg-[#6bc6a7] text-white px-6 sm:px-12 py-6 sm:py-16 md:py-18 lg:py-20"
     >
       <div className="max-w-7xl mx-auto lg:mt-20">
         {/* Heading */}
-        <div className="mb-12 text-left">
-          <h2 className="text-3xl sm:text-5xl font-bold leading-tight mb-3">
+        <div className="mb-4 md:mb-8 sm:mb-12 md:mb-16 text-left">
+          <h2 className="text-2xl sm:text-5xl md:text-3xl font-bold leading-tight mb-1 sm:mb-2 md:mb-3">
             <span className="text-white">Shop What You Love.</span><br />
             <span className="text-white">Pay How You Like.</span><br />
-            <span className="font-extrabold text-white">Only with Confirm.</span>
+            {/* <span className="font-extrabold text-white">Only with Confirm.</span> */}
           </h2>
-          <h3 className="text-xl sm:text-2xl font-semibold mt-6">
+          <h3 className="text-lg sm:text-2xl font-semibold mt-0 sm:mt-4 md:mt-4">
             How to use Confirm.Shop?
           </h3>
         </div>
@@ -82,12 +82,12 @@ const Section3 = () => {
               <div
                 key={index}
                 ref={el => cardsRef.current[index] = el}
-                className="bg-white/10 p-6 sm:p-8 rounded-2xl shadow-lg border border-white/20 hover:border-white/40 transition-all duration-300"
+                className="bg-white/10 p-2 sm:p-8 rounded-2xl shadow-lg border border-white/20 hover:border-white/40 transition-all duration-300"
               >
-                <div className={`w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r ${box.gradient} rounded-xl flex items-center justify-center mb-4`}>
+                <div className={`w-8 h-8 sm:w-16 sm:h-16 md:w-20 md:h-20 bg-gradient-to-r ${box.gradient} rounded-xl flex items-center justify-center mb-0 sm:mb-4 md:mb-4`}>
                   <Icon className="text-white w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
-                <h4 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-2">{box.title}</h4>
+                <h4 className="text-lg sm:text-2xl md:text-2xl lg:text-3xl font-bold mb-0 sm:mb-2 md:mb-2">{box.title}</h4>
                 <p className="text-sm sm:text-base lg:text-xl text-white/90 leading-relaxed">{box.description}</p>
               </div>
             );
@@ -95,7 +95,7 @@ const Section3 = () => {
         </div>
 
         {/* Shop Now Button */}
-        <div className="mt-10 sm:mt-14 text-left">
+        <div className="mt-8 sm:mt-14 md:mt-16 text-left">
           <a
             href="/shop"
             target="_blank"
