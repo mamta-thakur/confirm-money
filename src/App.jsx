@@ -25,6 +25,9 @@ import TermsAndConditions from "./pages/TermsAndConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CallToAction from "./pages/CallToAction";
 
+import UserManagement from './components/UserManagement';
+import AdminManagement from './components/AdminManagement';
+
 
 function HomePage() {
   const location = useLocation();
@@ -59,6 +62,8 @@ function App() {
         <Route path="/login" element={<MultiStepForm />} />
         <Route path="/loan-journey" element={<MultiStepForm />} />
         <Route path="/loan-journey/offers" element={<Offers />} />
+        <Route path="/users" element={<UserManagement />} />
+        <Route path="/admin" element={<AdminManagement />} />
         <Route path="*" element={<Navigate to="/loan-journey" replace />} />
         {/* <Route path="/shop-journey" element={<MultiStepForm />} /> */}
         <Route path="/shop-journey" element={<ShopLoginPage />} />

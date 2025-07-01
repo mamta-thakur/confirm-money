@@ -1,5 +1,9 @@
 // Helper functions for authentication
 
+import api, { setAuthToken } from '../services/api';
+import { jwtDecode } from 'jwt-decode';
+
+
 // Mock user storage
 const USER_DETAILS_KEY = 'userDetails';
 
@@ -47,13 +51,38 @@ export const isUserRegistered = (mobile: string): boolean => {
   
   // Logout user
   // Clear user details from local storage and redirect
-  export const logoutUser = () => {
-    localStorage.removeItem('userDetails');
-    localStorage.removeItem('isAuthenticated');
-    localStorage.removeItem('registeredUsers');
-    localStorage.removeItem('shop-otp');
-    localStorage.removeItem('userMobile');
-    window.location.href = '/'; // Redirect to home or login page
+  export const logoutUser = async() => {
+    try {
+      // const token = localStorage.getItem(USER_DETAILS_KEY) 
+      //   ? JSON.parse(localStorage.getItem(USER_DETAILS_KEY)).token 
+      //   : null;
+
+      const token = formData.token; // already stored from OTP
+      if (token) {
+        // setAuthToken(token);
+
+        // const decoded = jwtDecode(token);
+        // const userId = decoded.user_id;
+
+        const decoded = jwtDecode(token);
+        const userId = decoded.user_id;
+
+        // Call logout API
+        await api.post('/user/logout', { user_id: userId });
+      }
+    } catch (error) {
+      console.error("Logout API failed:", error);
+    } finally {
+      localStorage.removeItem('userDetails');
+      localStorage.removeItem('isAuthenticated');
+      localStorage.removeItem('registeredUsers');
+      localStorage.removeItem('shop-otp');
+      localStorage.removeItem('userMobile');
+      localStorage.removeItem('authToken');
+
+      setAuthToken(null);
+      window.location.href = '/'; // Redirect to home or login page
+    }
   };
   
 ////////////////////////////////////////////////////////////////////

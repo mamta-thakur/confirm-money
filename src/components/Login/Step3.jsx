@@ -1,14 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoanLogo from '../../assets/loan-logo.png';
 // import ProgressSteps from '../ProgressSteps';
+import api from '../../services/api';
+import toast from 'react-hot-toast';
 import ProgressBar from '../ProgressBar';
 import ProgressSteps from '../ProgressSteps';
 import { saveUserDetails } from '../../utils/auth';
+import { jwtDecode } from 'jwt-decode';
 
 const Step3 = ({ formData, setFormData, prevStep }) => {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUserLoanPreferences = async () => {
+      try {
+        const token = formData.token || localStorage.getItem("authToken");
+        const userId = formData.userId || jwtDecode(token)?.user_id;
+
+        if (!userId) {
+          toast.error("User session expired. Please log in again.");
+          return;
+        }
+
+        const response = await api.get(`/user/get-user-info?id=${userId}`);
+        if (response.data.success && response.data.user) {
+          const user = response.data.user;
+
+          setFormData((prev) => ({
+            ...prev,
+            loanType: user.looking_for || '',
+            loanPurpose: user.purpose || '',
+            loanAmount: user.loan_amount || 5000,
+            tenure: user.tenure_months || 6,
+          }));
+        }
+      } catch (error) {
+        console.error("Error fetching user preferences:", error);
+      }
+    };
+
+    fetchUserLoanPreferences();
+  }, []);
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -31,7 +66,40 @@ const Step3 = ({ formData, setFormData, prevStep }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
+    if (!validate()) return;
+
+    try {
+
+      const token = formData.token; // already stored from OTP
+      const decoded = jwtDecode(token);
+      const userId = decoded.user_id;
+
+      console.log("User ID:", userId);
+
+      const payload = {
+        id: userId, // Replace with dynamic ID if needed
+        looking_for: formData.loanType || "Personal Loan",
+        purpose: formData.loanPurpose || "Personal",
+        loan_amount: formData.loanAmount || 5000,
+        tenure_months: formData.tenure || 6
+      };
+
+      const response = await api.post('/user/loan-preferences', payload);
+
+      if (response.data.success) {
+        saveUserDetails({ ...formData, ...payload });
+        // toast.success("Details saved successfully!");
+        navigate('/loan-journey/offers');
+      } else {
+        toast.error(response.data.message || "Failed to save details.");
+      }
+    } catch (error) {
+      console.error("Failed to save basic details:", error);
+      toast.error("Something went wrong. Please try again.");
+    }
+
+
     if (validate()) {
       saveUserDetails(formData);
       navigate('/loan-journey/offers');

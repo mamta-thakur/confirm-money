@@ -1,19 +1,60 @@
 import React, { useState, useEffect } from 'react';
 import LoanLogo from '../../assets/loan-logo.png';
+import api from '../../services/api';
+import toast from 'react-hot-toast';
 import ProgressBar from '../ProgressBar';
 import ProgressSteps from '../ProgressSteps';
 import { saveUserDetails } from '../../utils/auth';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+// import jwt_decode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
+
 const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) => {
   const [errors, setErrors] = useState({});
 
+  // useEffect(() => {
+  //   if (!isReturningUser || !formData.isAuthenticated) {
+  //     const { mobile, otp, isAuthenticated } = formData;
+  //     setFormData({ mobile, otp, isAuthenticated });
+  //   }
+  // }, []);
+
   useEffect(() => {
-    if (!isReturningUser || !formData.isAuthenticated) {
-      const { mobile, otp, isAuthenticated } = formData;
-      setFormData({ mobile, otp, isAuthenticated });
-    }
+    const fetchUserInfo = async () => {
+      try {
+        const userId = formData.userId || jwtDecode(formData.token || localStorage.getItem('authToken'))?.user_id;
+
+        if (!userId) {
+          toast.error("User ID missing. Please log in again.");
+          return;
+        }
+
+        const response = await api.get(`/user/get-user-info?id=${userId}`);
+
+        if (response.data.success && response.data.user) {
+          const userData = response.data.user;
+
+          setFormData(prev => ({
+            ...prev,
+            name: userData.name || '',
+            gender: userData.gender || '',
+            dob: userData.dob || '',
+            profession: userData.profession || '',
+            income: userData.monthly_income || '',
+            pan: userData.pancard || '',
+            aadhar: userData.adhar_number || '',
+          }));
+        } else {
+          console.log("No user details found.");
+        }
+      } catch (error) {
+        console.error("Failed to fetch user info:", error);
+      }
+    };
+
+    fetchUserInfo();
   }, []);
 
   const handleChange = (e) => {
@@ -71,12 +112,89 @@ const Step2 = ({ nextStep, prevStep, formData, setFormData, isReturningUser }) =
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleNext = () => {
-    if (validate()) {
-      saveUserDetails(formData);
-      nextStep();
+  const handleNext = async () => {
+    if (!validate()) return;
+
+    try {
+      const token = formData.token || localStorage.getItem('authToken');
+
+      if (!token || typeof token !== 'string') {
+        toast.error("Session expired. Please log in again.");
+        return;
+      }
+
+      const decoded = jwtDecode(token);
+      const userId = decoded.user_id;
+
+      const payload = {
+        id: userId,
+        name: formData.name,
+        gender: formData.gender,
+        dob: formData.dob,
+        profession: formData.profession,
+        monthly_income: formData.income,
+        pancard: formData.pan,
+        adhar_number: formData.aadhar
+      };
+
+      const response = await api.post('/user/basic-details', payload);
+
+      if (response.data.success) {
+        saveUserDetails({ ...formData, ...payload });
+        toast.success("Details saved successfully!");
+        nextStep();
+      } else {
+        toast.error(response.data.message || "Failed to save details.");
+      }
+    } catch (error) {
+      console.error("Failed to save basic details:", error);
+      toast.error("Something went wrong. Please try again.");
     }
   };
+
+  // const handleNext = async() => {
+  //   if (!validate()) return;
+
+  //   try {
+
+  //     const token = formData.token; // already stored from OTP
+  //     const decoded = jwtDecode(token);
+  //     const userId = decoded.user_id;
+
+  //     console.log("User ID:", userId);
+
+  //     const payload = {
+  //       id: userId, // Replace with dynamic ID if needed
+  //       name: formData.name,
+  //       gender: formData.gender,
+  //       dob: formData.dob,
+  //       profession: formData.profession,
+  //       monthly_income: formData.income,
+  //       pancard: formData.pan,
+  //       adhar_number: formData.aadhar
+  //     };
+
+  //     const response = await api.post('/user/basic-details', payload);
+
+  //     if (response.data.success) {
+  //       saveUserDetails({ ...formData, ...payload });
+  //       toast.success("Details saved successfully!");
+  //       nextStep();
+  //     } else {
+  //       toast.error(response.data.message || "Failed to save details.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Failed to save basic details:", error);
+  //     toast.error("Something went wrong. Please try again.");
+  //   }
+
+  //   // if (validate()) {
+  //   //   saveUserDetails(formData);
+  //   //   nextStep();
+  //   // }
+  // };
+
+
 
   return (
     <div className="p-2 mt-2 text-center">

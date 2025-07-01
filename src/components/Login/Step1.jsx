@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { isUserRegistered, generateOTP } from '../../utils/auth';
-import api from '../../services/api';
+import api, { setAuthToken } from '../../services/api';
 import toast from 'react-hot-toast';
 import LoanLogo from '../../assets/loan-logo.png';
 import ProgressBar from '../ProgressBar';
 import ProgressSteps from '../ProgressSteps';
 import { saveConcentDetails } from '../../utils/auth';
+import { jwtDecode } from 'jwt-decode';
 
 const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
   const [loading, setLoading] = useState(false);
@@ -40,9 +41,13 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
     setLoading(true);
     
     try {
-    //   await api.post('/send-otp', { mobile });
-      
-      const otp = generateOTP();
+      // const otp = generateOTP();
+      const send_otp  = await api.post('/user/send', { mobile_number: mobile, type: "credit" });
+
+      console.log(send_otp);
+
+      const otp = send_otp.data.otp; 
+      // const otp = generateOTP();
       console.log('Generated OTP:', otp);
       toast.success(`Your OTP is: ${otp}`);
       
@@ -82,25 +87,59 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
   };
 
   const handleResendOTP = () => {
+    if (timer > 0) return; // Prevent resending if timer is active
+    handleGenerateOTP();
     toast.success("New OTP sent!");
     setTimer(60);
   };
 
-  const handleVerifyOTP = () => {
+  const handleVerifyOTP = async() => {
     const enteredOtp = otp.join('');
-    
-    if (enteredOtp === formData.otp?.toString()) {
-      const updatedFormData = {
-        ...formData,
-        isAuthenticated: true
-      };
-      
-      setFormData(updatedFormData);
-      toast.success('OTP verified successfully!');
-      nextStep();
-    } else {
-      toast.error('Invalid OTP. Please try again.');
+
+    try {
+      const response = await api.post('/user/verify-otp', {
+        mobile_number: formData.mobile,
+        otp: enteredOtp
+      });
+
+      if (response.data.success) {
+        const token = response.data.token;
+        const decoded = jwtDecode(token);
+        const userId = decoded.user_id;
+
+        localStorage.setItem("authToken", token);
+        // Set token globally
+        setAuthToken(token);
+
+        setFormData(prev => ({
+          ...prev,
+          token,
+          userId,
+          isAuthenticated: true
+        }));
+
+        toast.success('OTP verified successfully!');
+        nextStep();
+      } else {
+        toast.error(response.data.message || 'Invalid OTP. Please try again.');
+      }
+    } catch (error) {
+      console.error('OTP verification failed:', error);
+      toast.error('Verification failed. Please try again.');
     }
+
+    // if (enteredOtp === formData.otp?.toString()) {
+    //   const updatedFormData = {
+    //     ...formData,
+    //     isAuthenticated: true
+    //   };
+      
+    //   setFormData(updatedFormData);
+    //   toast.success('OTP verified successfully!');
+    //   nextStep();
+    // } else {
+    //   toast.error('Invalid OTP. Please try again.');
+    // }
   };
 
   const isFormValid = checked1 && checked2 && otp.every(digit => digit !== '');
