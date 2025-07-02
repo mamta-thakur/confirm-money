@@ -1,94 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, Star, Info, X } from 'lucide-react';
 import BgAnimation from '../BgAnimation';
 import Navbar from '../NavbarProducts';
-
-const offers = [
-  {
-    id: 1,
-    lender: "Poonawalla Fincorp",
-    description: "Personal Loan",
-    approval: "Excellent",
-    loanAmount: "Upto Rs 5,00,000",
-    interestRate: "Starting 12%",
-    tenure: "Upto 36 months",
-    processingFee: "2 to 6%",
-    recommended: true,
-    logoColor: "bg-blue-600",
-    logoText: "P",
-    documents: [
-      {
-        title: "Identity proof",
-        examples: ["PAN"]
-      },
-      {
-        title: "Current Residence Proof",
-        examples: ["Aadhaar", "Passport"]
-      },
-      {
-        title: "Income Proof (Only for Loan Amount > 50k)",
-        examples: ["Bank Statement(Soft Copy - 3 Months)"]
-      }
-    ]
-  },
-  {
-    id: 2,
-    lender: "Prefr",
-    description: "Personal Loan",
-    approval: "Good",
-    loanAmount: "Upto Rs 5,00,000",
-    interestRate: "Starting 15%",
-    tenure: "Upto 36 months",
-    processingFee: "2 to 5%",
-    logoColor: "bg-purple-600",
-    logoText: "P",
-    documents: [
-      {
-        title: "Identity proof",
-        examples: ["PAN"]
-      },
-      {
-        title: "Current Residence Proof",
-        examples: ["Aadhaar", "Passport"]
-      },
-      {
-        title: "Income Proof (Only for Loan Amount > 50k)",
-        examples: ["Bank Statement(Soft Copy - 3 Months)"]
-      }
-    ]
-  },
-  {
-    id: 3,
-    lender: "IndusInd Bank",
-    description: "Personal Loan",
-    approval: "Average",
-    loanAmount: "Upto Rs 3,00,000",
-    interestRate: "Starting 14%",
-    tenure: "Upto 24 months",
-    processingFee: "1.5 to 4%",
-    logoColor: "bg-red-600",
-    logoText: "I",
-    documents: [
-      {
-        title: "Identity proof",
-        examples: ["PAN"]
-      },
-      {
-        title: "Current Residence Proof",
-        examples: ["Aadhaar", "Passport"]
-      },
-      {
-        title: "Income Proof (Only for Loan Amount > 50k)",
-        examples: ["Bank Statement(Soft Copy - 3 Months)"]
-      }
-    ]
-  }
-];
+import api from '../../services/api';
 
 const Offers = ({ formData }) => {
+  const [offers, setOffers] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [selectedOffer, setSelectedOffer] = useState(null);
   const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    fetchOffers();
+  }, []);
+
+  const fetchOffers = async () => {
+    try {
+      setLoading(true);
+      const response = await api.get('/user/offer-list');
+      console.log('API Response:', response.data);
+      
+      if (response.data.success && response.data.offers) {
+        setOffers(response.data.offers);
+      } else {
+        setOffers([]);
+        toast.error('No offers found');
+      }
+    } catch (error) {
+      console.error('Error fetching offers:', error);
+      toast.error('Failed to load offers. Please try again.');
+      setOffers([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleMoreDetails = (offer) => {
     setSelectedOffer(offer);
@@ -138,6 +84,11 @@ const Offers = ({ formData }) => {
                         {/* <div className={`${offer.logoColor} text-white rounded-lg w-12 h-12 flex items-center justify-center font-bold text-lg mr-3`}>
                           {offer.logoText}
                         </div> */}
+                        <img 
+                          src={'https://confirmmoney-nodejs.ckeoo6.easypanel.host' + offer.logo || 'https://confirmmoney-nodejs.ckeoo6.easypanel.host/uploads/logo.png'} 
+                          alt="logo"
+                          className="w-12 h-12 rounded-lg mr-3 object-cover"
+                        />
                         <div>
                           <h3 className="font-bold text-lg">{offer.lender}</h3>
                           <p className="text-gray-600 text-sm">{offer.description}</p>
@@ -178,9 +129,17 @@ const Offers = ({ formData }) => {
                         <Info className="w-4 h-4 mr-1" />
                         More Details
                       </button>
-                      <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 active:bg-green-700 transition text-sm">
+                      {/* <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 active:bg-green-700 transition text-sm">
                         Apply Now
-                      </button>
+                      </button> */}
+                      <a
+                          href={offer.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 active:bg-green-700 transition text-sm inline-block text-center"
+                        >
+                          Apply Now
+                        </a>
                     </div>
                   </div>
                 ))}
@@ -250,9 +209,17 @@ const Offers = ({ formData }) => {
 
                 {/* Apply Button */}
                 <div className="flex justify-center">
-                  <button className="bg-green-500 text-white px-8 py-3 rounded-lg hover:bg-green-600 active:bg-green-700 transition font-medium">
+                  {/* <button className="bg-green-500 text-white px-8 py-3 rounded-lg hover:bg-green-600 active:bg-green-700 transition font-medium">
                     Apply Now
-                  </button>
+                  </button> */}
+                  <a
+                    href={selectedOffer.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-green-500 text-white px-8 py-3 rounded-lg hover:bg-green-600 active:bg-green-700 transition font-medium inline-block text-center"
+                  >
+                    Apply Now
+                  </a>
                 </div>
               </div>
             </motion.div>

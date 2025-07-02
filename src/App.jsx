@@ -27,6 +27,7 @@ import CallToAction from "./pages/CallToAction";
 
 import UserManagement from './components/UserManagement';
 import AdminManagement from './components/AdminManagement';
+import OffersManagement from './components/OffersManagement';
 
 
 function HomePage() {
@@ -63,7 +64,6 @@ function App() {
         <Route path="/loan-journey" element={<MultiStepForm />} />
         <Route path="/loan-journey/offers" element={<Offers />} />
         <Route path="/users" element={<UserManagement />} />
-        <Route path="/admin" element={<AdminManagement />} />
         <Route path="*" element={<Navigate to="/loan-journey" replace />} />
         {/* <Route path="/shop-journey" element={<MultiStepForm />} /> */}
         <Route path="/shop-journey" element={<ShopLoginPage />} />
@@ -71,6 +71,8 @@ function App() {
         <Route path="/terms" element={<TermsAndConditions />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/call-to-action" element={<CallToAction />} />
+        <Route path="/admin/users" element={<AdminManagement />} />
+        <Route path="/admin/offers" element={<OffersManagement />} />
       </Routes>
     </Router>
   );
