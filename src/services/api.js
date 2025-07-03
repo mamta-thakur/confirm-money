@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://confirmmoney-nodejs.ckeoo6.easypanel.host', // or your actual base URL
-  // baseURL: 'https://cors-anywhere.herokuapp.com/https://confirmmoney-nodejs.ckeoo6.easypanel.host', // or your actual base URL
+  // baseURL: 'http://localhost:5000/api', // or your actual base URL
+  baseURL: 'https://cors-anywhere.herokuapp.com/https://confirmmoney-nodejs.ckeoo6.easypanel.host', // or your actual base URL
   headers: {
     'Content-Type': 'application/json',
   },
