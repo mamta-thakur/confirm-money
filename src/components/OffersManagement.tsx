@@ -25,6 +25,7 @@ import {
 import api from '../services/api';
 import toast from 'react-hot-toast';
 import { tr } from 'framer-motion/client';
+import { Link } from 'react-router-dom';
 
 interface Document {
   title: string;
@@ -1106,15 +1107,22 @@ const OffersManagement: React.FC = () => {
                     <div className="flex items-center mb-2">
                       <span className="font-medium text-gray-700">Offer Link</span>
                     </div>
-                    <a
+                    {/* <a
                       href={selectedOffer.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-green-600 hover:text-green-800 flex items-center break-all"
+                    > */}
+                    <Link
+                      to={/^https?:\/\//.test(selectedOffer.link) ? selectedOffer.link : 'http://' + selectedOffer.link}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-green-600 hover:text-green-800 flex items-center break-all"
                     >
                       <span className="truncate">{selectedOffer.link}</span>
                       <ExternalLink className="w-4 h-4 ml-2 flex-shrink-0" />
-                    </a>
+                    </Link>
+                    {/* </a> */}
                   </div>
 
                   {selectedOffer.documents && selectedOffer.documents.length > 0 && (

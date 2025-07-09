@@ -4,6 +4,7 @@ import { Check, Star, Info, X } from 'lucide-react';
 import BgAnimation from '../BgAnimation';
 import Navbar from '../NavbarProducts';
 import api from '../../services/api';
+import { Link } from 'react-router-dom';
 
 const Offers = ({ formData }) => {
   const [offers, setOffers] = useState([]);
@@ -132,14 +133,20 @@ const Offers = ({ formData }) => {
                       {/* <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 active:bg-green-700 transition text-sm">
                         Apply Now
                       </button> */}
-                      <a
+                      {/* <a
                           href={offer.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 active:bg-green-700 transition text-sm inline-block text-center"
+                        > */}
+                        <Link
+                          to={/^https?:\/\//.test(offer.link) ? offer.link : 'http://' + offer.link}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 active:bg-green-700 transition text-sm inline-block text-center"
                         >
                           Apply Now
-                        </a>
+                        </Link>
                     </div>
                   </div>
                 ))}
@@ -212,14 +219,20 @@ const Offers = ({ formData }) => {
                   {/* <button className="bg-green-500 text-white px-8 py-3 rounded-lg hover:bg-green-600 active:bg-green-700 transition font-medium">
                     Apply Now
                   </button> */}
-                  <a
+                  {/* <a
                     href={selectedOffer.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-green-500 text-white px-8 py-3 rounded-lg hover:bg-green-600 active:bg-green-700 transition font-medium inline-block text-center"
+                  > */}
+                  <Link
+                    to={/^https?:\/\//.test(selectedOffer.link) ? selectedOffer.link : 'http://' + selectedOffer.link}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-green-500 text-white px-8 py-3 rounded-lg hover:bg-green-600 active:bg-green-700 transition font-medium inline-block text-center"
                   >
                     Apply Now
-                  </a>
+                  </Link>
                 </div>
               </div>
             </motion.div>

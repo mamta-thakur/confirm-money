@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { X } from "lucide-react";
+import { Link } from 'react-router-dom';
 import Logo from "../assets/loan-logo.png";
 import { logoutUser } from '../utils/auth';
 
@@ -45,33 +46,35 @@ export default function SidebarMenuProducts({ isOpen, onClose }) {
                 <X size={40} />
               </button>
 
-              <a href="/"><img src={Logo} alt="Logo" className="h-20 mb-4" /></a>
+              <Link to="/">
+                <img src={Logo} alt="Logo" className="h-20 mb-4" />
+              </Link>
               {localStorage.getItem('userDetails') || localStorage.getItem('isAuthenticated')? (
                 <>
                 <div className="text-l font-bold text-black">
-                  <a href="/" className="hover:underline">Home</a>
+                  <Link to="/" className="hover:underline">Home</Link>
                 </div>
                 <div className="text-l font-bold text-black">
-                  <a href="/loan-journey" className="hover:underline">Confirm.Credit</a>
+                  <Link to="/loan-journey" className="hover:underline">Confirm.Credit</Link>
                 </div>
                 <div className="text-l font-bold text-black">
-                  <a href="/shop" className="hover:underline">Confirm.Shop</a>
+                  <Link to="/shop" className="hover:underline">Confirm.Shop</Link>
                 </div>
                 <div className="text-l font-bold text-black">
-                  <a onClick={logoutUser} className="hover:underline">Logout</a>
+                  <Link to="/" onClick={logoutUser} className="hover:underline">Logout</Link>
                 </div>
               </>
                 
               ) : (
                 <>
                   <div className="text-l font-bold text-black">
-                    <a href="/" className="hover:underline">Home</a>
+                    <Link to="/" className="hover:underline">Home</Link>
                   </div>
                   <div className="text-l font-bold text-black">
-                    <a href="/loan-journey" className="hover:underline">Confirm.Credit</a>
+                    <Link to="/loan-journey" className="hover:underline">Confirm.Credit</Link>
                   </div>
                   <div className="text-l font-bold text-black">
-                    <a href="/shop" className="hover:underline">Confirm.Shop</a>
+                    <Link to="/shop" className="hover:underline">Confirm.Shop</Link>
                   </div>
                 </>
               )}

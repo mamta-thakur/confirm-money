@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ShoppingCart, IndianRupee, Headphones } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -96,14 +97,19 @@ const Section3 = () => {
 
         {/* Shop Now Button */}
         <div className="mt-8 sm:mt-14 md:mt-16 text-left">
-          <a
+          {/* <a
             href="/shop"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-white text-[#6bc6a7] px-6 sm:px-10 py-3 sm:py-4 rounded-full text-sm sm:text-lg font-semibold shadow-lg hover:bg-green-100 transition-all duration-300"
+          > */}
+          <Link
+            to="/shop"
+            className="bg-white text-[#6bc6a7] px-6 sm:px-10 py-3 sm:py-4 rounded-full text-sm sm:text-lg font-semibold shadow-lg hover:bg-green-100 transition-all duration-300"
           >
             Shop Now
-          </a>
+          </Link>
+          {/* </a> */}
         </div>
       </div>
     </section>

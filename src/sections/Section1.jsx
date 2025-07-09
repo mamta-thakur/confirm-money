@@ -6,6 +6,7 @@ import percentArrow from "../assets/percent_arrow.png";
 import moneyBag from "../assets/money_bag.png";
 import rupee from "../assets/rupee.png";
 import coinBag from '../assets/coin_bag.png';
+import { Link } from 'react-router-dom';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -119,10 +120,15 @@ const Section1 = () => {
         </h1>
 
         {/* CTA Button */}
-        <a
+        {/* <a
           href="/loan-journey"
           target="_blank"
           rel="noopener noreferrer"
+          ref={buttonRef}
+          className="inline-flex items-center gap-2 sm:gap-3 bg-white text-[#0d6b57] px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 rounded-full shadow-lg cursor-pointer hover:scale-105 transition-transform duration-300 font-semibold text-sm sm:text-base md:text-xl"
+        > */}
+        <Link
+          to="/loan-journey"
           ref={buttonRef}
           className="inline-flex items-center gap-2 sm:gap-3 bg-white text-[#0d6b57] px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 rounded-full shadow-lg cursor-pointer hover:scale-105 transition-transform duration-300 font-semibold text-sm sm:text-base md:text-xl"
         >
@@ -132,7 +138,8 @@ const Section1 = () => {
             </svg>
           </div>
           Check eligibility
-        </a>
+        {/* </a> */}
+        </Link>
 
         {/* Statistics Section */}
         <div className="mt-12 sm:mt-16 bg-white/30 backdrop-blur-md rounded-2xl p-4 sm:p-6 mx-auto max-w-5xl">

@@ -11,9 +11,9 @@ const Footer = () => {
           
           {/* Logo + Description */}
           <div className="md:w-2/5">
-            <a href="/" className="inline-block mb-4">
+            <Link to="/" className="inline-block mb-4">
               <img src={Logo} alt="Confirm Logo" className="h-16 w-auto" />
-            </a>
+            </Link>
             <p className="text-sm md:text-base lg:text-lg text-gray-600 leading-relaxed mb-3">
               Confirm.Money is your all-in-one site for comparing loans and shopping online. You can see offers from many lenders and choose flexible payment plans for your purchases.
             </p>

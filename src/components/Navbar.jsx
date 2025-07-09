@@ -3,6 +3,7 @@ import { useState } from "react";
 import SidebarMenu from "./SidebarMenuProducts";
 import Logo from "../assets/loan-logo.png";
 import { Menu } from "lucide-react";
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -11,10 +12,10 @@ export default function Navbar() {
     <>
       <nav className="bg-white shadow-md sticky top-0 z-50">
         <div className="w-[80%] mx-auto py-2 flex justify-between items-center">
-          <a href="/">
+          <Link to="/">
           {/* <img src={Logo} alt="Logo" className="h-8-" /> */}
           <img src={Logo} alt="Logo" className="h-20 mb-2 md:h-20 w-auto" />
-          </a>
+          </Link>
 
           {/* Hamburger Button */}
           <button

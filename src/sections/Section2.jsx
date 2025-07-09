@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import vendingMachine from '../assets/coin_bag.png';
 import percentIcon from '../assets/percent_arrow.png';
 import loanApprovedIcon from '../assets/loan-approved.png';
+import { Link } from 'react-router-dom';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -168,7 +169,7 @@ const Section2 = () => {
 
       {/* CTA Button */}
       <button className="mt-6 sm:mt-14 bg-[#6bc6a7] text-white px-6 sm:px-8 py-2.5 sm:py-3.5 rounded-full text-sm sm:text-lg md:text-xl font-semibold hover:bg-[#5bb396] transition duration-300">
-        <a href="/loan-journey">Apply for Loan</a>
+        <Link to="/loan-journey">Apply for Loan</Link>
       </button>
     </section>
   );
