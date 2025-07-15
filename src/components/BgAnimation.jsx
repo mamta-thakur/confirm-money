@@ -31,7 +31,7 @@ const BgAnimation = () => {
             viewBox="0 0 100 100"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            class="opacity-40"
+            classname="opacity-40"
         >
             {/* Outer coin circle */}
             <circle cx="50" cy="50" r="45" fill="#FFD700" stroke="#DAA520" strokeWidth="5" />
@@ -67,7 +67,7 @@ const BgAnimation = () => {
             viewBox="0 0 120 60"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            class="opacity-40"
+            classname="opacity-40"
         >
             {/* Note body */}
             <rect x="2" y="2" width="116" height="56" rx="8" fill="#A8E6CF" stroke="#34A853" strokeWidth="4" />

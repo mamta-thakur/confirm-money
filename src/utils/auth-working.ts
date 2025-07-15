@@ -2,8 +2,6 @@
 
 import api, { setAuthToken } from '../services/api';
 import { jwtDecode } from 'jwt-decode';
-import { auth } from '../services/firebase';
-import { signOut } from 'firebase/auth';
 
 
 // Mock user storage
@@ -48,25 +46,29 @@ export const isUserRegistered = (mobile: string): boolean => {
   
   // Generate a random OTP
   export const generateOTP = (): number => {
-    return Math.floor(100000 + Math.random() * 900000); // 6-digit OTP for consistency
+    return Math.floor(1000 + Math.random() * 9000);
   };
   
   // Logout user
   // Clear user details from local storage and redirect
-  export const logoutUser = async(formData = null) => {
+  export const logoutUser = async() => {
     try {
-      const token = formData?.token || localStorage.getItem('authToken');
+      // const token = localStorage.getItem(USER_DETAILS_KEY) 
+      //   ? JSON.parse(localStorage.getItem(USER_DETAILS_KEY)).token 
+      //   : null;
+
+      const token = formData.token; // already stored from OTP
       if (token) {
+        // setAuthToken(token);
+
+        // const decoded = jwtDecode(token);
+        // const userId = decoded.user_id;
+
         const decoded = jwtDecode(token);
         const userId = decoded.user_id;
 
         // Call logout API
         await api.post('/user/logout', { user_id: userId });
-      }
-
-      // Sign out from Firebase
-      if (auth.currentUser) {
-        await signOut(auth);
       }
     } catch (error) {
       console.error("Logout API failed:", error);
@@ -77,12 +79,6 @@ export const isUserRegistered = (mobile: string): boolean => {
       localStorage.removeItem('shop-otp');
       localStorage.removeItem('userMobile');
       localStorage.removeItem('authToken');
-      
-      // Clear Firebase reCAPTCHA
-      if (window.recaptchaVerifier) {
-        window.recaptchaVerifier.clear();
-        window.recaptchaVerifier = null;
-      }
 
       setAuthToken(null);
       window.location.href = '/'; // Redirect to home or login page

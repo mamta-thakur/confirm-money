@@ -8,17 +8,22 @@ import ProgressBar from '../ProgressBar';
 import ProgressSteps from '../ProgressSteps';
 import { saveConcentDetails } from '../../utils/auth';
 import { jwtDecode } from 'jwt-decode';
+import { sendOTP, verifyOTP } from '../../services/firebase';
 
 const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
   const [loading, setLoading] = useState(false);
   const [mobile, setMobile] = useState(formData.mobile || '');
   const [mode, setMode] = useState('login');
   const [showOTP, setShowOTP] = useState(false);
-  const [otp, setOtp] = useState(['', '', '', '']);
+  const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const inputsRef = useRef([]);
   const [timer, setTimer] = useState(60);
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
+  const [confirmationResult, setConfirmationResult] = useState(null);
+  const [verifying, setVerifying] = useState(false);
+  const [useFirebase, setUseFirebase] = useState(true);
+  const [mockOTP, setMockOTP] = useState(null);
 
   const isValidMobile = (mobile.length === 10 && /^\d+$/.test(mobile));
   const isConcentGiven = checked1 && checked2;
@@ -42,20 +47,39 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
     setLoading(true);
     
     try {
-      // const otp = generateOTP();
-      const send_otp  = await api.post('/user/send', { mobile_number: mobile, type: "credit" });
-
-      console.log(send_otp);
-
-      const otp = send_otp.data.otp; 
-      // const otp = generateOTP();
-      console.log('Generated OTP:', otp);
-      toast.success(`Your OTP is: ${otp}`);
+      if (useFirebase) {
+        try {
+          // Try Firebase first
+          const phoneNumber = `+91${mobile}`;
+          const confirmation = await sendOTP(phoneNumber);
+          setConfirmationResult(confirmation);
+          toast.success('OTP sent successfully via Firebase!');
+        } catch (firebaseError) {
+          console.warn('Firebase OTP failed, falling back to mock OTP:', firebaseError);
+          
+          // Check if it's a billing error
+          if (firebaseError.code === 'auth/billing-not-enabled') {
+            toast.error('Firebase Phone Auth requires a paid plan. Using mock OTP for demo.');
+            setUseFirebase(false);
+            
+            // Generate mock OTP
+            const generatedOTP = generateOTP();
+            setMockOTP(generatedOTP);
+            toast.success(`Demo OTP: ${generatedOTP} (This is for testing only)`);
+          } else {
+            throw firebaseError;
+          }
+        }
+      } else {
+        // Use mock OTP system
+        const generatedOTP = generateOTP();
+        setMockOTP(generatedOTP);
+        toast.success(`Demo OTP: ${generatedOTP} (This is for testing only)`);
+      }
       
       setFormData(prev => ({ 
         ...prev, 
-        mobile, 
-        otp,
+        mobile,
         isNewUser: mode === 'register'
       }));
       
@@ -64,7 +88,17 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
       setTimer(60);
     } catch (error) {
       console.error("OTP request failed:", error);
-      toast.error("Failed to send OTP. Please try again.");
+      
+      // Handle specific Firebase errors
+      if (error.code === 'auth/too-many-requests') {
+        toast.error("Too many requests. Please try again later.");
+      } else if (error.code === 'auth/invalid-phone-number') {
+        toast.error("Invalid phone number format.");
+      } else if (error.code === 'auth/billing-not-enabled') {
+        toast.error("Firebase Phone Auth requires billing to be enabled. Please upgrade your Firebase plan.");
+      } else {
+        toast.error("Failed to send OTP. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
@@ -76,7 +110,7 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
     updated[index] = value;
     setOtp(updated);
 
-    if (value && index < 3) {
+    if (value && index < 5) {
       inputsRef.current[index + 1].focus();
     }
   };
@@ -87,60 +121,135 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
     }
   };
 
-  const handleResendOTP = () => {
+  const handleResendOTP = async () => {
     if (timer > 0) return; // Prevent resending if timer is active
-    handleGenerateOTP();
-    toast.success("New OTP sent!");
-    setTimer(60);
+    
+    try {
+      setLoading(true);
+      
+      if (useFirebase && confirmationResult) {
+        const phoneNumber = `+91${mobile}`;
+        const confirmation = await sendOTP(phoneNumber);
+        setConfirmationResult(confirmation);
+        toast.success("New OTP sent via Firebase!");
+      } else {
+        // Resend mock OTP
+        const generatedOTP = generateOTP();
+        setMockOTP(generatedOTP);
+        toast.success(`New Demo OTP: ${generatedOTP}`);
+      }
+      
+      setTimer(60);
+    } catch (error) {
+      console.error("Resend OTP failed:", error);
+      toast.error("Failed to resend OTP. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleVerifyOTP = async() => {
+  const handleVerifyOTP = async () => {
     const enteredOtp = otp.join('');
+    
+    if (enteredOtp.length !== 6) {
+      toast.error('Please enter complete OTP');
+      return;
+    }
+
+    if (!confirmationResult && !mockOTP) {
+      toast.error('Please request OTP first');
+      return;
+    }
+
+    setVerifying(true);
 
     try {
-      const response = await api.post('/user/verify-otp', {
-        mobile_number: formData.mobile,
-        otp: enteredOtp
-      });
+      let authSuccess = false;
+      let firebaseToken = null;
 
-      if (response.data.success) {
-        const token = response.data.token;
-        const decoded = jwtDecode(token);
-        const userId = decoded.user_id;
+      if (useFirebase && confirmationResult) {
+        // Verify OTP with Firebase
+        const result = await verifyOTP(confirmationResult, enteredOtp);
+        
+        if (result.user) {
+          // Get Firebase ID token
+          firebaseToken = await result.user.getIdToken();
+          authSuccess = true;
+        }
+      } else if (mockOTP) {
+        // Verify mock OTP
+        if (enteredOtp === mockOTP.toString()) {
+          authSuccess = true;
+          // For mock, we'll create a dummy token or use a different endpoint
+        } else {
+          throw new Error('Invalid OTP');
+        }
+      }
 
-        localStorage.setItem("authToken", token);
-        // Set token globally
-        setAuthToken(token);
+      if (authSuccess) {
+        let response;
+        
+        if (firebaseToken) {
+          console.log('Using Firebase token:', firebaseToken);
+          // Use Firebase auth endpoint
+          response = await api.post('/user/firebase-auth', {
+            firebase_token: firebaseToken,
+            mobile_number: mobile,
+            type: "credit"
+          },
+          // {
+          //   headers: {
+          //     Authorization: '' // Explicitly clear the Bearer token
+          //   }
+          // }
+        );
+        } else {
+          // Use mock auth endpoint or create a demo session
+          response = await api.post('/user/mock-auth', {
+            mobile_number: mobile,
+            type: "credit",
+            demo: true
+          });
+        }
 
-        setFormData(prev => ({
-          ...prev,
-          token,
-          userId,
-          isAuthenticated: true
-        }));
+        if (response.data.success) {
+          const token = response.data.token;
+          const decoded = jwtDecode(token);
+          const userId = decoded.user_id;
 
-        toast.success('OTP verified successfully!');
-        nextStep();
-      } else {
-        toast.error(response.data.message || 'Invalid OTP. Please try again.');
+          localStorage.setItem("authToken", token);
+          setAuthToken(token);
+
+          setFormData(prev => ({
+            ...prev,
+            token,
+            userId,
+            isAuthenticated: true,
+            authMethod: useFirebase ? 'firebase' : 'mock'
+          }));
+
+          toast.success('OTP verified successfully!');
+          nextStep();
+        } else {
+          toast.error(response.data.message || 'Authentication failed');
+        }
       }
     } catch (error) {
       console.error('OTP verification failed:', error);
-      toast.error('Verification failed. Please try again.');
-    }
-
-    // if (enteredOtp === formData.otp?.toString()) {
-    //   const updatedFormData = {
-    //     ...formData,
-    //     isAuthenticated: true
-    //   };
       
-    //   setFormData(updatedFormData);
-    //   toast.success('OTP verified successfully!');
-    //   nextStep();
-    // } else {
-    //   toast.error('Invalid OTP. Please try again.');
-    // }
+      // Handle specific Firebase errors
+      if (error.code === 'auth/invalid-verification-code') {
+        toast.error('Invalid OTP. Please try again.');
+      } else if (error.code === 'auth/code-expired') {
+        toast.error('OTP expired. Please request a new one.');
+      } else if (error.message === 'Invalid OTP') {
+        toast.error('Invalid OTP. Please try again.');
+      } else {
+        toast.error('Verification failed. Please try again.');
+      }
+    } finally {
+      setVerifying(false);
+    }
   };
 
   const isFormValid = checked1 && checked2 && otp.every(digit => digit !== '');
@@ -148,23 +257,26 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
 
   return (
     <div className="p-2 mt-2 text-center">
-      {/* <div className="mb-8">
-        <img src={LoanLogo} alt="Loan Logo" className="mx-auto mb-6 w-32 h-auto" />
-      </div> */}
+      {/* Hidden reCAPTCHA container */}
+      <div id="recaptcha-container"></div>
+
+      {/* Demo Mode Indicator */}
+      {!useFirebase && (
+        <div className="mb-4 p-3 bg-yellow-100 border border-yellow-400 rounded-lg">
+          <p className="text-sm text-yellow-800">
+            <strong>Demo Mode:</strong> Using mock OTP for testing. 
+            Upgrade Firebase to Blaze plan for real SMS.
+          </p>
+        </div>
+      )}
 
       <ProgressBar formData={formData} currentStep={1} />
       <ProgressSteps currentStep={1} />
-
 
       <div className="mb-8 mt-6">
         <h2 className="text-2xl font-bold text-gray-800">
           {mode === 'login' ? '' : ''}
         </h2>
-
-        {/* <p className="text-2xl font-semibold text-blue-800 leading-snug">
-          Unlock Best Offers <br />
-          from <span className="font-extrabold text-3xl">30+ Lenders</span>
-        </p> */}
 
         <p className="text-gray-600 mt-10 text-2xl font-semibold leading-snug">
           {mode === 'login' ? (
@@ -181,20 +293,6 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
         </p>
       </div>
 
-      {/* <div className="mb-8 mt-6 text-center">
-        <h2 className="text-2xl font-bold text-gray-800">
-          {mode === 'login' ? '' : ''}
-        </h2>
-        {mode === 'login' ? (
-          <p className="text-2xl font-semibold text-blue-800 leading-snug">
-            Unlock Best Offers <br />
-            from <span className="font-extrabold text-3xl">30+ Lenders</span>
-          </p>
-        ) : (
-          <p className="text-gray-600 text-xl">Sign-up using Mobile Number</p>
-        )}
-      </div> */}
-
       <input
         type="tel"
         inputMode="numeric"
@@ -210,7 +308,7 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
 
       {!showOTP ? (
         <>
-        <div className="text-left text-xs text-gray-600 space-y-3 mb-6">
+          <div className="text-left text-xs text-gray-600 space-y-3 mb-6">
             <div className="flex items-start">
               <input 
                 type="checkbox" 
@@ -219,7 +317,7 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
                 checked={checked2} 
                 onChange={e => setChecked2(e.target.checked)} 
               />
-              <label htmlFor="consent" className="cursor-pointer-">
+              <label htmlFor="consent" className="cursor-pointer">
                 I acknowledge that this is my mobile number and authorise Confirm to use it for communications related to my loan application. {' '}
               </label>
             </div>
@@ -232,7 +330,7 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
                 checked={checked1} 
                 onChange={e => setChecked1(e.target.checked)} 
               />
-              <label htmlFor="terms" className="cursor-pointer-">
+              <label htmlFor="terms" className="cursor-pointer">
                 I acknowledge that I have read and agree to Confirm's <a href="terms" target="_blank" className="text-green-500 underline">Credit Report Terms</a>, <a href="terms" target="_blank" className="text-green-500 underline">Terms of Use</a>, and <a href="privacy" target="_blank" className="text-green-500 underline"> Privacy Policy</a>. {' '}
               </label>
             </div>
@@ -251,11 +349,18 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
               mode === 'login' ? 'Proceed with OTP' : 'Proceed with OTP'
             )}
           </button>
-        
         </>
-        
       ) : (
         <>
+          {/* Show current OTP in demo mode */}
+          {!useFirebase && mockOTP && (
+            <div className="mb-4 p-3 bg-blue-100 border border-blue-400 rounded-lg">
+              <p className="text-sm text-blue-800">
+                <strong>Demo OTP:</strong> {mockOTP}
+              </p>
+            </div>
+          )}
+
           <div className="flex justify-center space-x-3 mb-3">
             {otp.map((digit, index) => (
               <input
@@ -264,7 +369,7 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
                 type="text"
                 inputMode="numeric"
                 maxLength={1}
-                className="w-14 h-14 text-center border rounded-lg text-xl font-semibold focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
+                className="w-12 h-12 text-center border rounded-lg text-xl font-semibold focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
                 value={digit}
                 onChange={e => handleOtpChange(e.target.value, index)}
                 onKeyDown={e => handleKeyDown(e, index)}
@@ -280,25 +385,24 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
             ) : (
               <button 
                 onClick={handleResendOTP}
-                className="text-green-600 text-sm font-medium hover:underline"
+                disabled={loading}
+                className="text-green-600 text-sm font-medium hover:underline disabled:opacity-50"
               >
-                Resend OTP
+                {loading ? 'Sending...' : 'Resend OTP'}
               </button>
             )}
           </div>
 
-          
-
           <button
             onClick={handleVerifyOTP}
+            disabled={!isFormValid || verifying}
             className={`w-full py-3 rounded-lg font-semibold transition ${
-              isFormValid 
+              isFormValid && !verifying
                 ? 'bg-green-500 text-white hover:bg-green-600 active:bg-green-700' 
                 : 'bg-gray-300 text-gray-600 cursor-not-allowed'
             }`}
-            disabled={!isFormValid}
           >
-            Verify & Login
+            {verifying ? 'Verifying...' : 'Verify & Login'}
           </button>
         </>
       )}

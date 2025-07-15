@@ -7,15 +7,6 @@ import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-// const firebaseConfig = {
-//   apiKey: "AIzaSyCMg_ovqltuQjCcLs2Mn9S6c8bPucMaxDM",
-//   authDomain: "confirmmoney-556ac.firebaseapp.com",
-//   projectId: "confirmmoney-556ac",
-//   storageBucket: "confirmmoney-556ac.firebasestorage.app",
-//   messagingSenderId: "567169996406",
-//   appId: "1:567169996406:web:0c15bccfd18dfbc8087157",
-//   measurementId: "G-10WH9PQ5VW"
-// };
 const firebaseConfig = {
   apiKey: "AIzaSyCFmwQ2QnKPQpYid5jFFp5JIhBPfz8LldA",
   authDomain: "confirm-money.firebaseapp.com",
@@ -47,6 +38,7 @@ export const setupRecaptcha = (containerId) => {
   return window.recaptchaVerifier;
 };
 
+// Send OTP
 export const sendOTP = async (phoneNumber) => {
   try {
     const recaptchaVerifier = setupRecaptcha('recaptcha-container');
@@ -68,3 +60,5 @@ export const verifyOTP = async (confirmationResult, otp) => {
     throw error;
   }
 };
+
+export default app;
