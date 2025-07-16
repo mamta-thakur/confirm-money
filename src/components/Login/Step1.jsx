@@ -196,13 +196,7 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
             firebase_token: firebaseToken,
             mobile_number: mobile,
             type: "credit"
-          },
-          // {
-          //   headers: {
-          //     Authorization: '' // Explicitly clear the Bearer token
-          //   }
-          // }
-        );
+          });
         } else {
           // Use mock auth endpoint or create a demo session
           response = await api.post('/user/mock-auth', {
@@ -226,7 +220,7 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
             userId,
             isAuthenticated: true,
             authMethod: useFirebase ? 'firebase' : 'mock'
-          }));
+          }));x
 
           toast.success('OTP verified successfully!');
           nextStep();

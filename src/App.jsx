@@ -71,8 +71,8 @@ function App() {
         <Route path="/terms" element={<TermsAndConditions />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/call-to-action" element={<CallToAction />} />
-        <Route path="/admin/users" element={<AdminManagement />} />
-        <Route path="/admin/offers" element={<OffersManagement />} />
+        <Route path="/admin121/users" element={<AdminManagement />} />
+        <Route path="/admin121/offers" element={<OffersManagement />} />
       </Routes>
     </Router>
   );
