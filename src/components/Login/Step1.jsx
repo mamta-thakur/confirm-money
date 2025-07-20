@@ -53,7 +53,7 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
           const phoneNumber = `+91${mobile}`;
           const confirmation = await sendOTP(phoneNumber);
           setConfirmationResult(confirmation);
-          toast.success('OTP sent successfully via Firebase!');
+          toast.success('OTP sent successfully!');
         } catch (firebaseError) {
           console.warn('Firebase OTP failed, falling back to mock OTP:', firebaseError);
           
@@ -205,8 +205,11 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
             demo: true
           });
         }
+        
+        console.log('Auth response:', response.data);
 
         if (response.data.success) {
+          console.log('Authentication successful:', response.data);
           const token = response.data.token;
           const decoded = jwtDecode(token);
           const userId = decoded.user_id;
@@ -220,7 +223,7 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
             userId,
             isAuthenticated: true,
             authMethod: useFirebase ? 'firebase' : 'mock'
-          }));x
+          }));
 
           toast.success('OTP verified successfully!');
           nextStep();
