@@ -39,8 +39,10 @@ const Section3 = () => {
   const boxes = [
     {
       icon: ShoppingCart,
-      title: 'At checkout',
-      description: 'Look for the Affirm logo when completing your purchase, or pay with your Affirm Card.',
+      // title: 'At checkout',
+      title: 'Get Deals',
+      // description: 'Look for the Affirm logo when completing your purchase, or pay with your Affirm Card.',
+      description: 'on your favourite brands At Checkout',
       gradient: 'from-teal-400 to-emerald-500',
     },
     {

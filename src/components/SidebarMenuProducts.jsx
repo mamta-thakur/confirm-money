@@ -49,23 +49,38 @@ export default function SidebarMenuProducts({ isOpen, onClose }) {
               <Link to="/">
                 <img src={Logo} alt="Logo" className="h-20 mb-4" />
               </Link>
-              {localStorage.getItem('userDetails') || localStorage.getItem('isAuthenticated')? (
+              {/* {localStorage.getItem('userDetails') || localStorage.getItem('isAuthenticated')? ( */}
+              {(localStorage.getItem('userDetails') || localStorage.getItem('isAuthenticated')) ? (() => {
+                const user = JSON.parse(localStorage.getItem('userDetails') || '{}');
+                const isSpecialUser = user?.mobile_number === '9459120428';
                 <>
-                <div className="text-l font-bold text-black">
-                  <Link to="/" className="hover:underline">Home</Link>
-                </div>
-                <div className="text-l font-bold text-black">
-                  <Link to="/loan-journey" className="hover:underline">Confirm.Credit</Link>
-                </div>
-                <div className="text-l font-bold text-black">
-                  <Link to="/shop" className="hover:underline">Confirm.Shop</Link>
-                </div>
-                <div className="text-l font-bold text-black">
-                  <Link to="/" onClick={logoutUser} className="hover:underline">Logout</Link>
-                </div>
-              </>
-                
-              ) : (
+                  <div className="text-l font-bold text-black">
+                    <Link to="/" className="hover:underline">Home</Link>
+                  </div>
+                  <div className="text-l font-bold text-black">
+                    <Link to="/loan-journey" className="hover:underline">Confirm.Credit</Link>
+                  </div>
+                  <div className="text-l font-bold text-black">
+                    <Link to="/shop" className="hover:underline">Confirm.Shop</Link>
+                  </div>
+
+                  {isSpecialUser && (
+                    <>
+                      <div className="text-l font-bold text-black">
+                        <Link to="/admin121/users" className="hover:underline">Users List</Link>
+                      </div>
+                      <div className="text-l font-bold text-black">
+                        <Link to="/admin121/offers" className="hover:underline">Offers List</Link>
+                      </div>
+                    </>
+                  )}
+
+                  <div className="text-l font-bold text-black">
+                    <Link to="/" onClick={logoutUser} className="hover:underline">Logout</Link>
+                  </div>
+                </>
+              })() : (              
+              // ) : (
                 <>
                   <div className="text-l font-bold text-black">
                     <Link to="/" className="hover:underline">Home</Link>

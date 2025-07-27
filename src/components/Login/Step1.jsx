@@ -212,9 +212,13 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
           console.log('Authentication successful:', response.data);
           const token = response.data.token;
           const decoded = jwtDecode(token);
+
+          console.log('Decoded token:', decoded);
           const userId = decoded.user_id;
+          const mobile_number = decoded.mobile_number;
 
           localStorage.setItem("authToken", token);
+          localStorage.setItem("userDetails", JSON.stringify({ mobile_number }));
           setAuthToken(token);
 
           setFormData(prev => ({
