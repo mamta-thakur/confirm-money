@@ -15,7 +15,8 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
   const [mobile, setMobile] = useState(formData.mobile || '');
   const [mode, setMode] = useState('login');
   const [showOTP, setShowOTP] = useState(false);
-  const [otp, setOtp] = useState(['', '', '', '', '', '']);
+  // const [otp, setOtp] = useState(['', '', '', '', '', '']);
+  const [otp, setOtp] = useState();
   const inputsRef = useRef([]);
   const [timer, setTimer] = useState(60);
   const [checked1, setChecked1] = useState(false);
@@ -150,8 +151,8 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
 
   const handleVerifyOTP = async () => {
     // const enteredOtp = otp.join('');
-    const enteredOtp = otp;
-    
+    const enteredOtp = otp.trim();
+
     if (enteredOtp.length !== 6) {
       toast.error('Please enter complete OTP');
       return;
@@ -247,7 +248,9 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
     }
   };
 
-  const isFormValid = checked1 && checked2 && otp.every(digit => digit !== '');
+  // const isFormValid = checked1 && checked2 && otp.every(digit => digit !== '');
+  const isFormValid = checked1 && checked2 && otp.length === 6;
+
   const completionPercentage = mode === 'register' ? 0 : 25;
 
   return (
@@ -358,7 +361,7 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
 
           <div className="flex justify-center space-x-3 mb-3">
 
-            <input
+            {/* <input
               type="text"
               inputMode="numeric"
               maxLength={6}
@@ -366,6 +369,21 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
               placeholder="Enter 6-digit OTP"
               value={otp}
               onChange={handleOtpChange}
+            /> */}
+
+            <input
+              type="text"
+              inputMode="numeric"
+              maxLength={6}
+              className="w-full p-3 border rounded-lg text-lg text-center font-semibold focus:ring-2 focus:ring-green-500 focus:border-green-500 transition tracking-widest"
+              placeholder="Enter 6-digit OTP"
+              value={otp}
+              onChange={(e) => {
+                const val = e.target.value;
+                if (/^\d*$/.test(val) && val.length <= 6) {
+                  setOtp(val);
+                }
+              }}
             />
             
             {/* {otp.map((digit, index) => (
