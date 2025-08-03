@@ -276,12 +276,12 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
           {mode === 'login' ? (
             <>
               Unlock Best Offers <br />
-              from <span className="font-extrabold text-3xl">30+ Lenders</span>
+              {/* from <span className="font-extrabold text-3xl">30+ Lenders</span> */}
             </>
           ) : (
             <>
               Unlock Best Offers <br />
-              from <span className="font-extrabold text-3xl">30+ Lenders</span>
+              {/* from <span className="font-extrabold text-3xl">30+ Lenders</span> */}
             </>
           )}
         </p>
@@ -325,7 +325,7 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
                 onChange={e => setChecked1(e.target.checked)} 
               />
               <label htmlFor="terms" className="cursor-pointer">
-                I acknowledge that I have read and agree to Confirm's <a href="terms" target="_blank" className="text-green-500 underline">Credit Report Terms</a>, <a href="terms" target="_blank" className="text-green-500 underline">Terms of Use</a>, and <a href="privacy" target="_blank" className="text-green-500 underline"> Privacy Policy</a>. {' '}
+                I acknowledge that I have read and agree to Confirm's <a href="terms" target="_blank" className="text-green-500 underline">Terms of Use</a>, and <a href="privacy" target="_blank" className="text-green-500 underline"> Privacy Policy</a>. {' '}
               </label>
             </div>
           </div>
@@ -340,7 +340,7 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
             }`}
           >
             {loading ? 'Sending OTP...' : (
-              mode === 'login' ? 'Proceed with OTP' : 'Proceed with OTP'
+              mode === 'login' ? 'Proceed' : 'Proceed'
             )}
           </button>
         </>
@@ -356,6 +356,7 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
           )}
 
           <div className="flex justify-center space-x-3 mb-3">
+            
             {otp.map((digit, index) => (
               <input
                 key={index}
@@ -409,8 +410,8 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
           </>
         ) : (
           <>
-            By logging in, you agree to following <br />
-            Confirm's Credit Report Terms, <a href="terms" target="_blank" className="text-green-500 underline">Terms of Use</a>, and <a href="privacy" target="_blank" className="text-green-500 underline"> Privacy Policy</a>.
+            {/* By logging in, you agree to following <br />
+            Confirm's Credit Report Terms, <a href="terms" target="_blank" className="text-green-500 underline">Terms of Use</a>, and <a href="privacy" target="_blank" className="text-green-500 underline"> Privacy Policy</a>. */}
           </>
         )}
       </p>

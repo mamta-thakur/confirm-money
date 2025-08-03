@@ -1,5 +1,6 @@
 import React from 'react';
 import { ShoppingCart, DollarSign, CreditCard } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import cartFundingImg from '../../../assets/cart-funding.png';
 import personalLoanImg from '../../../assets/personal-loan.png';
 import businessLoanImg from '../../../assets/business-loan.png';
@@ -64,10 +65,10 @@ const ShopSidebar = () => {
         
         <div className="grid grid-cols-3 gap-5 p-4">
           {creditOptions.map((option) => (
-            <div 
+            <Link
               key={option.id}
-              onClick={() => handleOptionClick(option.url)}
-              className="bg-white- rounded-lg- p-10- border- border-gray-200- cursor-pointer- hover:shadow-md- hover:border-gray-300- transition-all- duration-200-"
+              to={option.url}
+              className="bg-white- rounded-lg- p-10- border- border-gray-200- cursor-pointer- hover:shadow-md- hover:border-gray-300- transition-all- duration-200- block"
             >
               <div className="flex flex-col items-center text-center gap-2">
                 <div className="p-6 bg-white rounded-lg">
@@ -81,7 +82,7 @@ const ShopSidebar = () => {
                   <h4 className="font-medium text-gray-800 text-sm leading-tight">{option.name}</h4>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

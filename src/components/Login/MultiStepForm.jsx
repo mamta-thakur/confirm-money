@@ -68,7 +68,7 @@ const MultiStepForm = () => {
               transition={{ duration: 0.5 }}
               className="bg-white/60- backdrop-blur-xl bg-gradient-to-br shadow-2xl- border border-white/30 px-8 py-2 w-full max-w-xl transition-all duration-300"
             >
-              <BgAnimation />
+              {/* <BgAnimation /> */}
               <AnimatePresence mode="wait">
                 {renderStep()}
               </AnimatePresence>
