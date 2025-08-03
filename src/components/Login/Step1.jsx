@@ -16,7 +16,8 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
   const [mode, setMode] = useState('login');
   const [showOTP, setShowOTP] = useState(false);
   // const [otp, setOtp] = useState(['', '', '', '', '', '']);
-  const [otp, setOtp] = useState();
+  const [otp, setOtp] = useState('');
+
   const inputsRef = useRef([]);
   const [timer, setTimer] = useState(60);
   const [checked1, setChecked1] = useState(false);
