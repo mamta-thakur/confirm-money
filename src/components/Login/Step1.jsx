@@ -149,7 +149,8 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
   };
 
   const handleVerifyOTP = async () => {
-    const enteredOtp = otp.join('');
+    // const enteredOtp = otp.join('');
+    const enteredOtp = otp;
     
     if (enteredOtp.length !== 6) {
       toast.error('Please enter complete OTP');
