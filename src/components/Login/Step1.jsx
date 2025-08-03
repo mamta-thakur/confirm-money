@@ -356,8 +356,18 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
           )}
 
           <div className="flex justify-center space-x-3 mb-3">
+
+            <input
+              type="text"
+              inputMode="numeric"
+              maxLength={6}
+              className="w-full p-3 border rounded-lg text-lg text-center font-semibold focus:ring-2 focus:ring-green-500 focus:border-green-500 transition tracking-widest"
+              placeholder="Enter 6-digit OTP"
+              value={otp}
+              onChange={handleOtpChange}
+            />
             
-            {otp.map((digit, index) => (
+            {/* {otp.map((digit, index) => (
               <input
                 key={index}
                 ref={el => (inputsRef.current[index] = el)}
@@ -369,7 +379,8 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
                 onChange={e => handleOtpChange(e.target.value, index)}
                 onKeyDown={e => handleKeyDown(e, index)}
               />
-            ))}
+            ))} */}
+
           </div>
 
           <div className="text-center mb-4">
