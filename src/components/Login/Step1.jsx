@@ -190,7 +190,6 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
         let response;
         
         if (firebaseToken) {
-          console.log('Using Firebase token:', firebaseToken);
           // Use Firebase auth endpoint
           response = await api.post('/user/firebase-auth', {
             firebase_token: firebaseToken,
@@ -205,20 +204,14 @@ const Step1 = ({ nextStep, formData, setFormData, setIsReturningUser }) => {
             demo: true
           });
         }
-        
-        console.log('Auth response:', response.data);
 
         if (response.data.success) {
-          console.log('Authentication successful:', response.data);
           const token = response.data.token;
           const decoded = jwtDecode(token);
-
-          console.log('Decoded token:', decoded);
           const userId = decoded.user_id;
-          const mobile_number = decoded.mobile_number;
 
           localStorage.setItem("authToken", token);
-          localStorage.setItem("userDetails", JSON.stringify({ mobile_number }));
+          localStorage.setItem("isAuthenticated", true);
           setAuthToken(token);
 
           setFormData(prev => ({
